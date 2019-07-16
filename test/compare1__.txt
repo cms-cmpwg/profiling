@@ -1,3 +1,0 @@
-Non  --->  Non  edm::WorkerT&lt;edm::EDProducer&gt;::implDo(
-|    --->  |    edm::WorkerT&lt;edm::stream::EDProducerAdaptorBase&gt;::implDo(
-|    --->  |    edm::WorkerT&lt;edm::one::OutputModuleBase&gt;::implDo(
