@@ -2,11 +2,11 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-#oldlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre2_igprofCPU'
-#newlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre3_igprofCPU'
+oldlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre2_igprofCPU'
+newlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre3_igprofCPU'
 
-oldlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/pre3/igprofCPU_'
-newlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/pre4/igprofCPU_'
+#oldlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/pre3/igprofCPU_'
+#newlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/pre4/igprofCPU_'
 
 new_req=requests.get(newlink)
 new_html = new_req.text
