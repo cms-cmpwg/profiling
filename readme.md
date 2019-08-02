@@ -1,4 +1,4 @@
-## CPU and Memory monitering job  
+## CPU and Memory monitoring job  
 ---
 ### 1. All results are uploaded here: https://jiwoong.web.cern.ch/jiwoong/  
 ### 2. ASCII type results are uploaded N01_profile/10_6_X and N02_compare_summary/results_XX  
