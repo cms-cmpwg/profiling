@@ -1,0 +1,20 @@
+MemoryCheck: event : VSIZE 4142.46 0 RSS 1905.97 0
+TimeEvent> 1 1 11.7487
+MemoryCheck: event : VSIZE 4142.5 0 RSS 1907.36 0
+TimeEvent> 2 1 3.1698
+MemoryCheck: event : VSIZE 4142.5 0 RSS 1892.37 0
+TimeEvent> 3 1 2.43325
+MemoryCheck: event : VSIZE 4142.5 0 RSS 1847.72 0
+TimeEvent> 4 1 3.02877
+MemoryCheck: event : VSIZE 4142.5 0 RSS 1845.47 0
+TimeEvent> 5 1 4.38883
+MemoryCheck: event : VSIZE 4142.5 0 RSS 1841.18 0
+TimeEvent> 6 1 2.66072
+MemoryCheck: event : VSIZE 4142.5 0 RSS 1857.88 0
+TimeEvent> 7 1 5.06834
+MemoryCheck: event : VSIZE 4142.54 0 RSS 1878.36 0
+TimeEvent> 8 1 5.60489
+MemoryCheck: event : VSIZE 4142.58 0 RSS 1878.47 0
+TimeEvent> 9 1 3.94028
+MemoryCheck: event : VSIZE 4142.58 0 RSS 1878.23 0
+TimeEvent> 10 1 2.65482
