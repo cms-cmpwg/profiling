@@ -26,7 +26,7 @@ cd TimeMemory
 echo $PWD
 
 
-## --3. Make cmdLog run_option  ----Need improve
+## --3. Make cmdLog run_option  
 cat << EOF >> read.py
 import subprocess
 
@@ -91,7 +91,9 @@ else
 fi
 EOF
 
-
+# run profiler
+n01_profile.sh
+n02_profile.sh
 
 
 
