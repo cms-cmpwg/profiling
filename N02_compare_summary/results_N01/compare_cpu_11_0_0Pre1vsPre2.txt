@@ -1,0 +1,8 @@
+### legacy modules CMSSW_11_0_0_pre1 --> CMSSW_11_0_0_pre2
+None  ====> None         edm::WorkerT<edm::EDProducer>::implDo(
+76.38 ====> 74.63        edm::WorkerT<edm::stream::EDProducerAdaptorBase>::implDo(
+20.88 ====> 22.44        edm::WorkerT<edm::one::OutputModuleBase>::implDo(
+### top 20 ::stream ED producers Rank and Cost [CMSSW_11_0_0_pre1 --> CMSSW_11_0_0_pre2]
+### Delta Check : [CMSSW_11_0_0_pre1 - CMSSW_11_0_0_pre2 / total * 100% = delta]
+ 845.27  -  845.83 / 15941.43 *100% =  -0.0%  cms::CkfTrackCandidateMakerBase::produceBase(edm::Event&, edm::EventSetup const&)
+ 197.44  -   195.8 / 15941.43 *100% =  0.01%  MuonIdProducer::produce(edm::Event&, edm::EventSetup const&)
