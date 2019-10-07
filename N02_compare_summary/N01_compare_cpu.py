@@ -2,11 +2,11 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-oldlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre2_igprofCPU'
-newlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre3_igprofCPU'
+#oldlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre2_igprofCPU'
+#newlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre3_igprofCPU'
 
-#oldlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/pre3/igprofCPU_'
-#newlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/pre4/igprofCPU_'
+oldlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_CMSSW11_0_0_pre1'
+newlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_CMSSW11_0_0_pre2'
 
 new_req=requests.get(newlink)
 new_html = new_req.text
@@ -60,7 +60,7 @@ old_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
 ###  step1 
 total=columnlist[1]
 
-print("### legacy modules CMSSW_8_1_0_pre2 --> CMSSW_8_1_0_pre3")
+print("### legacy modules CMSSW_11_0_0_pre1 --> CMSSW_11_0_0_pre2")
 
 strs=["edm::WorkerT<edm::EDProducer>::implDo(",
 "edm::WorkerT<edm::stream::EDProducerAdaptorBase>::implDo(",
@@ -97,7 +97,7 @@ for link in old_soup.findAll("a"):
             link_list.append(link.attrs['href'])
             #print(link.attrs['href'])
             
-old_str2_link="https://ycyang.web.cern.ch"+link_list[0]
+old_str2_link="https://jiwoong.web.cern.ch"+link_list[0]
 
 link_list=[]
 for link in new_soup.findAll("a"):
@@ -107,7 +107,7 @@ for link in new_soup.findAll("a"):
             link_list.append(link.attrs['href'])
             #print(link.attrs['href'])
             
-new_str2_link="https://ycyang.web.cern.ch"+link_list[0]
+new_str2_link="https://jiwoong.web.cern.ch"+link_list[0]
 
 old_req=requests.get(old_str2_link)
 old_html = old_req.text
@@ -146,7 +146,7 @@ for content in contents:
 new_str2_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
 
 str2_list = list(old_str2_df[4:24]['name'])
-print("### top 20 ::stream ED producers Rank and Cost [CMSSW_8_1_0_pre2 --> CMSSW_8_1_0_pre3]")
+print("### top 20 ::stream ED producers Rank and Cost [CMSSW_11_0_0_pre1 --> CMSSW_11_0_0_pre2]")
 
 for str2 in str2_list:
     idx_new=new_str2_df.loc[new_str2_df['name']==str2].index 
@@ -166,7 +166,7 @@ Cumulative=old_df.columns[2]
 oldAll=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
 oldAll=float(oldAll.replace(',','').strip())
 
-print("### Delta Check : [CMSSW_8_1_0_pre3 - CMSSW_8_1_0_pre2 / total * 100% = delta]")
+print("### Delta Check : [CMSSW_11_0_0_pre2 - CMSSW_11_0_0_pre1 / total * 100% = delta]")
 
 for str in str3:
     
