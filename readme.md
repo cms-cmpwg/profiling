@@ -14,7 +14,7 @@ process = customise(process)
 ```  
 ---
 
-## Steps for monitoring PhaseII
+## Steps for monitoring Phase-II
 
 ### 1. Install CMSSW version and setup environment
 ```bash
