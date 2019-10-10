@@ -48,27 +48,27 @@ runTheMatrix.py -w upgrade -n
 
 ### 3. Modify cmdlog file and run cmsDriver
 
-After "dryrun", cmdLog file will be created.
-You can modify or add options.
--n 100: Number of events:100
--- nThreads 8: Number of threads 8
+After "dryrun", cmdLog file will be created.  
+You can modify or add options.  
+-n 100: Number of events:100  
+-- nThreads 8: Number of threads 8  
 --customise=Validation/Performance/TimeMemoryInfo.py: This add functions about Time Memory info to your python config file. I add this options in step3(RECO)
 
-This options about pileup
---pileup_input das:/RelValMinBias_14TeV/CMSSW_10_6_0_patch2-106X_upgrade2023_realistic_v3_2023D41noPU-v1/GEN-SIM
---pileup AVE_200_BX_25ns # Average number of pileup:200
+This options about pileup  
+--pileup_input das:/RelValMinBias_14TeV/CMSSW_10_6_0_patch2-106X_upgrade2023_realistic_v3_2023D41noPU-v1/GEN-SIM  
+--pileup AVE_200_BX_25ns # Average number of pileup:200  
 
 ### 4. Monitoring CPU tims and Memory using "Igprof"
-In N01_profile directory, try n01_profile.sh and n02_profile.sh
+In **N01_profile** directory, try **n01_profile.sh** and **n02_profile.sh**
 
 
 ### 5. Analysis using step3 config file output
 To do this, you need to add "--customise=Validation/Performance/TimeMemoryInfo.py: This add functions about Time Memory info to your python config file" options in cmdLog
 
 You can analyze the results using step3.log files
-In N02_compare_summary directory,
-N02_getTimeMemSummary.sh, N03_timeDiffFromReport.sh, N05_makehist.py
+In **N02_compare_summary** directory,
+**N02_getTimeMemSummary.sh**, **N03_timeDiffFromReport.sh**, **N05_makehist.py**
 
 You can analyze the results using step3.root files
-N04_compareProducts.sh
+**N04_compareProducts.sh**
 
