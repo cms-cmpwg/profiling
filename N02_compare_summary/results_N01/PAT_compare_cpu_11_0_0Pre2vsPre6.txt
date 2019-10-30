@@ -1,0 +1,31 @@
+### legacy modules CMSSW_11_0_0_pre2 --> CMSSW_11_0_0_pre6
+None  ====> None         edm::WorkerT<edm::EDProducer>::implDo(
+88.97 ====> 88.52        edm::WorkerT<edm::stream::EDProducerAdaptorBase>::implDo(
+1.43  ====> 1.45         edm::WorkerT<edm::one::OutputModuleBase>::implDo(
+### top 20 ::stream ED producers Rank and Cost [CMSSW_11_0_0_pre2 --> CMSSW_11_0_0_pre6]
+[1  -> 1 ] [16.98 -> 15.84] TauDiscriminationProducerBase<reco::PFTau, reco::PFTauDiscriminator>::produce(edm::Event&, edm::EventSetup const&)
+[2  -> 2 ] [15.64 -> 14.31] TopProjector<reco::PFCandidate, reco::PFCandidate, TopProjectorFwdPtrOverlap<reco::PFCandidate, reco::PFCandidate> >::produce(edm::Event&, edm::EventSetup const&)
+[3  -> 3 ] [10.95 -> 11.14] PuppiProducer::produce(edm::Event&, edm::EventSetup const&)
+[4  -> 4 ] [7.17 -> 7.74] pat::PATMuonProducer::produce(edm::Event&, edm::EventSetup const&)
+[5  -> 5 ] [7.17 -> 7.62] citk::PFIsolationSumProducerForPUPPI::produce(edm::Event&, edm::EventSetup const&)
+[6  -> 6 ] [3.53 -> 3.64] PFPileUp::produce(edm::Event&, edm::EventSetup const&)
+[7  -> 7 ] [3.35 -> 3.22] IPProducer<std::vector<edm::Ptr<reco::Candidate>, std::allocator<edm::Ptr<reco::Candidate> > >, reco::JetTagInfo, IPProducerHelpers::FromJetAndCands>::produce(edm::Event&, edm::EventSetup const&)
+[8  -> 8 ] [2.77 -> 2.78] HGCalElectronIDValueMapProducer::produce(edm::Event&, edm::EventSetup const&)
+[9  -> 9 ] [2.67 -> 2.63] HGCalPhotonIDValueMapProducer::produce(edm::Event&, edm::EventSetup const&)
+[10 -> 10] [2.43 -> 2.55] PrimaryVertexSorter<std::vector<reco::PFCandidate, std::allocator<reco::PFCandidate> > >::produce(edm::Event&, edm::EventSetup const&)
+[11 -> 11] [2.13 -> 2.36] DeepFlavourTFJetTagsProducer::produce(edm::Event&, edm::EventSetup const&)
+[12 -> 12] [1.99 -> 2.17] PFCand_AssoMap::produce(edm::Event&, edm::EventSetup const&)
+[13 -> 13] [1.53 -> 1.54] pat::PATIsolatedTrackProducer::produce(edm::Event&, edm::EventSetup const&)
+[14 -> 14] [1.39 -> 1.50] RecoTauProducer::produce(edm::Event&, edm::EventSetup const&)
+[15 -> 15] [1.20 -> 1.22] FastjetJetProducer::produce(edm::Event&, edm::EventSetup const&)
+[16 -> 17] [1.07 -> 1.08] NjettinessAdder::produce(edm::Event&, edm::EventSetup const&)
+[17 -> 16] [1.06 -> 1.17] deep_tau::DeepTauBase::produce(edm::Event&, edm::EventSetup const&)
+[18 -> 18] [0.80 -> 0.85] pat::PATMETProducer::produce(edm::Event&, edm::EventSetup const&)
+[19 -> 19] [0.62 -> 0.59] PileupJetIdProducer::produce(edm::Event&, edm::EventSetup const&)
+[20 -> 20] [0.52 -> 0.52] PFRecoTauChargedHadronProducer::produce(edm::Event&, edm::EventSetup const&)
+### Delta Check : [CMSSW_11_0_0_pre6 - CMSSW_11_0_0_pre2 / total * 100% = delta]
+ 120.84  -  130.66 / 769.71 *100% = -1.28%  TauDiscriminationProducerBase<reco::PFTau, reco::PFTauDiscriminator>::produce(edm::Event&, edm::EventSetup const&)
+ 109.14  -  120.37 / 769.71 *100% = -1.46%  TopProjector<reco::PFCandidate, reco::PFCandidate, TopProjectorFwdPtrOverlap<reco::PFCandidate, reco::PFCandidate> >::produce(edm::Event&, edm::EventSetup const&)
+  84.94  -   84.31 / 769.71 *100% =  0.08%  PuppiProducer::produce(edm::Event&, edm::EventSetup const&)
+  58.08  -   55.16 / 769.71 *100% =  0.38%  citk::PFIsolationSumProducerForPUPPI::produce(edm::Event&, edm::EventSetup const&)
+  59.02  -    55.2 / 769.71 *100% =   0.5%  pat::PATMuonProducer::produce(edm::Event&, edm::EventSetup const&)
