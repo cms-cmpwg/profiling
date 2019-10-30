@@ -1,0 +1,79 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.905766      -0.15%        11.03 ms/ev ->         0.27 ms/ev patJetCorrFactorsAK8Puppi
+   +1.884262      +0.05%         0.11 ms/ev ->         3.59 ms/ev muonBadTrackFilter
+   +1.743073      +0.09%         0.46 ms/ev ->         6.69 ms/ev reducedEgamma
+   +1.052632      +0.00%         0.02 ms/ev ->         0.06 ms/ev patTrkMet
+   -1.043943      -0.02%         1.85 ms/ev ->         0.58 ms/ev pfDeepBoostedJetTagsSlimmedAK8DeepTags
+   +1.024706      +0.03%         1.06 ms/ev ->         3.28 ms/ev slimmedMuons
+   -0.820607      -0.02%         1.93 ms/ev ->         0.81 ms/ev pfMassDecorrelatedDeepBoostedJetTagsSlimmedAK8DeepTags
+   +0.562253      +0.05%         4.08 ms/ev ->         7.28 ms/ev patElectronsFromMultiCl
+   +0.314851      +0.00%         0.85 ms/ev ->         1.17 ms/ev muPFIsoDepositChargedAllPAT
+   -0.289261      -0.03%         8.21 ms/ev ->         6.13 ms/ev pfCombinedCvsBJetTagsPuppi
+   +0.266565      +0.01%         1.71 ms/ev ->         2.23 ms/ev pfCombinedInclusiveSecondaryVertexV2BJetTagsAK8Puppi
+   +0.255408      +0.01%         1.25 ms/ev ->         1.62 ms/ev pfBoostedDoubleSecondaryVertexAK8BJetTagsAK8Puppi
+   +0.225481      +0.00%         0.48 ms/ev ->         0.61 ms/ev hpsPFTauDiscriminationByLooseMuonRejection3Boosted
+   +0.208821      +0.00%         0.99 ms/ev ->         1.23 ms/ev ecalLaserCorrFilter
+   -0.149105      -0.02%         9.73 ms/ev ->         8.38 ms/ev QGTagger
+   +0.129577      +0.21%       108.46 ms/ev ->       123.48 ms/ev MINIAODSIMoutput
+   +0.128653      +0.02%         9.94 ms/ev ->        11.31 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   +0.127960      +0.02%        11.01 ms/ev ->        12.51 ms/ev chargedHadronTrackResolutionFilter
+   -0.116567      -0.37%       236.90 ms/ev ->       210.81 ms/ev pfImpactParameterTagInfosAK8PFPuppiSoftDropSubjets
+   -0.101927      -0.22%       156.66 ms/ev ->       141.47 ms/ev hpsPFTauPUcorrPtSumBoosted
+   -0.096183      -0.20%       156.14 ms/ev ->       141.81 ms/ev hpsPFTauPUcorrPtSumdR03Boosted
+   -0.091159      -0.19%       153.29 ms/ev ->       139.93 ms/ev hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.089792      -0.19%       153.88 ms/ev ->       140.66 ms/ev hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.083352      -0.12%       107.14 ms/ev ->        98.57 ms/ev hpsPFTauNeutralIsoPtSumWeightBoosted
+   -0.082664      -0.12%       107.18 ms/ev ->        98.67 ms/ev hpsPFTauNeutralIsoPtSumWeightdR03Boosted
+   +0.080791      +0.01%        10.19 ms/ev ->        11.05 ms/ev patJetFlavourAssociation
+   -0.078012      -0.11%       104.46 ms/ev ->        96.61 ms/ev hpsPFTauDiscriminationByPhotonPtSumOutsideSignalConeBoosted
+   -0.077583      -0.16%       153.62 ms/ev ->       142.14 ms/ev hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.075029      -0.16%       156.12 ms/ev ->       144.83 ms/ev hpsPFTauDiscriminationByRawCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.073716      -0.03%        27.01 ms/ev ->        25.09 ms/ev pfImpactParameterTagInfosPuppi
+   -0.073472      -0.87%       860.54 ms/ev ->       799.56 ms/ev pfNoPileUpIsoPFBRECO
+   -0.071779      -0.01%         6.86 ms/ev ->         6.38 ms/ev noHFCands
+   +0.070837      +0.01%         5.01 ms/ev ->         5.38 ms/ev patPhotonsFromMultiCl
+   +0.061846      +0.14%       152.04 ms/ev ->       161.74 ms/ev pfCandidateToVertexAssociation
+   +0.058210      +0.01%         7.17 ms/ev ->         7.60 ms/ev puppiForMET
+   +0.056779      +0.01%         8.40 ms/ev ->         8.89 ms/ev patJetFlavourAssociationAK8
+   -0.055606      -0.01%        11.81 ms/ev ->        11.17 ms/ev pfCombinedCvsLJetTagsPuppi
+   +0.051767      +0.14%       184.35 ms/ev ->       194.15 ms/ev primaryVertexAssociation
+   +0.050868      +0.41%       549.83 ms/ev ->       578.53 ms/ev patMuons
+  ---------- ------------     --------                  ----       ------------
+Job total:  7.02272 s/ev ==> 6.93801 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   +1.886866      +0.05%         0.11 ms/ev ->         3.62 ms/ev muonBadTrackFilter
+   +1.767907      +0.09%         0.41 ms/ev ->         6.58 ms/ev reducedEgamma
+   +1.565054      +0.00%         0.02 ms/ev ->         0.14 ms/ev pfElectrons
+   -1.043980      -0.02%         1.87 ms/ev ->         0.59 ms/ev pfDeepBoostedJetTagsSlimmedAK8DeepTags
+   +1.035224      +0.00%         0.02 ms/ev ->         0.06 ms/ev patTrkMet
+   +1.029025      +0.03%         1.06 ms/ev ->         3.30 ms/ev slimmedMuons
+   -0.823728      -0.02%         1.94 ms/ev ->         0.81 ms/ev pfMassDecorrelatedDeepBoostedJetTagsSlimmedAK8DeepTags
+   +0.573201      +0.05%         4.01 ms/ev ->         7.24 ms/ev patElectronsFromMultiCl
+   +0.212801      +0.00%         0.83 ms/ev ->         1.03 ms/ev muPFIsoDepositChargedAllPAT
+   +0.143291      +0.02%         9.68 ms/ev ->        11.17 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   -0.105302      -0.23%       155.11 ms/ev ->       139.59 ms/ev hpsPFTauPUcorrPtSumBoosted
+   -0.099504      -0.22%       154.59 ms/ev ->       139.93 ms/ev hpsPFTauPUcorrPtSumdR03Boosted
+   -0.094018      -0.21%       152.40 ms/ev ->       138.71 ms/ev hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.093002      -0.20%       152.98 ms/ev ->       139.38 ms/ev hpsPFTauDiscriminationByTightCombinedIsolationDBSumPtCorr3HitsBoosted
+   +0.088389      +0.02%        10.85 ms/ev ->        11.86 ms/ev chargedHadronTrackResolutionFilter
+   -0.086544      -0.13%       106.06 ms/ev ->        97.26 ms/ev hpsPFTauNeutralIsoPtSumWeightBoosted
+   -0.085864      -0.13%       106.09 ms/ev ->        97.35 ms/ev hpsPFTauNeutralIsoPtSumWeightdR03Boosted
+   +0.083529      +0.01%        10.02 ms/ev ->        10.89 ms/ev patJetFlavourAssociation
+   -0.080505      -0.12%       103.83 ms/ev ->        95.79 ms/ev hpsPFTauDiscriminationByPhotonPtSumOutsideSignalConeBoosted
+   -0.078789      -0.17%       153.73 ms/ev ->       142.08 ms/ev hpsPFTauDiscriminationByRawCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.078778      -0.17%       152.46 ms/ev ->       140.90 ms/ev hpsPFTauDiscriminationByLooseCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.077618      -0.01%         6.62 ms/ev ->         6.13 ms/ev noHFCands
+   -0.074509      -0.92%       852.97 ms/ev ->       791.70 ms/ev pfNoPileUpIsoPFBRECO
+   -0.065164      -0.03%        26.43 ms/ev ->        24.76 ms/ev pfImpactParameterTagInfosPuppi
+   +0.059394      +0.01%         7.07 ms/ev ->         7.50 ms/ev puppiForMET
+   +0.058581      +0.14%       150.96 ms/ev ->       160.07 ms/ev pfCandidateToVertexAssociation
+   +0.057734      +0.01%         8.28 ms/ev ->         8.77 ms/ev patJetFlavourAssociationAK8
+   +0.054667      +0.46%       540.32 ms/ev ->       570.69 ms/ev patMuons
+   +0.052370      +0.01%         7.01 ms/ev ->         7.38 ms/ev pfImpactParameterTagInfosAK8Puppi
+  ---------- ------------     --------                  ----       ------------
+Job total:  6.65948 s/ev ==> 6.59069 s/ev
