@@ -1,0 +1,53 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.736626      -0.00%         0.23 ms/ev ->         0.02 ms/ev phPFIsoDepositChargedAllPAT
+   -1.722635      -0.05%         3.50 ms/ev ->         0.26 ms/ev hpsPFTauDiscriminationByLooseIsolationMVArun2v1DBdR03oldDMwLTBoosted
+   +1.250000      +0.00%         0.00 ms/ev ->         0.01 ms/ev shiftedPatMETCorrElectronEnUpNoHF
+   -1.228379      -0.06%         5.51 ms/ev ->         1.32 ms/ev hpsPFTauDiscriminationByMVA6rawElectronRejectionBoosted
+   -1.107379      -0.04%         4.35 ms/ev ->         1.25 ms/ev slimmedMuons
+   -1.022789      -0.01%         0.83 ms/ev ->         0.27 ms/ev hpsPFTauDiscriminationByMVA6LooseElectronRejectionBoosted
+   +0.376151      +0.80%       121.25 ms/ev ->       177.43 ms/ev packedPFCandidates
+   -0.358613      -0.01%         2.18 ms/ev ->         1.52 ms/ev pfBoostedDoubleSecondaryVertexAK8BJetTagsAK8Puppi
+   -0.316060      -0.01%         1.35 ms/ev ->         0.98 ms/ev muPFIsoDepositChargedAllPAT
+   +0.186339      +0.02%         6.93 ms/ev ->         8.35 ms/ev pfCombinedCvsBJetTagsPuppi
+   +0.180157      +0.03%        11.25 ms/ev ->        13.48 ms/ev pfCombinedCvsLJetTagsPuppi
+   +0.139000      +0.23%       108.51 ms/ev ->       124.72 ms/ev MINIAODSIMoutput
+   -0.110211      -0.17%       117.75 ms/ev ->       105.45 ms/ev pfPileUpJMENoHF
+   -0.109478      -0.24%       161.51 ms/ev ->       144.75 ms/ev pfPileUpIsoPFBRECO
+   +0.100430      +0.02%        15.45 ms/ev ->        17.09 ms/ev hpsPFTauPrimaryVertexProducerBoosted
+   -0.095576      -0.26%       202.42 ms/ev ->       183.96 ms/ev pfNoPileUpJMENoHF
+   -0.089326      -0.27%       222.60 ms/ev ->       203.57 ms/ev pfImpactParameterTagInfosAK8PFPuppiSoftDropSubjets
+   -0.073035      -0.16%       160.17 ms/ev ->       148.88 ms/ev pfCandidateToVertexAssociation
+   +0.072266      +0.21%       194.66 ms/ev ->       209.26 ms/ev primaryVertexAssociation
+   +0.061350      +0.01%         9.40 ms/ev ->        10.00 ms/ev pfImpactParameterTagInfosAK8Puppi
+   +0.053084      +0.01%         7.59 ms/ev ->         8.01 ms/ev puppiForMET
+   +0.052454      +0.00%         4.90 ms/ev ->         5.17 ms/ev boostedTauSeeds
+  ---------- ------------     --------                  ----       ------------
+Job total:  7.05548 s/ev ==> 7.11437 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.745977      -0.00%         0.23 ms/ev ->         0.02 ms/ev phPFIsoDepositChargedAllPAT
+   -1.113791      -0.05%         4.38 ms/ev ->         1.25 ms/ev slimmedMuons
+   -0.795910      -0.01%         1.20 ms/ev ->         0.52 ms/ev pfDeepDoubleCvBJetTagsSlimmedAK8DeepTags
+   -0.787500      -0.01%         1.19 ms/ev ->         0.52 ms/ev pfDeepDoubleCvLJetTagsSlimmedAK8DeepTags
+   -0.777028      -0.01%         1.17 ms/ev ->         0.52 ms/ev pfMassIndependentDeepDoubleBvLJetTagsSlimmedAK8DeepTags
+   -0.776865      -0.01%         1.18 ms/ev ->         0.52 ms/ev pfDeepDoubleBvLJetTagsSlimmedAK8DeepTags
+   -0.767448      -0.01%         1.19 ms/ev ->         0.53 ms/ev pfMassIndependentDeepDoubleCvLJetTagsSlimmedAK8DeepTags
+   -0.664069      -0.01%         1.30 ms/ev ->         0.65 ms/ev pfMassIndependentDeepDoubleCvBJetTagsSlimmedAK8DeepTags
+   +0.376003      +0.82%       119.32 ms/ev ->       174.58 ms/ev packedPFCandidates
+   -0.332419      -0.00%         0.72 ms/ev ->         0.51 ms/ev pfMassDecorrelatedDeepBoostedJetTagsSlimmedAK8DeepTags
+   -0.290296      -0.00%         1.31 ms/ev ->         0.98 ms/ev muPFIsoDepositChargedAllPAT
+   -0.202198      -0.00%         1.24 ms/ev ->         1.01 ms/ev patPFMetTxyCorr
+   -0.104909      -0.24%       159.32 ms/ev ->       143.44 ms/ev pfPileUpIsoPFBRECO
+   -0.102422      -0.17%       115.65 ms/ev ->       104.38 ms/ev pfPileUpJMENoHF
+   +0.101052      +0.02%        15.49 ms/ev ->        17.14 ms/ev hpsPFTauPrimaryVertexProducerBoosted
+   -0.092789      -0.26%       199.77 ms/ev ->       182.06 ms/ev pfNoPileUpJMENoHF
+   -0.080345      -0.18%       158.58 ms/ev ->       146.33 ms/ev pfCandidateToVertexAssociation
+   +0.068758      +0.20%       192.64 ms/ev ->       206.36 ms/ev primaryVertexAssociation
+   +0.060368      +0.01%         9.10 ms/ev ->         9.67 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   +0.052531      +0.01%         7.37 ms/ev ->         7.77 ms/ev patPhotonsFromMultiCl
+  ---------- ------------     --------                  ----       ------------
+Job total:  6.7062 s/ev ==> 6.77354 s/ev
