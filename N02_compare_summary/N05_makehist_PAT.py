@@ -11,17 +11,17 @@ VSIZE_list=[]
 RSS_list=[]
 column=[]
 
-file1 ='SUM_CMSSW_11_0_0_pre1.txt'
-file2 ='SUM_CMSSW_11_0_0_pre2.txt'
-file3 ='SUM_CMSSW_11_0_0_pre3.txt'
-file4 ='SUM_CMSSW_11_0_0_pre4.txt'
-file5 ='SUM_CMSSW_11_0_0_pre5.txt'
-file6 ='SUM_CMSSW_11_0_0_pre6.txt'
-file7 ='SUM_CMSSW_11_0_0_pre7.txt'
-file8 ='SUM_CMSSW_11_0_0_pre8.txt'
-file9 ='SUM_CMSSW_11_0_0_pre9.txt'
-file10='SUM_CMSSW_11_0_0_pre10.txt'
-file11='SUM_CMSSW_11_0_0_pre11.txt'
+file1 ='PAT_SUM_CMSSW_11_0_0_pre1.txt'
+file2 ='PAT_SUM_CMSSW_11_0_0_pre2.txt'
+file3 ='PAT_SUM_CMSSW_11_0_0_pre3.txt'
+file4 ='PAT_SUM_CMSSW_11_0_0_pre4.txt'
+file5 ='PAT_SUM_CMSSW_11_0_0_pre5.txt'
+file6 ='PAT_SUM_CMSSW_11_0_0_pre6.txt'
+file7 ='PAT_SUM_CMSSW_11_0_0_pre7.txt'
+file8 ='PAT_SUM_CMSSW_11_0_0_pre8.txt'
+file9 ='PAT_SUM_CMSSW_11_0_0_pre9.txt'
+file10='PAT_SUM_CMSSW_11_0_0_pre10.txt'
+file11='PAT_SUM_CMSSW_11_0_0_pre11.txt'
 
 print("Load files")
 with open(file1) as f:
@@ -415,74 +415,74 @@ print(RSS_list3)
 
 ## RSS
 fig,axs = plt.subplots(2,3,figsize=(30,20))
-axs[0,0].plot(evt_list,RSS_list,'-o',color='r',alpha=0.7)
-axs[0,0].plot(evt_list2,RSS_list2,'-o',color='green')
-axs[0,0].plot(evt_list3,RSS_list3,'-o',color='blue')
-axs[0,0].plot(evt_list4,RSS_list4,'-o',color='orange')
+axs[0,0].plot(evt_list2,RSS_list2,'-o',color='r',alpha=0.7)
+axs[0,0].plot(evt_list7,RSS_list7,'-o',color='g')
+axs[0,0].plot(evt_list8,RSS_list8,'-o',color='b')
+axs[0,0].plot(evt_list9,RSS_list9,'-o',color='orange')
 axs[0,0].set_title('Top 4 (RSS)Memory Profile',fontsize=30)
 axs[0,0].set_xlim([0,101])
-axs[0,0].set_ylim([3000,7000])
+axs[0,0].set_ylim([800,2000])
 axs[0,0].set_xlabel('ith event',fontsize=25)
 axs[0,0].set_ylabel('Memory(MB)',fontsize=25)
-axs[0,0].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre3','CMSSW_11_0_0_pre4'],prop={'size' :20})
+axs[0,0].legend(['CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre7','CMSSW_11_0_0_pre8','CMSSW_11_0_0_pre9'],prop={'size' :20})
 
 
 ## Vsize
 axs[0,1].plot(evt_list,VSIZE_list,'-o',color='r',alpha=0.7)
-axs[0,1].plot(evt_list2,VSIZE_list2,'-o',color='green')
-axs[0,1].plot(evt_list3,VSIZE_list3,'-o',color='blue')
-axs[0,1].plot(evt_list9,VSIZE_list9,'-o',color='orange')
+axs[0,1].plot(evt_list2,VSIZE_list2,'-o',color='g')
+axs[0,1].plot(evt_list3,VSIZE_list5,'-o',color='b')
+axs[0,1].plot(evt_list9,VSIZE_list6,'-o',color='orange')
 axs[0,1].set_title('Top 4 (VSIZE)Memory Profile',fontsize=30)
 axs[0,1].set_xlim([0,101])
-axs[0,1].set_ylim([4000,9000])
+axs[0,1].set_ylim([2000,3000])
 axs[0,1].set_xlabel('ith event',fontsize=25)
 axs[0,1].set_ylabel('Memory(MB)',fontsize=25)
-axs[0,1].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre3','CMSSW_11_0_0_pre9'],prop={'size' :20})
+axs[0,1].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre5','CMSSW_11_0_0_pre6'],prop={'size' :20})
 
 # Time
-axs[0,2].plot(evt_list,time_list,'-o',color='r',alpha=0.7)
-axs[0,2].plot(evt_list2,time_list2,'-o',color='green')
-axs[0,2].plot(evt_list5,time_list5,'-o',color='b')
-axs[0,2].plot(evt_list8,time_list8,'-o',color='orange')
+axs[0,2].plot(evt_list5,time_list5,'-o',color='r',alpha=0.7)
+axs[0,2].plot(evt_list9,time_list9,'-o',color='g')
+axs[0,2].plot(evt_list10,time_list10,'-o',color='b')
+axs[0,2].plot(evt_list11,time_list11,'-o',color='orange')
 axs[0,2].set_title('Top 4 average CPU Time Profile',fontsize=30)
 axs[0,2].set_xlim([0,101])
 #axs[0,2].set_yscale('log')
 axs[0,2].set_xlabel('ith event',fontsize=25)
 axs[0,2].set_ylabel('time (seconds)',fontsize=25)
-axs[0,2].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre5','CMSSW_11_0_0_pre8'],prop={'size' :20})
+axs[0,2].legend(['CMSSW_11_0_0_pre5','CMSSW_11_0_0_pre9','CMSSW_11_0_0_pre10','CMSSW_11_0_0_pre11'],prop={'size' :20})
 
 
 ## RSS
-bins = numpy.linspace(3000,7000,100)
-axs[1,0].hist(RSS_list,bins=bins,color='r',alpha=0.9)
-axs[1,0].hist(RSS_list2,bins=bins,color='g',alpha=0.9)
-axs[1,0].hist(RSS_list3,bins=bins,color='b',alpha=0.9)
-axs[1,0].hist(RSS_list4,bins=bins,color='orange',alpha=0.9)
+bins = numpy.linspace(800,2000,100)
+axs[1,0].hist(RSS_list2,bins=bins,color='r',alpha=0.9)
+axs[1,0].hist(RSS_list7,bins=bins,color='g',alpha=0.9)
+axs[1,0].hist(RSS_list8,bins=bins,color='b',alpha=0.9)
+axs[1,0].hist(RSS_list9,bins=bins,color='orange',alpha=0.9)
 axs[1,0].set_yscale('log')
 axs[1,0].set_title('(RSS)Memory Profile',fontsize=30)
 axs[1,0].set_ylabel('ith event',fontsize=25)
 axs[1,0].set_xlabel('Memory(MB)',fontsize=25)
 
 ## Vsize
-bins = numpy.linspace(4000,9000,100)
+bins = numpy.linspace(2000,3000,100)
 axs[1,1].get_xaxis().get_major_formatter().set_useOffset(False)
 axs[1,1].hist(VSIZE_list,bins=bins,color='r',alpha=0.9)
 axs[1,1].hist(VSIZE_list2,bins=bins,color='g',alpha=0.9)
-axs[1,1].hist(VSIZE_list3,bins=bins,color='b',alpha=0.9)
-axs[1,1].hist(VSIZE_list9,bins=bins,color='orange',alpha=0.9)
+axs[1,1].hist(VSIZE_list5,bins=bins,color='b',alpha=0.9)
+axs[1,1].hist(VSIZE_list6,bins=bins,color='orange',alpha=0.9)
 axs[1,1].set_title('(VSIZE)Memory Profile',fontsize=30)
 axs[1,1].set_ylabel('ith event',fontsize=25)
 axs[1,1].set_xlabel('Memory(MB)',fontsize=25)
 axs[1,1].ticklabel_format(useOffset=False)
 
 ## Time
-bins = numpy.linspace(0,2000,100)
-axs[1,2].hist(time_list,bins=bins,color='r',alpha=0.9)
-axs[1,2].hist(time_list2,bins=bins,color='g',alpha=0.9)
-axs[1,2].hist(time_list5,bins=bins,color='b',alpha=0.9)
-axs[1,2].hist(time_list8,bins=bins,color='orange',alpha=0.9)
-axs[1,2].set_xscale('log')
-#axs[1,2].set_yscale('log')
+bins = numpy.linspace(0,60,100)
+axs[1,2].hist(time_list5,bins=bins,color='r',alpha=0.9)
+axs[1,2].hist(time_list9,bins=bins,color='g',alpha=0.9)
+axs[1,2].hist(time_list10,bins=bins,color='b',alpha=0.9)
+axs[1,2].hist(time_list11,bins=bins,color='orange',alpha=0.9)
+#axs[1,2].set_xscale('log')
+axs[1,2].set_yscale('log')
 axs[1,2].set_title('CPU Time Profile',fontsize=30)
 axs[1,2].set_ylabel('ith event',fontsize=25)
 axs[1,2].set_xlabel('time (seconds)',fontsize=25)
@@ -492,7 +492,7 @@ axs[1,2].set_xlabel('time (seconds)',fontsize=25)
 plt.tight_layout()
 plt.show()
 fig = plt.gcf()
-plt.savefig('Summary.png')
+plt.savefig('PAT_Summary.png')
 
 
 

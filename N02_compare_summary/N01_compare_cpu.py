@@ -5,8 +5,39 @@ from bs4 import BeautifulSoup
 #oldlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre2_igprofCPU'
 #newlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre3_igprofCPU'
 
-oldlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_CMSSW11_0_0_pre1'
-newlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_CMSSW11_0_0_pre2'
+## For step3(MINIAOD)
+#oldversion = 'CMSSW11_0_0_pre2'
+#newversion = 'CMSSW11_0_0_pre3'
+
+## For step4(PAT)
+#oldversion = 'CMSSW11_0_0_pre1PAT'
+#newversion = 'CMSSW11_0_0_pre2PAT'
+
+
+
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('old', type=str,
+            help="old version ex. CMSSW11_0_0_pre1")
+parser.add_argument('new', type=str,
+            help="new version ex. CMSSW11_0_0_pre2")
+
+args = parser.parse_args()
+
+isPAT=False
+if args.old[-3:] == 'PAT':
+    isPAT=True
+
+
+oldlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_' + args.old
+newlink='https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_' + args.new
+
+
+print(oldlink)
+print(newlink)
+
 
 new_req=requests.get(newlink)
 new_html = new_req.text
@@ -34,6 +65,12 @@ for content in contents:
         dfcontent.append(td.text)
     alldfcontents.append(dfcontent)
     dfcontent=[]
+
+
+
+
+
+
 new_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
 
 
@@ -60,7 +97,7 @@ old_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
 ###  step1 
 total=columnlist[1]
 
-print("### legacy modules CMSSW_11_0_0_pre1 --> CMSSW_11_0_0_pre2")
+print("### legacy modules {0} --> {1}".format(args.old,args.new))
 
 strs=["edm::WorkerT<edm::EDProducer>::implDo(",
 "edm::WorkerT<edm::stream::EDProducerAdaptorBase>::implDo(",
@@ -86,7 +123,6 @@ for str in strs:
 #display(new_df[new_df['Symbol name'].str.startswith('edm::WorkerT<edm::EDProducer>::implDo(',na=False)][total])
 
 ### step2
-
 str2="edm::stream::EDProducerAdaptorBase::doEvent("
 
 link_list=[]
@@ -145,28 +181,51 @@ for content in contents:
 
 new_str2_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
 
-str2_list = list(old_str2_df[4:24]['name'])
-print("### top 20 ::stream ED producers Rank and Cost [CMSSW_11_0_0_pre1 --> CMSSW_11_0_0_pre2]")
+if not isPAT:
+	str2_list = list(old_str2_df[5:25]['name']) #step3 AOD
+else: 
+	str2_list = list(old_str2_df[4:24]['name']) #step4 PAT
+
+print("### top 20 ::stream ED producers Rank and Cost [{0} --> {1}]".format(args.old,args.new))
 
 for str2 in str2_list:
-    idx_new=new_str2_df.loc[new_str2_df['name']==str2].index 
-    idx_old=old_str2_df.loc[old_str2_df['name']==str2].index  # 1 2 3 4 5... 20
-    print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-3, idx_new[0]-3, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2))
+	idx_new=new_str2_df.loc[new_str2_df['name']==str2].index 
+	idx_old=old_str2_df.loc[old_str2_df['name']==str2].index  # 1 2 3 4 5... 20
 
-str3=["EcalUncalibRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",
-"MultiTrackSelector::run(edm::Event&, edm::EventSetup const&) const",
-"cms::CkfTrackCandidateMakerBase::produceBase(edm::Event&, edm::EventSetup const&)",
-"SeedGeneratorFromRegionHitsEDProducer::produce(edm::Event&, edm::EventSetup const&)",
-"MuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",
-"CosmicsMuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",
-"HcalHitReconstructor::produce(edm::Event&, edm::EventSetup const&)"]
+	if not(list(idx_new)):
+		continue
+	
+	if not isPAT:
+		# step3 AOD
+		print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-4, idx_new[0]-4, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2))
+	else:
+		# step4 PAT
+		print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-3, idx_new[0]-3, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2))
+	
 
+str2_list_top5 = str2_list[:5]
+
+for i in str2_list_top5:
+	print(i)
+
+
+## For RECO(STEP3) ------ Not used
+#str3=["EcalUncalibRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",
+#"MultiTrackSelector::run(edm::Event&, edm::EventSetup const&) const",
+#"cms::CkfTrackCandidateMakerBase::produceBase(edm::Event&, edm::EventSetup const&)",
+#"SeedGeneratorFromRegionHitsEDProducer::produce(edm::Event&, edm::EventSetup const&)",
+#"MuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",
+#"CosmicsMuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",
+#"HcalHitReconstructor::produce(edm::Event&, edm::EventSetup const&)"]
+
+
+str3 = str2_list_top5
 Cumulative=old_df.columns[2]
 
 oldAll=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
 oldAll=float(oldAll.replace(',','').strip())
 
-print("### Delta Check : [CMSSW_11_0_0_pre2 - CMSSW_11_0_0_pre1 / total * 100% = delta]")
+print("### Delta Check : [{0} - {1} / total * 100% = delta]".format(args.new,args.old))
 
 for str in str3:
     
