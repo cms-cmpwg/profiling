@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-
+from IPython.display import display
 #oldlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre2_igprofCPU'
 #newlink='https://ycyang.web.cern.ch/ycyang/cgi-bin/igprof-navigator/CMSSW_8_1_0_pre3_igprofCPU'
 
@@ -68,9 +68,6 @@ for content in contents:
 
 
 
-
-
-
 new_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
 
 
@@ -99,10 +96,12 @@ total=columnlist[1]
 
 print("### legacy modules {0} --> {1}".format(args.old,args.new))
 
-strs=["edm::WorkerT<edm::EDProducer>::implDo(",
-"edm::WorkerT<edm::stream::EDProducerAdaptorBase>::implDo(",
-"edm::WorkerT<edm::one::OutputModuleBase>::implDo("]
-
+strs=["edm::WorkerT<edm::EDProducer>",
+"edm::WorkerT<edm::stream::EDProducerAdaptorBase>",
+"edm::WorkerT<edm::one::OutputModuleBase>",
+"edm::global::EDProducerBase::doEvent",
+"edm::WorkerT<edm::global::EDProducerBase>"
+]
 
 for str in strs:
     
@@ -119,126 +118,145 @@ for str in strs:
         print("{0:<5} ====> {1:<10}   {2:>30}".format("None",new_df.loc[idx_new[0]][total],str))
     elif(idx_old.size==0 and idx_new.size==0):
         print("{0:<5} ====> {1:<10}   {2:>30}".format("None","None",str))
+
+print(" ")
 #display(old_df[old_df['Symbol name'].str.startswith('edm::WorkerT<edm::EDProducer>::implDo(',na=False)][total])
 #display(new_df[new_df['Symbol name'].str.startswith('edm::WorkerT<edm::EDProducer>::implDo(',na=False)][total])
 
 ### step2
-str2="edm::stream::EDProducerAdaptorBase::doEvent("
+#str2="edm::stream::EDProducerAdaptorBase::doEvent("
 
-link_list=[]
-for link in old_soup.findAll("a"):
-    if 'href' in link.attrs:
-        name=link.text
-        if name.startswith(str2):
-            link_list.append(link.attrs['href'])
-            #print(link.attrs['href'])
-            
-old_str2_link="https://jiwoong.web.cern.ch"+link_list[0]
+list_str2=["edm::stream::EDProducerAdaptorBase::doEvent(",
+"edm::global::EDProducerBase::doEvent",
+"edm::WorkerT<edm::global::EDProducerBase>::implDo(edm::EventPrincipal const&, edm::EventSetupImpl const&, edm::ModuleCallingContext const*)"]
 
-link_list=[]
-for link in new_soup.findAll("a"):
-    if 'href' in link.attrs:
-        name=link.text
-        if name.startswith(str2):
-            link_list.append(link.attrs['href'])
-            #print(link.attrs['href'])
-            
-new_str2_link="https://jiwoong.web.cern.ch"+link_list[0]
 
-old_req=requests.get(old_str2_link)
-old_html = old_req.text
-old_str2_soup = BeautifulSoup(old_html,'html.parser')
-
-new_req=requests.get(new_str2_link)
-new_html = new_req.text
-new_str2_soup = BeautifulSoup(new_html,'html.parser')
-
-columnlist=['Rank','total','count_to/from','count_total','path_including','path_total','name']
-
-contents = old_str2_soup.select('tr')
-dfcontent=[]
-alldfcontents=[]
-
-for content in contents:
-    tds=content.find_all("td")
-    for td in tds:
-        dfcontent.append(td.text)
-    alldfcontents.append(dfcontent)
-    dfcontent=[]
-
-old_str2_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
-
-contents = new_str2_soup.select('tr')
-dfcontent=[]
-alldfcontents=[]
-
-for content in contents:
-    tds=content.find_all("td")
-    for td in tds:
-        dfcontent.append(td.text)
-    alldfcontents.append(dfcontent)
-    dfcontent=[]
-
-new_str2_df=pd.DataFrame(columns=columnlist, data=alldfcontents)
-
-if not isPAT:
-	str2_list = list(old_str2_df[5:25]['name']) #step3 AOD
-else: 
-	str2_list = list(old_str2_df[4:24]['name']) #step4 PAT
-
-print("### top 20 ::stream ED producers Rank and Cost [{0} --> {1}]".format(args.old,args.new))
-
-for str2 in str2_list:
-	idx_new=new_str2_df.loc[new_str2_df['name']==str2].index 
-	idx_old=old_str2_df.loc[old_str2_df['name']==str2].index  # 1 2 3 4 5... 20
-
-	if not(list(idx_new)):
-		continue
+cnt=0 # cnt for print different str2 initialzed info
+for str2 in list_str2:
+	link_list=[]
+	for link in old_soup.findAll("a"):
+	    if 'href' in link.attrs:
+	        name=link.text
+	        if name.startswith(str2):
+	            link_list.append(link.attrs['href'])
+	            #print(link.attrs['href'])
+	            
+	old_str2_link="https://jiwoong.web.cern.ch"+link_list[0]
 	
-	if not isPAT:
-		# step3 AOD
-		print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-4, idx_new[0]-4, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2))
+	link_list=[]
+	for link in new_soup.findAll("a"):
+	    if 'href' in link.attrs:
+	        name=link.text
+	        if name.startswith(str2):
+	            link_list.append(link.attrs['href'])
+	            #print(link.attrs['href'])
+	            
+	new_str2_link="https://jiwoong.web.cern.ch"+link_list[0]
+	
+	old_req=requests.get(old_str2_link)
+	old_html = old_req.text
+	old_str2_soup = BeautifulSoup(old_html,'html.parser')
+	
+	new_req=requests.get(new_str2_link)
+	new_html = new_req.text
+	new_str2_soup = BeautifulSoup(new_html,'html.parser')
+	
+	columnlist=['Rank','total','count_to/from','count_total','path_including','path_total','name']
+	
+	contents = old_str2_soup.select('tr')
+	dfcontent=[]
+	alldfcontents=[]
+	
+	for content in contents:
+	    tds=content.find_all("td")
+	    for td in tds:
+	        dfcontent.append(td.text)
+	    alldfcontents.append(dfcontent)
+	    dfcontent=[]
+	
+	old_str2_df = pd.DataFrame(columns=columnlist, data=alldfcontents)
+	
+	contents = new_str2_soup.select('tr')
+	dfcontent=[]
+	alldfcontents=[]
+	
+	for content in contents:
+	    tds=content.find_all("td")
+	    for td in tds:
+	        dfcontent.append(td.text)
+	    alldfcontents.append(dfcontent)
+	    dfcontent=[]
+	
+	new_str2_df = pd.DataFrame(columns=columnlist, data=alldfcontents)
+	
+	
+	cnt+=1
+	if cnt == 3:
+		if not isPAT:
+			str2_list = list(old_str2_df[4:24]['name']) #step3 AOD
+		else: 
+			str2_list = list(old_str2_df[4:23]['name']) #step4 PAT
 	else:
-		# step4 PAT
-		print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-3, idx_new[0]-3, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2))
+		if not isPAT:
+			str2_list = list(old_str2_df[4:24]['name']) #step3 AOD
+		else: 
+			str2_list = list(old_str2_df[4:24]['name']) #step4 PAT
 	
 
-str2_list_top5 = str2_list[:5]
+	print(" ")
+	print(" ")
+	if cnt==1:
+		print("### top 20 stream::EDProducerAdaptorBase Rank and Cost [{0} --> {1}]".format(args.old,args.new))
+	elif cnt==2:
+		print("### top 20  global::EDProducerBase Rank and Cost [{0} --> {1}]".format(args.old,args.new))
+	elif cnt==3:
+		print("### top 20 ::WorkerT<edm::global::EDProducerBase> Rank and Cost [{0} --> {1}]".format(args.old,args.new))
+		
+	print(" ")
+	for str2 in str2_list:
+		idx_new=new_str2_df.loc[new_str2_df['name']==str2].index 
+		idx_old=old_str2_df.loc[old_str2_df['name']==str2].index  # 1 2 3 4 5... 20
+	
+		if not(list(idx_new)):
+			continue
+		
+		if not isPAT:
+			# step3 AOD
+			print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-4, idx_new[0]-4, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2.split("(edm")[0]))
+		else:
+			# step4 PAT
+			print("[{0:<2} -> {1:<2}] [{2:<2} -> {3:<2}] {4:>40}".format(idx_old[0]-3, idx_new[0]-3, old_str2_df.loc[idx_old[0]]['total'],new_str2_df.loc[idx_new[0]]['total'],str2.split("(edm")[0]))
+		
 
-for i in str2_list_top5:
-	print(i)
+	str2_list_top5 = str2_list[:5]
+	
+	
+	print(" ")
+	str3 = str2_list_top5
+	Cumulative=old_df.columns[2]
+	
+	#oldAll=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
+	oldAll= list(new_df.loc[new_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
+	oldAll=float(oldAll.replace(',','').strip())
+	
+	print("### Delta Check : [{0} - {1} / total * 100% = delta]".format(args.new,args.old))
+	
+	for str in str3:
+		
+		# new
+		idx_old=old_str2_df.loc[old_str2_df['name']==str].index
+		idx_new=new_str2_df.loc[new_str2_df['name']==str].index
 
-
-## For RECO(STEP3) ------ Not used
-#str3=["EcalUncalibRecHitProducer::produce(edm::Event&, edm::EventSetup const&)",
-#"MultiTrackSelector::run(edm::Event&, edm::EventSetup const&) const",
-#"cms::CkfTrackCandidateMakerBase::produceBase(edm::Event&, edm::EventSetup const&)",
-#"SeedGeneratorFromRegionHitsEDProducer::produce(edm::Event&, edm::EventSetup const&)",
-#"MuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",
-#"CosmicsMuonIdProducer::produce(edm::Event&, edm::EventSetup const&)",
-#"HcalHitReconstructor::produce(edm::Event&, edm::EventSetup const&)"]
-
-
-str3 = str2_list_top5
-Cumulative=old_df.columns[2]
-
-oldAll=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
-oldAll=float(oldAll.replace(',','').strip())
-
-print("### Delta Check : [{0} - {1} / total * 100% = delta]".format(args.new,args.old))
-
-for str in str3:
-    
-    idx_old=old_df.loc[old_df['Symbol name']==str].index
-    idx_new=new_df.loc[new_df['Symbol name']==str].index
-    
-    if(idx_old.size ==0 or idx_new.size==0): continue;
-    
-    
-    oldVal=float(old_df.loc[idx_old[0]][Cumulative].replace(',','').strip())
-    newVal=float(new_df.loc[idx_new[0]][Cumulative].replace(',','').strip())
-    delta= round((newVal - oldVal) / oldAll * 100.0,2)
-    
-    print("{0:7}  - {1:7} / {2} *100% = {3:5}%  {4:<30}".format(newVal,oldVal,oldAll,delta,str))
-    
-    
+		if(idx_old.size ==0 or idx_new.size==0): 
+			#print("Out of scanned range (1000 Entreies) ---> {0}".format(str))
+			continue;
+		
+		
+		# new
+		oldVal=float(old_str2_df.loc[idx_old[0]]['count_to/from'].replace(',','').strip())
+		newVal=float(new_str2_df.loc[idx_new[0]]['count_to/from'].replace(',','').strip())
+		
+		delta= round((newVal - oldVal) / oldAll * 100.0,2)	
+		print("{0:7}  - {1:7} / {2} *100% = {3:5}%  {4:<30}".format(newVal,oldVal,oldAll,delta,str))
+	
+	
