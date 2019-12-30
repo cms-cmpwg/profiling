@@ -1,0 +1,48 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+     removed      -1.14%        82.75 ms/ev ->         0.00 ms/ev deepTau2017v2
+       added      +1.14%         0.00 ms/ev ->        82.45 ms/ev deepTau2017v2p1
+   -1.954954      -0.18%        13.52 ms/ev ->         0.15 ms/ev hpsPFTauDiscriminationByLooseIsolationMVArun2v1DBoldDMwLTBoosted
+   -1.940254      -0.04%         2.64 ms/ev ->         0.04 ms/ev hpsPFTauDiscriminationByVVLooseIsolationMVArun2v1DBoldDMwLTBoosted
+   -1.938760      -0.04%         2.64 ms/ev ->         0.04 ms/ev hpsPFTauDiscriminationByVTightIsolationMVArun2v1DBoldDMwLTBoosted
+   -1.937267      -0.04%         2.64 ms/ev ->         0.04 ms/ev hpsPFTauDiscriminationByVLooseIsolationMVArun2v1DBoldDMwLTBoosted
+   -1.935821      -0.04%         2.64 ms/ev ->         0.04 ms/ev hpsPFTauDiscriminationByVVTightIsolationMVArun2v1DBoldDMwLTBoosted
+   -1.931471      -0.04%         2.64 ms/ev ->         0.05 ms/ev hpsPFTauDiscriminationByMediumIsolationMVArun2v1DBoldDMwLTBoosted
+   -1.930007      -0.04%         2.64 ms/ev ->         0.05 ms/ev hpsPFTauDiscriminationByTightIsolationMVArun2v1DBoldDMwLTBoosted
+   +1.721311      +0.00%         0.02 ms/ev ->         0.23 ms/ev phPFIsoDepositChargedAllPAT
+   +1.572667      +0.04%         0.42 ms/ev ->         3.50 ms/ev hpsPFTauDiscriminationByLooseIsolationMVArun2v1DBdR03oldDMwLTBoosted
+   -1.416985      -0.03%         2.91 ms/ev ->         0.50 ms/ev pfCombinedMVAV2BJetTagsAK8Puppi
+   +1.083298      +0.05%         1.64 ms/ev ->         5.51 ms/ev hpsPFTauDiscriminationByMVA6rawElectronRejectionBoosted
+   +0.950178      +0.01%         0.30 ms/ev ->         0.83 ms/ev hpsPFTauDiscriminationByMVA6LooseElectronRejectionBoosted
+   -0.915584      -0.02%         1.80 ms/ev ->         0.67 ms/ev reducedEgamma
+   -0.622510      -0.06%         8.49 ms/ev ->         4.46 ms/ev patElectronsFromMultiCl
+   -0.359196      -0.05%        10.92 ms/ev ->         7.59 ms/ev puppiForMET
+   +0.310124      +0.01%         0.99 ms/ev ->         1.35 ms/ev muPFIsoDepositChargedAllPAT
+   +0.285974      +0.00%         0.94 ms/ev ->         1.26 ms/ev patPFMetTxyCorr
+   -0.250117      -0.04%        12.02 ms/ev ->         9.35 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   -0.208102      -0.00%         0.69 ms/ev ->         0.56 ms/ev hpsPFTauDiscriminationByLooseMuonRejection3Boosted
+   -0.163647      -0.02%         9.76 ms/ev ->         8.29 ms/ev patPhotonsFromMultiCl
+   -0.069532      -0.76%       816.12 ms/ev ->       761.28 ms/ev pfNoPileUpIsoPFBRECO
+   -0.056266      -0.09%       114.79 ms/ev ->       108.51 ms/ev MINIAODSIMoutput
+  ---------- ------------     --------                  ----       ------------
+Job total:  7.2455 s/ev ==> 7.05548 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+     removed      -1.20%        82.51 ms/ev ->         0.00 ms/ev deepTau2017v2
+       added      +1.19%         0.00 ms/ev ->        81.76 ms/ev deepTau2017v2p1
+   +1.728388      +0.00%         0.02 ms/ev ->         0.23 ms/ev phPFIsoDepositChargedAllPAT
+   -1.553355      -0.00%         0.16 ms/ev ->         0.02 ms/ev pfElectrons
+   -1.102160      -0.02%         1.66 ms/ev ->         0.48 ms/ev reducedEgamma
+   -0.655226      -0.06%         8.36 ms/ev ->         4.23 ms/ev patElectronsFromMultiCl
+   +0.337106      +0.01%         0.93 ms/ev ->         1.31 ms/ev muPFIsoDepositChargedAllPAT
+   +0.297424      +0.00%         0.92 ms/ev ->         1.24 ms/ev patPFMetTxyCorr
+   -0.262985      -0.04%        11.86 ms/ev ->         9.10 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   +0.207722      +0.01%         3.88 ms/ev ->         4.78 ms/ev ak4PFJetsLegacyHPSPiZerosBoosted
+   -0.122435      -0.01%         8.34 ms/ev ->         7.37 ms/ev patPhotonsFromMultiCl
+   -0.068020      -0.78%       807.93 ms/ev ->       754.78 ms/ev pfNoPileUpIsoPFBRECO
+   -0.056877      -0.01%         9.91 ms/ev ->         9.37 ms/ev pfImpactParameterTagInfosAK8Puppi
+  ---------- ------------     --------                  ----       ------------
+Job total:  6.85112 s/ev ==> 6.7062 s/ev
