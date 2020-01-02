@@ -2,11 +2,11 @@
 
 ## Args: old and new version of step3.log
 
+#ol="/x5/cms/jwkim/ServiceWork/tmp/$1/src/TimeMemory/logs/step3.log"
+#sl="/x5/cms/jwkim/ServiceWork/tmp/$2/src/TimeMemory/logs/step3.log"
 
-
-ol=$1
-
-sl=$2
+ol="../$1/src/TimeMemory/logs/step4.log"
+sl="../$2/src/TimeMemory/logs/step4.log"
 
 if [ ! -f "${ol}" ]; then
     echo "Couldn't file input log file ${ol}"
@@ -75,7 +75,3 @@ if [ "${nom}" != "0" -a  "${nsm}" != "0" ]; then
     echo "The same excluding the first ${nSkip} events"
     grep [a-zA-Z] ${otm} ${stm} | tr ':' ' ' | sed -e "s?^${stm}?st?g;s?^${otm}?ot?g"| awk -f  timeDiffFromReport.awk
 fi
-~                                                                                                                                                                                                                                                            
-~                                                                                                                                                                                                                                                            
-~                                                                                                                                                                                                                                                            
-~                    

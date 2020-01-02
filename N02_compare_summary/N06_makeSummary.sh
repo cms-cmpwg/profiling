@@ -1,7 +1,7 @@
-maxVSIZ=`./getTimeMemSummary.sh $1 | grep "Max VSIZ" | awk '{print $3,"(",$6,")"}'`
-maxRSS=`./getTimeMemSummary.sh  $1 | grep "max RSS"  | awk '{print $10,"(",$13,")"}'`
-avCPU=`./getTimeMemSummary.sh   $1 | grep "M1 Time"  | awk '{print $4}'`
-maxCPU=`./getTimeMemSummary.sh  $1 | grep "M1 Time"  | awk '{print $7,"(",$11,")"}'`
+maxVSIZ=`./N02_getTimeMemSummary.sh $1 | grep "Max VSIZ" | awk '{print $3,"(",$6,")"}'`
+maxRSS=`./N02_getTimeMemSummary.sh  $1 | grep "max RSS"  | awk '{print $10,"(",$13,")"}'`
+avCPU=`./N02_getTimeMemSummary.sh   $1 | grep "M1 Time"  | awk '{print $4}'`
+maxCPU=`./N02_getTimeMemSummary.sh  $1 | grep "M1 Time"  | awk '{print $7,"(",$11,")"}'`
 
 cat << EOF 
 <html>

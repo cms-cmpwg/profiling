@@ -20,9 +20,9 @@ import argparse
 parser = argparse.ArgumentParser()
 
 parser.add_argument('old', type=str,
-            help="old version ex. CMSSW11_0_0_pre1")
+            help="old version ex. CMSSW11_0_0_pre1 or CMSSW11_0_0_pre1PAT")
 parser.add_argument('new', type=str,
-            help="new version ex. CMSSW11_0_0_pre2")
+            help="new version ex. CMSSW11_0_0_pre2 or CMSSW11_0_0_pre2PAT")
 
 args = parser.parse_args()
 
@@ -99,8 +99,6 @@ print("### legacy modules {0} --> {1}".format(args.old,args.new))
 strs=["edm::WorkerT<edm::EDProducer>",
 "edm::WorkerT<edm::stream::EDProducerAdaptorBase>",
 "edm::WorkerT<edm::one::OutputModuleBase>",
-"edm::global::EDProducerBase::doEvent",
-"edm::WorkerT<edm::global::EDProducerBase>"
 ]
 
 for str in strs:
@@ -235,8 +233,13 @@ for str2 in list_str2:
 	str3 = str2_list_top5
 	Cumulative=old_df.columns[2]
 	
-	#oldAll=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
-	oldAll= list(new_df.loc[new_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
+	oldAll_=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])
+	
+	if not oldAll_:
+		oldAll= list(new_df.loc[new_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
+	else:
+		oldAll=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][Cumulative])[0]
+		
 	oldAll=float(oldAll.replace(',','').strip())
 	
 	print("### Delta Check : [{0} - {1} / total * 100% = delta]".format(args.new,args.old))

@@ -3,10 +3,11 @@
 ## This code analyzing branch size of step3 output root files
 ## The CMSSW enviroment is needed
 
+#old="../$1/src/TimeMemory/step4.root"
+#new="../$2/src/TimeMemory/step4.root"
 
-old="$1/src/TimeMemory/step3.root"
-new="$2/src/TimeMemory/step3.root"
-
+old="../$1/src/TimeMemory/step3.root"
+new="../$2/src/TimeMemory/step3.root"
 
 
 fA=`echo $old`
@@ -42,7 +43,12 @@ edmEventSize -v ${fA} > ${os}
 ns=ns.${ds}
 edmEventSize -v ${fB} > ${ns}
 
-grep ${procF} ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" 
-#grep ${procF} ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" | absMin=${absMin} dptMin=${dptMin} awk -f compareProducts.awk
 
+
+## Almost right but.. need validations 
+#step_bit=1
+#grep ${procF} ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" | absMin=${absMin} dptMin=${dptMin} awk -v step=$step_bit -f compareProducts.awk
+
+grep ${procF} ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" | absMin=${absMin} dptMin=${dptMin} awk -f compareProducts.awk
 rm ${os} ${ns}
+
