@@ -84,62 +84,25 @@ old_df[comul] = old_df[comul].str.replace(',','').astype('float')
 new_df[comul] = new_df[comul].str.replace(',','').astype('float')
 
 
-####################################################################################################  step1 
-#print("### legacy modules {0} --> {1}".format(args.old,args.new))
-
-strs=["edm::WorkerT<edm::EDProducer>",
-"edm::WorkerT<edm::stream::EDProducerAdaptorBase>",
-"edm::WorkerT<edm::one::OutputModuleBase>",
-]
-
-
-old_global_idx = []
-new_global_idx = []
-
-for str in strs:
-	
-	idx_old=old_df.loc[old_df['Symbol name'].str.startswith(str,na=False)].index
-	idx_new=new_df.loc[new_df['Symbol name'].str.startswith(str,na=False)].index
-	
-	
-	if(idx_old.size !=0 and idx_new.size!=0):
-		result_old=old_df.loc[idx_old[0]][total]
-		result_new=new_df.loc[idx_new[0]][total]
-		old_global_idx.append(idx_old[0])
-		new_global_idx.append(idx_new[0])
-		#print("{0:<5} ====> {1:<10}   {2:>30}".format(old_df.loc[idx_old[0]][total],new_df.loc[idx_new[0]][total],str))
-	
-	elif(idx_old.size!=0 and idx_new.size==0):
-		old_global_idx.append(idx_old[0])
-		new_global_idx.append('N')
-		#print("{0:<5} ====> {1:<10}   {2:>30}".format(old_df.loc[idx_old[0]][total],"None",str))
-	
-	elif(idx_old.size==0 and idx_new.size!=0):
-		old_global_idx.append('N')
-		new_global_idx.append(idx_new[0])
-		#print("{0:<5} ====> {1:<10}   {2:>30}".format("None",new_df.loc[idx_new[0]][total],str))
-	
-	elif(idx_old.size==0 and idx_new.size==0):
-		continue;
-		#print("{0:<5} ====> {1:<10}   {2:>30}".format("None","None",str))
-	
-print(" ")
-
-
 ### step2
 
 old_df_for_str2  = old_df.dropna()
 indexes_for_str2 = old_df['Symbol name'].str.contains('doEvent').dropna()
 list_str2 = old_df_for_str2[indexes_for_str2]['Symbol name'].values.tolist()
 
-#list_str2=["edm::stream::EDProducerAdaptorBase::doEvent(",
-#"edm::global::EDProducerBase::doEvent",
-#"edm::WorkerT<edm::global::EDProducerBase>::implDo(edm::EventPrincipal const&, edm::EventSetupImpl const&, edm::ModuleCallingContext const*)"]
-
-#print(list_str2)
 
 
+
+columnlist=['Rank','total','count_to/from','count_total','path_including','path_total','name']
 cnt=0 # cnt for print different str2 initialzed info
+global_old_df = pd.DataFrame(columns=columnlist)
+global_new_df = pd.DataFrame(columns=columnlist)
+
+
+
+
+
+
 for str2 in list_str2:
 	link_list=[]
 	for link in old_soup.findAll("a"):
@@ -173,7 +136,6 @@ for str2 in list_str2:
 	new_html = new_req.text
 	new_str2_soup = BeautifulSoup(new_html,'html.parser')
 	
-	columnlist=['Rank','total','count_to/from','count_total','path_including','path_total','name']
 	
 	contents = old_str2_soup.select('tr')
 	dfcontent=[]
@@ -187,6 +149,10 @@ for str2 in list_str2:
 	    dfcontent=[]
 	
 	old_str2_df = pd.DataFrame(columns=columnlist, data=alldfcontents)
+	old_str2_df = old_str2_df.dropna()
+	stIdx_old	= old_str2_df.loc[old_str2_df['name'] == str2].index[0] -1 
+	old_str2_df = old_str2_df[stIdx_old:]
+	
 	
 	contents = new_str2_soup.select('tr')
 	dfcontent=[]
@@ -200,44 +166,38 @@ for str2 in list_str2:
 	    dfcontent=[]
 	
 	new_str2_df = pd.DataFrame(columns=columnlist, data=alldfcontents)
+	new_str2_df = new_str2_df.dropna()
+	stIdx_new	= new_str2_df.loc[new_str2_df['name'] == str2].index[0] -1
+	new_str2_df = new_str2_df[stIdx_new:]
 	
-	
-	cnt+=1
-	if cnt == 3:
-		if not isPAT:
-			str2_list = list(old_str2_df[4:24]['name']) #step3 AOD
-		else: 
-			str2_list = list(old_str2_df[4:23]['name']) #step4 PAT
-	else:
-		if not isPAT:
-			str2_list = list(old_str2_df[4:24]['name']) #step3 AOD
-		else: 
-			str2_list = list(old_str2_df[4:24]['name']) #step4 PAT
+	global_old_df = pd.concat([global_old_df,old_str2_df],ignore_index=True)
+	global_new_df = pd.concat([global_new_df,new_str2_df],ignore_index=True)
 	
 
-		
-	print(" ")
-	for str2 in str2_list:
-		idx_new=new_df.loc[new_df['Symbol name']==str2].index 
-		idx_old=old_df.loc[old_df['Symbol name']==str2].index  # 1 2 3 4 5... 20
-		if(idx_old.size !=0 and idx_new.size!=0):
-			old_global_idx.append(idx_old[0])
-			new_global_idx.append(idx_new[0])
-		elif(idx_old.size!=0 and idx_new.size==0):
-			old_global_idx.append(idx_old[0])
-			new_global_idx.append('N')
-		elif(idx_old.size==0 and idx_new.size!=0):
-			old_global_idx.append('N')
-			new_global_idx.append(idx_new[0])
-		elif(idx_old.size==0 and idx_new.size==0):
-			continue;
+global_old_df['count_total'] =global_old_df['count_total'].str.replace(',','').astype('float')
+global_new_df['count_total'] =global_new_df['count_total'].str.replace(',','').astype('float')
+
+global_old_df['count_to/from'] =global_old_df['count_to/from'].str.replace(',','').astype('float')
+global_new_df['count_to/from'] =global_new_df['count_to/from'].str.replace(',','').astype('float')
+
+global_old_df = global_old_df.sort_values(by=['count_total'],axis=0,ascending=False)
+global_new_df = global_new_df.sort_values(by=['count_total'],axis=0,ascending=False)
+
+global_old_df = global_old_df.reset_index(drop=True)
+global_new_df = global_new_df.reset_index(drop=True)
+
+sorted_df = global_old_df
 
 
 
-#sorted_df = old_df.loc[old_global_idx].sort_values(by=[comul],axis=0,ascending=False)
-sorted_df = old_df.loc[old_global_idx]
 
-Tot_strs  = sorted_df['Symbol name']
+
+
+
+
+
+
+Tot_strs  = sorted_df['name']
 
 oldAll_=list(old_df.loc[old_df['Symbol name']=="<spontaneous>"][comul])
 
@@ -248,34 +208,44 @@ else:
 	
 
 
+print("==================================================================================================================================================================================")
+print("Rank			Total%	 		Cumulative					Delta						Symbol name")
+print("==================================================================================================================================================================================")
 
-print("==================================================================================================================================================================================")
-print(" Rank		Total%		Cumulative						Delta								Symbol name")
-print("==================================================================================================================================================================================")
+
+oldVal_sum=0
+newVal_sum=0
+
 for Tot_str in Tot_strs:
-	idx_new=new_df.loc[new_df['Symbol name']==Tot_str].index 
-	idx_old=old_df.loc[old_df['Symbol name']==Tot_str].index
+	idx_new = global_new_df.loc[global_new_df['name']==Tot_str].index 
+	idx_old = global_old_df.loc[global_old_df['name']==Tot_str].index
 	
 	if not(list(idx_new)):
 		continue
 	
 	if(idx_old.size ==0 or idx_new.size==0): 
-		continue;
+		continue
 	
-	oldVal=old_df.loc[idx_old[0]][comul]
-	newVal=new_df.loc[idx_new[0]][comul]
+	if(Tot_str == "_init"):
+	    continue
+	oldVal=global_old_df.loc[idx_old[0]]["count_total"]
+	newVal=global_new_df.loc[idx_new[0]]["count_total"]
 	
-	delta= round((newVal - oldVal) / oldAll * 100.0,2)	
+	oldVal_sum += oldVal
+	newVal_sum += newVal
 	
+	delta	  = round((newVal - oldVal) / oldAll * 100.0,2)	
+	#delta_sum = round((newVal_sum - oldVal_sum) / oldAll * 100.0,2)	
 
-	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}  - {7:<9} / {8:<9} *100% ] = [{9:<6}% ]         {10:<50}".format(old_df.loc[idx_old[0]][rank],new_df.loc[idx_new[0]][rank], old_df.loc[idx_old[0]][total],new_df.loc[idx_new[0]][total],old_df.loc[idx_old[0]][comul],new_df.loc[idx_new[0]][comul],newVal,oldVal,oldAll,delta,Tot_str.split("(edm")[0]))
-
-
-
-
+	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}  - {7:<9} / {8:<9} *100% ] = [{9:<6}% ]         {10:<50}".format(idx_old[0],idx_new[0], global_old_df.loc[idx_old[0]]['total'],global_new_df.loc[idx_new[0]]['total'],global_old_df.loc[idx_old[0]]['count_total'],global_new_df.loc[idx_new[0]]['count_total'],newVal,oldVal,oldAll,delta,Tot_str.split("(edm")[0]))
 
 
+print(" ")
 
+print(">> Total Cumulative(old->new): {0:<5} -> {1:<5}".format(oldVal_sum,newVal_sum))
+
+
+print(" ")
 
 
 
