@@ -20,9 +20,9 @@ END{
     }
     dsTotal=0;
     dsTTotal=0;
-    print  "-------------------------------------------------------------";
-    print  " or, B       new, B      delta, B   delta, %   deltaJ, %    branch "
-    print  "-------------------------------------------------------------";
+    #print  "-------------------------------------------------------------";
+    print  " oldB,newB,deltaB,delta%,deltaJ%,name"
+    #print  "-------------------------------------------------------------";
 	
 	for(br in ms){
     osi=os[br]; nsi=ns[br];
@@ -42,28 +42,41 @@ END{
     if (dsiR==200) isNew=1; else isNew=0;
     if (dsiR==-200) isGone=1; else isGone=0;
 	
-	
-##------Step4 output ( one condition )
-#	if (isNew!=1&&isGone!=1){
-#		printf("%9.0f ->   %9.0f  % 9.0f    % 5.1f  % 4.2f     %s\n", osi, nsi, dsi, dsiR, dsiT, br);
-#	} # Step4 condition loop	
 
 
-##------Step3 output ( two conditions )
-	if (adsiR>dptMin||adsi>absMin){
+###3 --- Original 
+##	if (adsiR>dptMin||adsi>absMin){
+ #   	if (isNew!=1&&isGone!=1){
+ #   	printf("%9.0f ->   %9.0f  % 9.0f    % 5.1f  % 4.2f     %s\n", osi, nsi, dsi, dsiR, dsiT, br);
+ #   	} else if (isNew==1){
+ #   	printf("%9.0f ->   %9.0f  % 9.0f     NEWO  % 4.2f     %s\n", osi, nsi, dsi, dsiT, br);
+ #   	} else if (isGone==1){
+ #   	printf("%9.0f ->   %9.0f  % 9.0f     OLDO  % 4.2f     %s\n", osi, nsi, dsi, dsiT, br);
+ #   	}
+##	}
+
+
+
+## New with python !
+	#if (adsiR>dptMin||adsi>absMin){ ## comment out for step4, stay sill for step3 ##
 		if (isNew!=1&&isGone!=1){
-		printf("%9.0f ->   %9.0f  % 9.0f    % 5.1f  % 4.2f     %s\n", osi, nsi, dsi, dsiR, dsiT, br);
+		printf("%9.0f,%9.0f,% 9.0f,% 5.1f,% 4.2f,%s\n", osi, nsi, dsi, dsiR, dsiT, br);
 		} else if (isNew==1){
-		printf("%9.0f ->   %9.0f  % 9.0f     NEWO  % 4.2f     %s\n", osi, nsi, dsi, dsiT, br);
+		printf("%9.0f,%9.0f,% 9.0f,NEWO,% 4.2f,%s\n", osi, nsi, dsi, dsiT, br);
 		} else if (isGone==1){
-		printf("%9.0f ->   %9.0f  % 9.0f     OLDO  % 4.2f     %s\n", osi, nsi, dsi, dsiT, br);
+		printf("%9.0f,%9.0f,% 9.0f,OLDO,% 4.2f,%s\n", osi, nsi, dsi, dsiT, br);
 		}
-	}# Step3 condition loop 
+	#}  ## comment out for step4, stay sill for step3 ##
     
+
+
+
+
 
 	}# for loop
 	
 
-    print  "-------------------------------------------------------------";
-    printf("%9.0f ->   %9.0f  % 9.0f           % 5.1f     ALL BRANCHES\n", oTotal, nTotal, dsTotal, dsTTotal );
+    #print  "-------------------------------------------------------------";
+    printf("%9.0f,%9.0f,% 9.0f,% 5.1f,None, ALLBRANCHES\n", oTotal, nTotal, dsTotal, dsTTotal);
+
 } # End loop
