@@ -228,6 +228,30 @@ for Tot_str in Tot_strs:
 	
 	if(Tot_str == "_init"):
 	    continue
+	if Tot_str.startswith("edm::service::Timing::postModuleEvent"):
+		continue
+	if Tot_str.startswith("edm::Event::commit_"):
+	    continue
+	if Tot_str.startswith("edm::Event::~Event()"):
+	    continue
+	if Tot_str.startswith("edm::Event::setProducer"):
+	    continue
+	if Tot_str.startswith("edm::Event::setConsumer"):
+	    continue
+	if Tot_str.startswith("edm::SystemTimeKeeper::startModuleEvent"):
+	    continue  
+	if Tot_str.startswith("edm::ModuleCallingContext::getStreamContext()"):
+	    continue   
+	if Tot_str.startswith("edm::service::MessageLogger::unEstablishModule"):
+	    continue   
+
+	module_name = Tot_str.split("(edm")[0] 
+	splited_module = module_name.split(">,")
+	if len(splited_module) > 1:
+		out_name = splited_module[0] + "..."
+	else:
+		out_name = module_name
+	
 	oldVal=global_old_df.loc[idx_old[0]]["count_total"]
 	newVal=global_new_df.loc[idx_new[0]]["count_total"]
 	
@@ -237,7 +261,7 @@ for Tot_str in Tot_strs:
 	delta	  = round((newVal - oldVal) / oldAll * 100.0,2)	
 	#delta_sum = round((newVal_sum - oldVal_sum) / oldAll * 100.0,2)	
 
-	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}  - {7:<9} / {8:<9} *100% ] = [{9:<6}% ]         {10:<50}".format(idx_old[0],idx_new[0], global_old_df.loc[idx_old[0]]['total'],global_new_df.loc[idx_new[0]]['total'],global_old_df.loc[idx_old[0]]['count_total'],global_new_df.loc[idx_new[0]]['count_total'],newVal,oldVal,oldAll,delta,Tot_str.split("(edm")[0]))
+	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}  - {7:<9} / {8:<9} *100% ] = [{9:<6}% ]         {10:<50}".format(idx_old[0],idx_new[0], global_old_df.loc[idx_old[0]]['total'],global_new_df.loc[idx_new[0]]['total'],global_old_df.loc[idx_old[0]]['count_total'],global_new_df.loc[idx_new[0]]['count_total'],newVal,oldVal,oldAll,delta,out_name))
 
 
 print(" ")

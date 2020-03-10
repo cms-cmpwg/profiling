@@ -24,6 +24,7 @@ file10='SUM_CMSSW_11_0_0_pre10.txt'
 file11='SUM_CMSSW_11_0_0_pre11.txt'
 file12='SUM_CMSSW_11_0_0_pre12.txt'
 file13='SUM_CMSSW_11_0_0_pre13.txt'
+file14='SUM_CMSSW_11_0_0.txt'
 
 print("Load files")
 with open(file1) as f:
@@ -340,6 +341,30 @@ with open(file13) as f:
 		RSS_list13.append(list_line[7])
 		#print(list_line)
 
+evt_list14=[]
+time_list14=[]
+VSIZE_list14=[]
+RSS_list14=[]
+column=[]
+
+with open(file14) as f:
+	for line in f:
+		line=line.strip()
+		#print(line)
+		list_line1=line.split()
+		
+		nextline=next(f)
+		nextline=nextline.strip()
+		#print(nextline)
+		list_line2=nextline.split()
+		list_line= list_line1 + list_line2
+
+		evt_list14.append(list_line[10])
+		time_list14.append(list_line[12])
+		VSIZE_list14.append(list_line[4])
+		RSS_list14.append(list_line[7])
+		#print(list_line)
+
 
 
 # --------------Define Hist variables
@@ -456,6 +481,14 @@ _,time_list13  = sort_obj(evt_list13,time_list13)
 _,VSIZE_list13 = sort_obj(evt_list13,VSIZE_list13)
 evt_list13,RSS_list13	  = sort_obj(evt_list13,RSS_list13)
 
+evt_list14=list(map(float,evt_list14))
+time_list14 =list(map(float,time_list14))
+VSIZE_list14=list(map(float,VSIZE_list14))
+RSS_list14=list(map(float,RSS_list14))
+_,time_list14  = sort_obj(evt_list14,time_list14)
+_,VSIZE_list14 = sort_obj(evt_list14,VSIZE_list14)
+evt_list14,RSS_list14	  = sort_obj(evt_list14,RSS_list14)
+
 
 
 # -------------- Make plots
@@ -479,65 +512,61 @@ print("### Y3 ###")
 
 ## RSS
 fig,axs = plt.subplots(2,3,figsize=(30,20))
-axs[0,0].plot(evt_list9,RSS_list9,'-o',color='r',alpha=0.7)
-axs[0,0].plot(evt_list10,RSS_list10,'-o',color='green')
-axs[0,0].plot(evt_list11,RSS_list11,'-o',color='blue')
-axs[0,0].plot(evt_list12,RSS_list12,'-o',color='orange')
-axs[0,0].plot(evt_list13,RSS_list13,'-o',color='magenta')
+axs[0,0].plot(evt_list,RSS_list,'-o',color='r',alpha=0.7)
+axs[0,0].plot(evt_list2,RSS_list2,'-o',color='green')
+axs[0,0].plot(evt_list3,RSS_list3,'-o',color='blue')
+axs[0,0].plot(evt_list14,RSS_list14,'-o',color='orange')
 
-#axs[0,0].set_title('Top 4 (RSS)Memory Profile',fontsize=30)
-axs[0,0].set_title('(RSS)Memory Profile',fontsize=30)
+axs[0,0].set_title('Top 4 (RSS)Memory Profile',fontsize=30)
+#axs[0,0].set_title('(RSS)Memory Profile',fontsize=30)
 axs[0,0].set_xlim([0,101])
 axs[0,0].set_ylim([3000,7000])
 axs[0,0].set_xlabel('ith event',fontsize=25)
 axs[0,0].set_ylabel('Memory(MB)',fontsize=25)
 
-#axs[0,0].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre3','CMSSW_11_0_0_pre4'],prop={'size' :20})
-axs[0,0].legend(['CMSSW_11_0_0_pre9','CMSSW_11_0_0_pre10','CMSSW_11_0_0_pre11','CMSSW_11_0_0_pre12','CMSSW_11_0_0_pre13'],prop={'size' :20})
+axs[0,0].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre3','CMSSW_11_0_0'],prop={'size' :20})
+#axs[0,0].legend(['CMSSW_11_0_0_pre12','CMSSW_11_0_0_pre13','CMSSW_11_0_0'],prop={'size' :20})
 axs[0,0].grid()
 
 ## Vsize
-axs[0,1].plot(evt_list9,VSIZE_list9,'-o',color='r',alpha=0.7)
-axs[0,1].plot(evt_list10,VSIZE_list10,'-o',color='green')
-axs[0,1].plot(evt_list11,VSIZE_list11,'-o',color='blue')
-axs[0,1].plot(evt_list12,VSIZE_list12,'-o',color='orange')
-axs[0,1].plot(evt_list13,VSIZE_list13,'-o',color='magenta')
+axs[0,1].plot(evt_list,VSIZE_list,'-o',color='r',alpha=0.7)
+axs[0,1].plot(evt_list2,VSIZE_list2,'-o',color='green')
+axs[0,1].plot(evt_list8,VSIZE_list8,'-o',color='blue')
+axs[0,1].plot(evt_list14,VSIZE_list14,'-o',color='orange')
 
-#axs[0,1].set_title('Top 4 (VSIZE)Memory Profile',fontsize=30)
-axs[0,1].set_title('(VSIZE)Memory Profile',fontsize=30)
+axs[0,1].set_title('Top 4 (VSIZE)Memory Profile',fontsize=30)
+#axs[0,1].set_title('(VSIZE)Memory Profile',fontsize=30)
 axs[0,1].set_xlim([0,101])
 axs[0,1].set_ylim([4000,9000])
 axs[0,1].set_xlabel('ith event',fontsize=25)
 axs[0,1].set_ylabel('Memory(MB)',fontsize=25)
-#axs[0,1].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre3','CMSSW_11_0_0_pre8'],prop={'size' :20})
-axs[0,1].legend(['CMSSW_11_0_0_pre9','CMSSW_11_0_0_pre10','CMSSW_11_0_0_pre11','CMSSW_11_0_0_pre12','CMSSW_11_0_0_pre13'],prop={'size' :20})
+axs[0,1].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre3','CMSSW_11_0_0'],prop={'size' :20})
+#axs[0,1].legend(['CMSSW_11_0_0_pre12','CMSSW_11_0_0_pre13','CMSSW_11_0_0'],prop={'size' :20})
 axs[0,1].grid()
 
 # Time
-axs[0,2].plot(evt_list9,time_list9,'-o',color='r',alpha=0.7)
-axs[0,2].plot(evt_list10,time_list10,'-o',color='green')
-axs[0,2].plot(evt_list11,time_list11,'-o',color='b')
-axs[0,2].plot(evt_list12,time_list12,'-o',color='orange')
-axs[0,2].plot(evt_list13,time_list13,'-o',color='magenta')
+axs[0,2].plot(evt_list,time_list,'-o',color='r',alpha=0.7)
+axs[0,2].plot(evt_list2,time_list2,'-o',color='green')
+axs[0,2].plot(evt_list5,time_list5,'-o',color='b')
+axs[0,2].plot(evt_list8,time_list8,'-o',color='orange')
 
-#axs[0,2].set_title('Top 4 average CPU Time Profile',fontsize=30)
-axs[0,2].set_title('average CPU Time Profile',fontsize=30)
+axs[0,2].set_title('Top 4 average CPU Time Profile',fontsize=30)
+#axs[0,2].set_title('average CPU Time Profile',fontsize=30)
 axs[0,2].set_xlim([0,101])
 #axs[0,2].set_yscale('log')
 axs[0,2].set_xlabel('ith event',fontsize=25)
 axs[0,2].set_ylabel('time (seconds)',fontsize=25)
-#axs[0,2].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre5','CMSSW_11_0_0_pre8'],prop={'size' :20})
-axs[0,2].legend(['CMSSW_11_0_0_pre9','CMSSW_11_0_0_pre10','CMSSW_11_0_0_pre11','CMSSW_11_0_0_pre12','CMSSW_11_0_0_pre13'],prop={'size' :20})
+axs[0,2].legend(['CMSSW_11_0_0_pre1','CMSSW_11_0_0_pre2','CMSSW_11_0_0_pre5','CMSSW_11_0_0_pre8'],prop={'size' :20})
+#axs[0,2].legend(['CMSSW_11_0_0_pre12','CMSSW_11_0_0_pre13','CMSSW_11_0_0'],prop={'size' :20})
 axs[0,2].grid()
 
 
 ## RSS
 bins = numpy.linspace(3000,7000,100)
-axs[1,0].hist(RSS_list9,bins=bins,color='r',alpha=0.9)
-axs[1,0].hist(RSS_list10,bins=bins,color='g',alpha=0.9)
-axs[1,0].hist(RSS_list11,bins=bins,color='b',alpha=0.9)
-axs[1,0].hist(RSS_list12,bins=bins,color='orange',alpha=0.9)
-axs[1,0].hist(RSS_list13,bins=bins,color='magenta',alpha=0.9)
+axs[1,0].hist(RSS_list,bins=bins,color='r',alpha=0.9)
+axs[1,0].hist(RSS_list2,bins=bins,color='g',alpha=0.9)
+axs[1,0].hist(RSS_list3,bins=bins,color='b',alpha=0.9)
+axs[1,0].hist(RSS_list14,bins=bins,color='orange',alpha=0.9)
 axs[1,0].set_yscale('log')
 axs[1,0].set_title('(RSS)Memory Profile',fontsize=30)
 axs[1,0].set_ylabel('ith event',fontsize=25)
@@ -547,11 +576,10 @@ axs[1,0].grid()
 ## Vsize
 bins = numpy.linspace(4000,9000,100)
 axs[1,1].get_xaxis().get_major_formatter().set_useOffset(False)
-axs[1,1].hist(VSIZE_list9,bins=bins,color='r',alpha=0.9)
-axs[1,1].hist(VSIZE_list10,bins=bins,color='g',alpha=0.9)
-axs[1,1].hist(VSIZE_list11,bins=bins,color='b',alpha=0.9)
-axs[1,1].hist(VSIZE_list12,bins=bins,color='orange',alpha=0.9)
-axs[1,1].hist(VSIZE_list13,bins=bins,color='magenta',alpha=0.9)
+axs[1,1].hist(VSIZE_list,bins=bins,color='r',alpha=0.9)
+axs[1,1].hist(VSIZE_list2,bins=bins,color='g',alpha=0.9)
+axs[1,1].hist(VSIZE_list8,bins=bins,color='b',alpha=0.9)
+axs[1,1].hist(VSIZE_list14,bins=bins,color='orange',alpha=0.9)
 axs[1,1].set_title('(VSIZE)Memory Profile',fontsize=30)
 axs[1,1].set_ylabel('ith event',fontsize=25)
 axs[1,1].set_xlabel('Memory(MB)',fontsize=25)
@@ -560,11 +588,10 @@ axs[1,1].grid()
 
 ## Time
 bins = numpy.linspace(0,2000,100)
-axs[1,2].hist(time_list9,bins=bins,color='r',alpha=0.9)
-axs[1,2].hist(time_list10,bins=bins,color='g',alpha=0.9)
-axs[1,2].hist(time_list11,bins=bins,color='b',alpha=0.9)
-axs[1,2].hist(time_list12,bins=bins,color='orange',alpha=0.9)
-axs[1,2].hist(time_list13,bins=bins,color='magenta',alpha=0.9)
+axs[1,2].hist(time_list,bins=bins,color='r',alpha=0.9)
+axs[1,2].hist(time_list2,bins=bins,color='g',alpha=0.9)
+axs[1,2].hist(time_list5,bins=bins,color='b',alpha=0.9)
+axs[1,2].hist(time_list8,bins=bins,color='orange',alpha=0.9)
 axs[1,2].set_xscale('log')
 #axs[1,2].set_yscale('log')
 axs[1,2].set_title('CPU Time Profile',fontsize=30)
@@ -577,7 +604,7 @@ axs[1,2].grid()
 plt.tight_layout()
 plt.show()
 fig = plt.gcf()
-plt.savefig('SummaryStep3.png')
+plt.savefig('Summary_step3.png')
 
 
 

@@ -58,7 +58,7 @@ grep "_RECO\|_PAT" ${os} ${ns} | sed -e "s/${os}:/os /g;s/${ns}:/ns /g" | absMin
 python compareProd.py 
 
 rm ${os} ${ns}
-rm temp.csv
+#rm temp.csv
 
 
 
