@@ -23,10 +23,16 @@ $ ./N03_timeDiffFromReport.sh CMSSW_11_1_0_pre1 CMSSW_11_1_0_pre2
 
 ### 4. N04_compareProducts.sh  
  - This can compare branch sizes of two  different CMSSW versions based on step3.root(or step4.root) file  
- - Please comment out https://github.com/ico1036/ServiceWork/blob/master/Analyze_tool/compareProducts.awk#L61 and L69 when you run step4  
+ - Please comment out https://github.com/ico1036/ServiceWork/blob/master/Analyze_tool/compareProducts.awk#L47 and L55 when you run step4  
 ```bash
 $ ./N04_compareProducts.sh CMSSW_11_1_0_pre1 CMSSW_11_1_0_pre2
 ```  
 
+### 5. N05_makehist.py ( N05_makehist_PAT.py )  
+ - This makes image file of **histogram** using N02_getTimeMemSummary.sh ( mode2 ) output  
+
+### 6. N06_makeSummary.sh  
+ - This makes **Summary page** using output image of N05_makehist.py  
+ - examples: https://jiwoong.web.cern.ch/jiwoong/results/phase2/shortSummary_step3.html  
 
 
