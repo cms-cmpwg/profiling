@@ -21,10 +21,11 @@ $ ./Gen.sh CMSSW_X_X_X
  - **Gen_tool/runall_cpu.sh** can monitoring **cpu usage** and make **igprofCPU_stepN.gz** output  
  - **Gen_tool/runall_mem.sh** can monitoring **memory usage** and make **igprofMEM_stepN.mp** output  
  - **Your_CMSSW_Working_Dir/profile.sh** read **igprofCPU_stepN.gz** and **igprofMEM_stepN.mp**, then make reports ( **.sql3** and **.res** outputs )  
- - **.sql3 file** is used in **web-based** reports ex) https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_CMSSW11_1_0_pre2  
- - **.res file** is used in **Ascii-based** report ex) https://jiwoong.web.cern.ch/jiwoong/results/phase2/RES_MEM_CMSSW_11_1_0_pre2.res  
+ - **.sql3 file** is used in **web-based** reports (ex https://jiwoong.web.cern.ch/jiwoong/cgi-bin/igprof-navigator/igprofCPU_CMSSW11_1_0_pre2 )  
+ - **.res file** is used in **Ascii-based** report (ex https://jiwoong.web.cern.ch/jiwoong/results/phase2/RES_MEM_CMSSW_11_1_0_pre2.res )  
 
-### 3. Analyze 
+### 3. Analysis  
+ - Go to **Analyze_tool** directory
 
  
 
