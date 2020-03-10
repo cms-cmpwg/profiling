@@ -1,17 +1,22 @@
 #!/bin/bash
 
-## This code analyzing branch size of step3 output root files
+## This code analyze branch-size of step3 output root files
 ## The CMSSW enviroment is needed
 
-old="../$1/src/TimeMemory/step4.root"
-new="../$2/src/TimeMemory/step4.root"
-isPAT=1
 
+## -- step3 AOD
 #old="../$1/src/TimeMemory/step3.root"
 #new="../$2/src/TimeMemory/step3.root"
 #isPAT=0
 
 
+## -- step4 MINIAOD
+old="../$1/src/TimeMemory/step4.root"
+new="../$2/src/TimeMemory/step4.root"
+isPAT=1
+
+
+## -------------------------------- Args End
 
 fA=`echo $old`
 if [ ! -f "${fA}" ]; then

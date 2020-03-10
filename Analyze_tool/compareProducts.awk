@@ -44,21 +44,7 @@ END{
 	
 
 
-###3 --- Original 
-##	if (adsiR>dptMin||adsi>absMin){
- #   	if (isNew!=1&&isGone!=1){
- #   	printf("%9.0f ->   %9.0f  % 9.0f    % 5.1f  % 4.2f     %s\n", osi, nsi, dsi, dsiR, dsiT, br);
- #   	} else if (isNew==1){
- #   	printf("%9.0f ->   %9.0f  % 9.0f     NEWO  % 4.2f     %s\n", osi, nsi, dsi, dsiT, br);
- #   	} else if (isGone==1){
- #   	printf("%9.0f ->   %9.0f  % 9.0f     OLDO  % 4.2f     %s\n", osi, nsi, dsi, dsiT, br);
- #   	}
-##	}
-
-
-
-## New with python !
-	#if (adsiR>dptMin||adsi>absMin){ ## comment out for step4, stay sill for step3 ##
+	#if (adsiR>dptMin||adsi>absMin){ ## ---comment out for step4
 		if (isNew!=1&&isGone!=1){
 		printf("%9.0f,%9.0f,% 9.0f,% 5.1f,% 4.2f,%s\n", osi, nsi, dsi, dsiR, dsiT, br);
 		} else if (isNew==1){
@@ -66,7 +52,7 @@ END{
 		} else if (isGone==1){
 		printf("%9.0f,%9.0f,% 9.0f,OLDO,% 4.2f,%s\n", osi, nsi, dsi, dsiT, br);
 		}
-	#}  ## comment out for step4, stay sill for step3 ##
+	#}  ## ---comment out for step4
     
 
 
