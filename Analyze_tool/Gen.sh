@@ -35,62 +35,73 @@ mv $outname TimeMemory
 cd TimeMemory
 
 
+## -- Not yet ---------
 # --3. Make cmdLog run_option  -- Set N events
-cat << EOF >> read.py
-import subprocess
-
-with open('cmdLog','r') as f:
-	cnt=0
-	for line in f:
-		line=line.rstrip()
-		if line.startswith(' cmsDriver'):
-			cnt+=1
-## --Set N events
-            #line=line.replace("-n 10","-n 1000")
-			if cnt==3:
-				line_list = line.split()
-				logfile = line_list[-2]
-				line_list.insert(-7,"--customise=Validation/Performance/TimeMemoryInfo.py")
-				line=' '.join(line_list)
-				line=line.replace(logfile,"step3.log")
-## --Do not run step4
-			if cnt==4: break
-## --Excute cmsDriver
-            #subprocess.check_output (line,shell=True)
-			print(line)
-			print(" ")
-
-EOF
-
+#cat << EOF >> read.py
+#import subprocess
+#
+#with open('cmdLog','r') as f:
+#	cnt=0
+#	for line in f:
+#		line=line.rstrip()
+#		if line.startswith(' cmsDriver'):
+#			cnt+=1
+### --Set N events
+#            #line=line.replace("-n 10","-n 1000")
+#			if cnt==3:
+#				line_list = line.split()
+#				logfile = line_list[-2]
+#				line_list.insert(-7,"--customise=Validation/Performance/TimeMemoryInfo.py")
+#				line=' '.join(line_list)
+#				line=line.replace(logfile,"step3.log")
+### --Do not run step4
+#			if cnt==4: break
+### --Excute cmsDriver
+#            #subprocess.check_output (line,shell=True)
+#			print(line)
+#			print(" ")
+#EOF
 # run cmsDriver.py
 #python read.py
-
+# ---------------------------------------
 
 ## --4. Make profiler 
 
 
 
-EOF
 
-cat << EOF >> n02_profile.sh
+cat << EOF >> profile.sh
 #!/bin/bash
 
 
 ## --For web-based report
-#   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_CMSSW11_0_0.sql3 >& MEMsql.log
-#   igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_CMSSW11_0_0.sql3 >& CPUsql.log
 
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_CMSSW11_0_0PAT.sql3 >& MEMsql.log
-    igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_CMSSW11_0_0PAT.sql3 >& CPUsql.log
+## -step3
+   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
+   igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
+
+## -step4
+    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}PAT.sql3 >& MEMsql.log
+    igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}PAT.sql3 >& CPUsql.log
 
 
 ## --For ascii-based report
-#   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_MEM_$1\.res
-#   igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_CPU_$1\.res
+## -step3
+   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_MEM_${1}.res
+   igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_CPU_${1}.res
 
-    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_PAT_MEM_$1\.res
-    igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_PAT_CPU_$1\.res
-
-
+## -step4
+    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_PAT_MEM_${1}.res
+    igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_PAT_CPU_${1}.res
 
 EOF
+
+mkdir igprofs
+mkdir logs
+
+EOF cat << EOF >> sendtoCERN.sh
+scp cmdLog  jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/results/phase2/cmdlog_$1
+scp igprofs/*.res jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/results/phase2
+scp igprofs/*.sql3 jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/cgi-bin/data
+EOF
+
