@@ -1,0 +1,116 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.693113      -0.00%         3.53 ms/ev ->         0.29 ms/ev hpsPFTauDiscriminationByMVA6LooseElectronRejection
+   +1.355321      +0.00%         1.21 ms/ev ->         6.28 ms/ev ecalPreshowerRecHit
+   +1.313898      +0.00%         1.46 ms/ev ->         7.08 ms/ev initialStepSeedLayers
+   -1.047619      -0.00%         0.03 ms/ev ->         0.01 ms/ev ootPhotonHcalPFClusterIsolationProducer
+   -1.037037      -0.00%         0.04 ms/ev ->         0.01 ms/ev muonSeededTracksOutInDisplacedClassifier
+   -0.971880      -0.00%         4.70 ms/ev ->         1.63 ms/ev uncleanedOnlyConversionTrackCandidates
+   -0.953308      -0.01%        10.39 ms/ev ->         3.68 ms/ev particleFlowForChargedMET
+   -0.667801      -0.00%         2.35 ms/ev ->         1.17 ms/ev dt1DCosmicRecHits
+   -0.482408      -0.01%        18.54 ms/ev ->        11.33 ms/ev particleFlow
+   +0.472060      +0.00%         0.46 ms/ev ->         0.74 ms/ev ancientMuonSeed
+   +0.383198      +0.00%         5.81 ms/ev ->         8.57 ms/ev pfPileUpAllChargedParticles
+   +0.372749      +0.00%         6.05 ms/ev ->         8.83 ms/ev totemRPUVPatternFinder
+   -0.322824      -0.00%         1.23 ms/ev ->         0.89 ms/ev uncleanedOnlyElectronSeeds
+   -0.304833      -0.00%         0.93 ms/ev ->         0.68 ms/ev generalInOutOutInConversionTrackMerger
+   +0.291127      +0.33%      1205.55 ms/ev ->      1616.31 ms/ev ecalDrivenElectronSeedsFromMultiCl
+   -0.281028      -0.00%         1.04 ms/ev ->         0.79 ms/ev lowPtGsfElectronID
+   +0.263015      +0.00%         8.31 ms/ev ->        10.82 ms/ev vertexMerger
+   +0.245647      +0.59%      2599.22 ms/ev ->      3327.11 ms/ev ecalDrivenElectronSeeds
+   -0.216260      -0.00%         4.13 ms/ev ->         3.32 ms/ev particleBasedIsolationTmp
+   -0.201991      -0.00%         1.16 ms/ev ->         0.95 ms/ev muonSeededTrackCandidatesOutIn
+   -0.180387      -0.01%        48.89 ms/ev ->        40.80 ms/ev ak4PFJets
+   +0.127390      +1.87%     17052.83 ms/ev ->     19372.97 ms/ev particleFlowClusterHGCal
+   -0.126010      -0.01%        72.32 ms/ev ->        63.75 ms/ev conversionTrackCandidates
+   -0.113679      -0.03%       290.81 ms/ev ->       259.53 ms/ev gsfGeneralInOutOutInConversionTrackMerger
+   -0.111690      -0.00%        13.58 ms/ev ->        12.14 ms/ev csc2DRecHits
+   +0.106342      +0.03%       347.88 ms/ev ->       386.96 ms/ev trackVertexArbitrator
+   -0.101381      -0.00%         7.83 ms/ev ->         7.08 ms/ev EcalHaloData
+   +0.101011      +0.05%       568.76 ms/ev ->       629.27 ms/ev tripletElectronSeeds
+   +0.098834      +0.01%        99.55 ms/ev ->       109.90 ms/ev inclusiveCandidateVertexFinderCvsL
+   +0.087471      +0.01%        98.80 ms/ev ->       107.83 ms/ev inclusiveCandidateVertexFinder
+   -0.079128      -0.00%        63.84 ms/ev ->        58.98 ms/ev globalMuons
+   -0.077691      -0.00%        39.42 ms/ev ->        36.47 ms/ev standAloneMuons
+   +0.077095      +0.01%        87.86 ms/ev ->        94.90 ms/ev inclusiveVertexFinder
+   +0.075240      +0.03%       428.39 ms/ev ->       461.88 ms/ev candidateVertexArbitratorCvsL
+   -0.074123      -0.00%        45.12 ms/ev ->        41.90 ms/ev refittedStandAloneMuons
+   +0.074115      +0.83%     13418.93 ms/ev ->     14451.75 ms/ev unsortedOfflinePrimaryVertices4D
+   -0.069292      -0.00%         5.90 ms/ev ->         5.50 ms/ev lowPtGsfEleCkfTrackCandidates
+   -0.067049      -0.00%        59.28 ms/ev ->        55.44 ms/ev particleFlowTmpBarrel
+   +0.066264      +0.02%       363.06 ms/ev ->       387.94 ms/ev candidateVertexArbitrator
+   -0.061650      -0.00%         8.26 ms/ev ->         7.77 ms/ev particleFlowTmp
+   +0.061636      +0.01%       106.00 ms/ev ->       112.74 ms/ev lowPtQuadStepSeeds
+   +0.059456      +0.01%       216.77 ms/ev ->       230.05 ms/ev initialStepSeeds
+   +0.059364      +0.00%         5.54 ms/ev ->         5.88 ms/ev particleFlowClusterHBHE
+   -0.058768      -0.00%        51.38 ms/ev ->        48.44 ms/ev tofPID
+   +0.058046      +0.00%        56.11 ms/ev ->        59.46 ms/ev me0Segments
+   -0.056983      -0.00%        53.06 ms/ev ->        50.12 ms/ev lowPtGsfElectrons
+   -0.056656      -0.00%        94.02 ms/ev ->        88.84 ms/ev hgcalDigis
+   -0.054771      -0.00%        11.16 ms/ev ->        10.57 ms/ev muonsFromCosmics1Leg
+   -0.054657      -0.00%        24.30 ms/ev ->        23.01 ms/ev lowPtGsfEleGsfTracks
+   -0.052740      -0.00%        20.73 ms/ev ->        19.66 ms/ev lowPtGsfElePfGsfTracks
+   -0.051886      -0.00%        86.29 ms/ev ->        81.92 ms/ev highPtTripletStepHitDoublets
+   -0.051479      -0.00%        48.58 ms/ev ->        46.14 ms/ev ak4TrackJets
+   -0.051240      -0.00%        15.01 ms/ev ->        14.26 ms/ev gedGsfElectrons
+   +0.051101      +0.00%        47.23 ms/ev ->        49.71 ms/ev highPtTripletStepSeeds
+   +0.050772      +0.00%         5.59 ms/ev ->         5.88 ms/ev muonSeededTracksInOut
+   -0.050312      -0.00%        33.99 ms/ev ->        32.32 ms/ev pixelClusterTagInfos
+   +0.050266      +0.00%        33.71 ms/ev ->        35.45 ms/ev detachedQuadStepSeeds
+  ---------- ------------     --------                  ----       ------------
+Job total:  124.14 s/ev ==> 129.638 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.029584      -0.00%         0.04 ms/ev ->         0.01 ms/ev muonSeededTracksOutInDisplacedClassifier
+   -0.978701      -0.01%        10.46 ms/ev ->         3.59 ms/ev particleFlowForChargedMET
+   -0.975657      -0.00%         4.74 ms/ev ->         1.63 ms/ev uncleanedOnlyConversionTrackCandidates
+   -0.492969      -0.01%        18.51 ms/ev ->        11.19 ms/ev particleFlow
+   +0.482948      +0.00%         0.44 ms/ev ->         0.73 ms/ev ancientMuonSeed
+   +0.381972      +0.00%         5.75 ms/ev ->         8.47 ms/ev pfPileUpAllChargedParticles
+   -0.321811      -0.00%         1.24 ms/ev ->         0.90 ms/ev uncleanedOnlyElectronSeeds
+   -0.308375      -0.00%         0.93 ms/ev ->         0.68 ms/ev generalInOutOutInConversionTrackMerger
+   +0.285267      +0.33%      1199.25 ms/ev ->      1598.27 ms/ev ecalDrivenElectronSeedsFromMultiCl
+   -0.259301      -0.00%         1.17 ms/ev ->         0.90 ms/ev muonSeededTrackCandidatesOutIn
+   -0.250503      -0.00%         1.00 ms/ev ->         0.78 ms/ev lowPtGsfElectronID
+   +0.241467      +0.58%      2579.46 ms/ev ->      3287.84 ms/ev ecalDrivenElectronSeeds
+   -0.237003      -0.00%         4.13 ms/ev ->         3.25 ms/ev particleBasedIsolationTmp
+   +0.221755      +0.00%         8.35 ms/ev ->        10.43 ms/ev vertexMerger
+   +0.128986      +1.93%     17122.30 ms/ev ->     19483.10 ms/ev particleFlowClusterHGCal
+   -0.125928      -0.01%        73.04 ms/ev ->        64.39 ms/ev conversionTrackCandidates
+   -0.124678      -0.00%         7.83 ms/ev ->         6.91 ms/ev EcalHaloData
+   -0.120719      -0.03%       289.26 ms/ev ->       256.33 ms/ev gsfGeneralInOutOutInConversionTrackMerger
+   -0.102402      -0.00%        44.81 ms/ev ->        40.44 ms/ev ak4PFJets
+   +0.097803      +0.05%       564.29 ms/ev ->       622.32 ms/ev tripletElectronSeeds
+   -0.082163      -0.00%        33.76 ms/ev ->        31.10 ms/ev pixelClusterTagInfos
+   -0.082029      -0.00%        63.18 ms/ev ->        58.20 ms/ev globalMuons
+   -0.081663      -0.00%         9.79 ms/ev ->         9.02 ms/ev muonsFromCosmics1Leg
+   +0.081360      +0.02%       348.23 ms/ev ->       377.76 ms/ev trackVertexArbitrator
+   -0.080441      -0.00%        39.11 ms/ev ->        36.08 ms/ev standAloneMuons
+   -0.080086      -0.00%        44.85 ms/ev ->        41.40 ms/ev refittedStandAloneMuons
+   -0.075066      -0.00%         8.21 ms/ev ->         7.62 ms/ev particleFlowTmp
+   +0.071379      +0.81%     13346.20 ms/ev ->     14334.10 ms/ev unsortedOfflinePrimaryVertices4D
+   -0.071008      -0.00%        58.46 ms/ev ->        54.46 ms/ev particleFlowTmpBarrel
+   -0.067020      -0.00%         5.85 ms/ev ->         5.47 ms/ev lowPtGsfEleCkfTrackCandidates
+   +0.062006      +0.01%        98.73 ms/ev ->       105.05 ms/ev inclusiveCandidateVertexFinder
+   -0.061601      -0.00%        50.99 ms/ev ->        47.94 ms/ev tofPID
+   +0.061253      +0.01%       104.78 ms/ev ->       111.40 ms/ev lowPtQuadStepSeeds
+   +0.060966      +0.01%        99.04 ms/ev ->       105.27 ms/ev inclusiveCandidateVertexFinderCvsL
+   -0.060692      -0.00%        92.70 ms/ev ->        87.24 ms/ev hgcalDigis
+   -0.059748      -0.00%         7.00 ms/ev ->         6.59 ms/ev csc2DRecHits
+   +0.058938      +0.01%       214.40 ms/ev ->       227.42 ms/ev initialStepSeeds
+   +0.058405      +0.00%         5.49 ms/ev ->         5.82 ms/ev particleFlowClusterHBHE
+   +0.058094      +0.00%        55.53 ms/ev ->        58.85 ms/ev me0Segments
+   -0.057836      -0.00%        52.83 ms/ev ->        49.86 ms/ev lowPtGsfElectrons
+   +0.057454      +0.00%        87.89 ms/ev ->        93.09 ms/ev inclusiveVertexFinder
+   -0.056326      -0.00%        24.20 ms/ev ->        22.88 ms/ev lowPtGsfEleGsfTracks
+   -0.055822      -0.00%        20.65 ms/ev ->        19.53 ms/ev lowPtGsfElePfGsfTracks
+   -0.055803      -0.00%        48.19 ms/ev ->        45.58 ms/ev ak4TrackJets
+   -0.052619      -0.00%        10.09 ms/ev ->         9.57 ms/ev lowPtGsfElectronCores
+   -0.052197      -0.00%        51.93 ms/ev ->        49.29 ms/ev tevMuons
+   -0.051866      -0.00%        85.33 ms/ev ->        81.02 ms/ev highPtTripletStepHitDoublets
+   +0.051827      +0.02%       427.78 ms/ev ->       450.54 ms/ev candidateVertexArbitratorCvsL
+  ---------- ------------     --------                  ----       ------------
+Job total:  122.251 s/ev ==> 127.244 s/ev

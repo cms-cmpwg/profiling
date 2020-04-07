@@ -1,0 +1,2000 @@
+MemoryCheck: event : VSIZE 3493.06 0 RSS 2001.55 0
+TimeEvent> 1 1 31.4901
+MemoryCheck: event : VSIZE 3493.1 0 RSS 2003.72 0
+TimeEvent> 2 1 1.96338
+MemoryCheck: event : VSIZE 3493.1 0 RSS 1902.19 0
+TimeEvent> 3 1 1.46469
+MemoryCheck: event : VSIZE 3493.1 0 RSS 1902.19 0
+TimeEvent> 4 1 1.89378
+MemoryCheck: event : VSIZE 3493.1 0 RSS 1907.96 0
+TimeEvent> 5 1 2.5387
+MemoryCheck: event : VSIZE 3493.1 0 RSS 1906.85 0
+TimeEvent> 6 1 1.73076
+MemoryCheck: event : VSIZE 3493.1 0 RSS 1917.75 0
+TimeEvent> 7 1 3.04988
+MemoryCheck: event : VSIZE 3493.14 0 RSS 1934.59 0
+TimeEvent> 8 1 2.98845
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1933.7 0
+TimeEvent> 9 1 2.30241
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1932.67 0
+TimeEvent> 10 1 1.5657
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1935.41 0
+TimeEvent> 11 1 2.31259
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1934.28 0
+TimeEvent> 12 1 2.31187
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1939.26 0
+TimeEvent> 13 1 1.99921
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1938.57 0
+TimeEvent> 14 1 1.65702
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1941.91 0
+TimeEvent> 15 1 1.90033
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1968.14 0
+TimeEvent> 16 1 3.20876
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1966.29 0
+TimeEvent> 17 1 2.04027
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1964.14 0
+TimeEvent> 18 1 1.76134
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1969.5 0
+TimeEvent> 19 1 2.78876
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1967.69 0
+TimeEvent> 20 1 2.61713
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1966.09 0
+TimeEvent> 21 1 2.51268
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1969.09 0
+TimeEvent> 22 1 2.60262
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1963.86 0
+TimeEvent> 23 1 1.9532
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1967.76 0
+TimeEvent> 24 1 2.47495
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1964.4 0
+TimeEvent> 25 1 2.07348
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1963.64 0
+TimeEvent> 26 1 2.15087
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1962.05 0
+TimeEvent> 27 1 2.39239
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1966.49 0
+TimeEvent> 28 1 2.39434
+MemoryCheck: event : VSIZE 3493.18 0 RSS 2004.75 0
+TimeEvent> 29 1 3.89886
+MemoryCheck: event : VSIZE 3493.18 0 RSS 2004.28 0
+TimeEvent> 30 1 2.10655
+MemoryCheck: event : VSIZE 3493.18 0 RSS 2003.72 0
+TimeEvent> 31 1 2.3064
+MemoryCheck: event : VSIZE 3493.18 0 RSS 2000.54 0
+TimeEvent> 32 1 3.60694
+MemoryCheck: event : VSIZE 3493.18 0 RSS 2005.28 0
+TimeEvent> 33 1 2.99094
+MemoryCheck: event : VSIZE 3493.18 0 RSS 2001.9 0
+TimeEvent> 34 1 2.12041
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1995.9 0
+TimeEvent> 35 1 2.79008
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1994.96 0
+TimeEvent> 36 1 2.00183
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1990.04 0
+TimeEvent> 37 1 2.23711
+MemoryCheck: event : VSIZE 3493.18 0 RSS 1989.23 0
+TimeEvent> 38 1 2.53603
+MemoryCheck: event : VSIZE 3493.19 0 RSS 1993.84 0
+TimeEvent> 39 1 2.88398
+MemoryCheck: event : VSIZE 3493.19 0 RSS 1991.27 0
+TimeEvent> 40 1 2.43842
+MemoryCheck: event : VSIZE 3493.19 0 RSS 1984.2 0
+TimeEvent> 41 1 2.61883
+MemoryCheck: event : VSIZE 3493.19 0 RSS 1982.72 0
+TimeEvent> 42 1 2.32576
+MemoryCheck: event : VSIZE 3493.19 0 RSS 1994.21 0
+TimeEvent> 43 1 2.83561
+MemoryCheck: event : VSIZE 3493.19 0 RSS 1997.51 0
+TimeEvent> 44 1 2.54609
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2009.05 0
+TimeEvent> 45 1 3.55153
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2027.01 0
+TimeEvent> 46 1 3.24035
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2026.03 0
+TimeEvent> 47 1 3.48823
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2058.55 0
+TimeEvent> 48 1 4.78818
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2057.87 0
+TimeEvent> 49 1 2.74668
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2056.24 0
+TimeEvent> 50 1 2.56225
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2052.9 0
+TimeEvent> 51 1 3.33516
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2044.89 0
+TimeEvent> 52 1 4.14004
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2039.64 0
+TimeEvent> 53 1 3.28263
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2030.07 0
+TimeEvent> 54 1 2.87464
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2024.56 0
+TimeEvent> 55 1 2.86441
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2031.61 0
+TimeEvent> 56 1 2.66583
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2041.64 0
+TimeEvent> 57 1 3.40914
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2054.17 0
+TimeEvent> 58 1 4.43162
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2053.3 0
+TimeEvent> 59 1 3.16323
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2064.26 0
+TimeEvent> 60 1 2.58782
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2060.07 0
+TimeEvent> 61 1 2.91767
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2048.21 0
+TimeEvent> 62 1 3.7272
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2054.18 0
+TimeEvent> 63 1 4.29946
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2042.71 0
+TimeEvent> 64 1 3.1641
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2040.44 0
+TimeEvent> 65 1 3.72037
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2040.62 0
+TimeEvent> 66 1 3.49266
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2053.05 0
+TimeEvent> 67 1 2.96938
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2049.48 0
+TimeEvent> 68 1 3.62574
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2036.23 0
+TimeEvent> 69 1 3.17363
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2034.13 0
+TimeEvent> 70 1 3.17628
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2036.17 0
+TimeEvent> 71 1 2.6243
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2036.3 0
+TimeEvent> 72 1 3.58612
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2049.23 0
+TimeEvent> 73 1 2.73387
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2063.78 0
+TimeEvent> 74 1 4.61933
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2061.55 0
+TimeEvent> 75 1 3.91736
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2056.99 0
+TimeEvent> 76 1 3.19178
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2067.77 0
+TimeEvent> 77 1 3.85144
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2064.91 0
+TimeEvent> 78 1 3.77967
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2064.11 0
+TimeEvent> 79 1 4.68161
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2063.41 0
+TimeEvent> 80 1 2.89057
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2059.83 0
+TimeEvent> 81 1 3.6368
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2087.26 0
+TimeEvent> 82 1 4.47478
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2073.29 0
+TimeEvent> 83 1 3.93861
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2072.14 0
+TimeEvent> 84 1 3.35772
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2071.1 0
+TimeEvent> 85 1 3.71838
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2066.95 0
+TimeEvent> 86 1 3.5783
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2061.14 0
+TimeEvent> 87 1 4.28125
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2087.3 0
+TimeEvent> 88 1 4.27142
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2066.86 0
+TimeEvent> 89 1 3.55509
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2065.86 0
+TimeEvent> 90 1 3.51047
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2064.87 0
+TimeEvent> 91 1 3.36029
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2063.89 0
+TimeEvent> 92 1 3.24364
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2064.37 0
+TimeEvent> 93 1 3.99645
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2063.75 0
+TimeEvent> 94 1 3.58962
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2088.03 0
+TimeEvent> 95 1 4.16371
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2072.06 0
+TimeEvent> 96 1 3.52685
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2077.79 0
+TimeEvent> 97 1 4.41155
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2076.82 0
+TimeEvent> 98 1 3.43689
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2075.98 0
+TimeEvent> 99 1 4.16409
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2135.69 0
+TimeEvent> 100 1 5.34538
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2148.51 0
+TimeEvent> 101 1 3.88507
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2143.89 0
+TimeEvent> 102 1 3.24799
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2119.33 0
+TimeEvent> 103 1 4.00155
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2117.4 0
+TimeEvent> 104 1 4.83235
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2114.92 0
+TimeEvent> 105 1 3.4069
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2112.97 0
+TimeEvent> 106 1 3.60451
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2152.25 0
+TimeEvent> 107 1 5.87516
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2142.17 0
+TimeEvent> 108 1 3.78301
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2130.22 0
+TimeEvent> 109 1 4.21193
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2121.45 0
+TimeEvent> 110 1 3.7085
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2120.37 0
+TimeEvent> 111 1 3.56306
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2119.11 0
+TimeEvent> 112 1 3.81701
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2113.86 0
+TimeEvent> 113 1 3.73408
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2111.45 0
+TimeEvent> 114 1 4.34366
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2109.9 0
+TimeEvent> 115 1 3.58423
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2108.12 0
+TimeEvent> 116 1 3.9512
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2123.36 0
+TimeEvent> 117 1 3.51277
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2122.5 0
+TimeEvent> 118 1 4.23634
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2104.38 0
+TimeEvent> 119 1 3.66659
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2103.03 0
+TimeEvent> 120 1 3.99873
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2102.04 0
+TimeEvent> 121 1 3.86227
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2110.51 0
+TimeEvent> 122 1 4.5142
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2110.92 0
+TimeEvent> 123 1 4.08558
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2109.2 0
+TimeEvent> 124 1 4.62586
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2132.2 0
+TimeEvent> 125 1 4.1983
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2131.22 0
+TimeEvent> 126 1 3.69553
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2110.38 0
+TimeEvent> 127 1 4.08224
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2101.54 0
+TimeEvent> 128 1 3.8448
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2102.16 0
+TimeEvent> 129 1 3.91734
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2099.94 0
+TimeEvent> 130 1 3.5989
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2112.72 0
+TimeEvent> 131 1 4.72176
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2112.83 0
+TimeEvent> 132 1 3.71393
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2124.36 0
+TimeEvent> 133 1 4.92901
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2123.13 0
+TimeEvent> 134 1 3.91327
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2122.17 0
+TimeEvent> 135 1 3.74697
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2120.5 0
+TimeEvent> 136 1 4.03824
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2142.43 0
+TimeEvent> 137 1 4.59145
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2140.71 0
+TimeEvent> 138 1 4.35003
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2139.03 0
+TimeEvent> 139 1 4.35974
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2137.92 0
+TimeEvent> 140 1 3.63134
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2114.38 0
+TimeEvent> 141 1 3.90428
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2115 0
+TimeEvent> 142 1 4.04329
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2113 0
+TimeEvent> 143 1 4.23707
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2115.27 0
+TimeEvent> 144 1 4.24779
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2116.98 0
+TimeEvent> 145 1 3.8787
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2120.48 0
+TimeEvent> 146 1 4.26307
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2118.31 0
+TimeEvent> 147 1 4.36475
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2116.72 0
+TimeEvent> 148 1 3.93509
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2113.11 0
+TimeEvent> 149 1 3.84215
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2116.35 0
+TimeEvent> 150 1 4.31782
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2148.13 0
+TimeEvent> 151 1 4.62974
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2147.15 0
+TimeEvent> 152 1 4.71654
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2145.78 0
+TimeEvent> 153 1 4.596
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2134.47 0
+TimeEvent> 154 1 4.9368
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2135.36 0
+TimeEvent> 155 1 4.98001
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2140.22 0
+TimeEvent> 156 1 4.90303
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2143.05 0
+TimeEvent> 157 1 4.84679
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2142.81 0
+TimeEvent> 158 1 4.8299
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2138.75 0
+TimeEvent> 159 1 4.4948
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2140.62 0
+TimeEvent> 160 1 4.94637
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2165.92 0
+TimeEvent> 161 1 4.36937
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2157.74 0
+TimeEvent> 162 1 4.41298
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2155.34 0
+TimeEvent> 163 1 4.52637
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2152.41 0
+TimeEvent> 164 1 4.11978
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2150.27 0
+TimeEvent> 165 1 3.99105
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2155.27 0
+TimeEvent> 166 1 5.03414
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2146.38 0
+TimeEvent> 167 1 4.49155
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2156.54 0
+TimeEvent> 168 1 5.23928
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2154.34 0
+TimeEvent> 169 1 4.28415
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2155.7 0
+TimeEvent> 170 1 5.32289
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2157.49 0
+TimeEvent> 171 1 5.00866
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2153.17 0
+TimeEvent> 172 1 5.40296
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2178.26 0
+TimeEvent> 173 1 5.24599
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2156.08 0
+TimeEvent> 174 1 4.89394
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2154.44 0
+TimeEvent> 175 1 4.56229
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2152.29 0
+TimeEvent> 176 1 4.58133
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2150.71 0
+TimeEvent> 177 1 4.7909
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2147.52 0
+TimeEvent> 178 1 4.33144
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2157.21 0
+TimeEvent> 179 1 5.04196
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2161.57 0
+TimeEvent> 180 1 5.0677
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2158.3 0
+TimeEvent> 181 1 4.6223
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2158.42 0
+TimeEvent> 182 1 5.33309
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2155.76 0
+TimeEvent> 183 1 4.84561
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2163.62 0
+TimeEvent> 184 1 5.15721
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2160.6 0
+TimeEvent> 185 1 4.69899
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2184.34 0
+TimeEvent> 186 1 4.73147
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2180.49 0
+TimeEvent> 187 1 4.81857
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2164.12 0
+TimeEvent> 188 1 5.04951
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2163.85 0
+TimeEvent> 189 1 5.06886
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2159.66 0
+TimeEvent> 190 1 4.75192
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2158.72 0
+TimeEvent> 191 1 5.27287
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2175.26 0
+TimeEvent> 192 1 5.58431
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2178.06 0
+TimeEvent> 193 1 5.57551
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2180 0
+TimeEvent> 194 1 5.56059
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2177.16 0
+TimeEvent> 195 1 5.16854
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2176.15 0
+TimeEvent> 196 1 4.5912
+MemoryCheck: event : VSIZE 3493.19 0 RSS 2204.66 0
+TimeEvent> 197 1 6.52724
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2209.34 0
+TimeEvent> 198 1 5.72812
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2204.08 0
+TimeEvent> 199 1 5.99482
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2197.8 0
+TimeEvent> 200 1 4.63361
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2187.07 0
+TimeEvent> 201 1 5.33057
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2186.93 0
+TimeEvent> 202 1 4.51517
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2183.58 0
+TimeEvent> 203 1 4.90458
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2183.44 0
+TimeEvent> 204 1 4.7008
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2182.3 0
+TimeEvent> 205 1 4.56548
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2187.64 0
+TimeEvent> 206 1 5.58299
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2186.53 0
+TimeEvent> 207 1 4.58999
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2186.66 0
+TimeEvent> 208 1 4.88039
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2181.99 0
+TimeEvent> 209 1 4.85386
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2186.05 0
+TimeEvent> 210 1 5.19462
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2183.58 0
+TimeEvent> 211 1 4.5032
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2194.49 0
+TimeEvent> 212 1 5.61662
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2192.98 0
+TimeEvent> 213 1 4.94429
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2200.84 0
+TimeEvent> 214 1 6.08239
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2196.71 0
+TimeEvent> 215 1 5.67728
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2193.44 0
+TimeEvent> 216 1 4.91769
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2230.11 0
+TimeEvent> 217 1 5.85996
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2202.19 0
+TimeEvent> 218 1 4.67774
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2196.91 0
+TimeEvent> 219 1 4.67984
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2195.58 0
+TimeEvent> 220 1 4.78905
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2206.48 0
+TimeEvent> 221 1 5.91632
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2204.94 0
+TimeEvent> 222 1 4.85243
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2224.66 0
+TimeEvent> 223 1 6.24538
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2221.71 0
+TimeEvent> 224 1 5.3948
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2220.93 0
+TimeEvent> 225 1 5.95162
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2251.27 0
+TimeEvent> 226 1 7.17177
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2250.5 0
+TimeEvent> 227 1 4.92769
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2245.55 0
+TimeEvent> 228 1 5.24011
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2236.26 0
+TimeEvent> 229 1 6.35479
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2236.83 0
+TimeEvent> 230 1 5.33767
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2232.91 0
+TimeEvent> 231 1 5.43397
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2233.31 0
+TimeEvent> 232 1 6.07736
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2254.2 0
+TimeEvent> 233 1 4.83481
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2262.14 0
+TimeEvent> 234 1 5.254
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2260 0
+TimeEvent> 235 1 5.25499
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2264.66 0
+TimeEvent> 236 1 5.11946
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2238.41 0
+TimeEvent> 237 1 5.1008
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2234.84 0
+TimeEvent> 238 1 5.22366
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2231.55 0
+TimeEvent> 239 1 5.21142
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2244.99 0
+TimeEvent> 240 1 5.81225
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2253.45 0
+TimeEvent> 241 1 5.89788
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2249.57 0
+TimeEvent> 242 1 4.56472
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2260.23 0
+TimeEvent> 243 1 5.29797
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2255.2 0
+TimeEvent> 244 1 5.24514
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2259.73 0
+TimeEvent> 245 1 5.08956
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2264.76 0
+TimeEvent> 246 1 5.28971
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2268.99 0
+TimeEvent> 247 1 5.59375
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.73 0
+TimeEvent> 248 1 5.89317
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2280.2 0
+TimeEvent> 249 1 5.41097
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2279.46 0
+TimeEvent> 250 1 5.43236
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2285.62 0
+TimeEvent> 251 1 5.19368
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2292.34 0
+TimeEvent> 252 1 5.97807
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2287.53 0
+TimeEvent> 253 1 4.91439
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2287.67 0
+TimeEvent> 254 1 5.64006
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2290.38 0
+TimeEvent> 255 1 5.11779
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2289.43 0
+TimeEvent> 256 1 5.4399
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2298.5 0
+TimeEvent> 257 1 6.8743
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2286.56 0
+TimeEvent> 258 1 5.6977
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2297.05 0
+TimeEvent> 259 1 6.01632
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2295.04 0
+TimeEvent> 260 1 5.11773
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2293.65 0
+TimeEvent> 261 1 5.81485
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2294.98 0
+TimeEvent> 262 1 5.70053
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2289.39 0
+TimeEvent> 263 1 5.21689
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2285.11 0
+TimeEvent> 264 1 4.95757
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2277.2 0
+TimeEvent> 265 1 5.00521
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2279.61 0
+TimeEvent> 266 1 5.39834
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2305.46 0
+TimeEvent> 267 1 6.39707
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2315.61 0
+TimeEvent> 268 1 7.00825
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2311.04 0
+TimeEvent> 269 1 6.74487
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2302.36 0
+TimeEvent> 270 1 5.95317
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2294.38 0
+TimeEvent> 271 1 5.58208
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2292.17 0
+TimeEvent> 272 1 5.73494
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2294.07 0
+TimeEvent> 273 1 5.99076
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2304.29 0
+TimeEvent> 274 1 6.2924
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2298.97 0
+TimeEvent> 275 1 5.26031
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2325.43 0
+TimeEvent> 276 1 6.90308
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2324.08 0
+TimeEvent> 277 1 5.29878
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2293.96 0
+TimeEvent> 278 1 5.46401
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2287.34 0
+TimeEvent> 279 1 5.67045
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2286.56 0
+TimeEvent> 280 1 5.51436
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2284.46 0
+TimeEvent> 281 1 5.48774
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2296.68 0
+TimeEvent> 282 1 5.88462
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2296.71 0
+TimeEvent> 283 1 5.49393
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2303.05 0
+TimeEvent> 284 1 6.03115
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2299.23 0
+TimeEvent> 285 1 4.96987
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2299.05 0
+TimeEvent> 286 1 5.73905
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2296.66 0
+TimeEvent> 287 1 5.66586
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2306.17 0
+TimeEvent> 288 1 6.6977
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2309.37 0
+TimeEvent> 289 1 6.46063
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2304.79 0
+TimeEvent> 290 1 5.94082
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2346.48 0
+TimeEvent> 291 1 5.37364
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2345.57 0
+TimeEvent> 292 1 6.37238
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2339.08 0
+TimeEvent> 293 1 5.42679
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2334.61 0
+TimeEvent> 294 1 5.59878
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2330.57 0
+TimeEvent> 295 1 5.46177
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2320.93 0
+TimeEvent> 296 1 5.52846
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2321.14 0
+TimeEvent> 297 1 5.36092
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2326.63 0
+TimeEvent> 298 1 5.77411
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2322.34 0
+TimeEvent> 299 1 5.63803
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2324.68 0
+TimeEvent> 300 1 5.70366
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2335.89 0
+TimeEvent> 301 1 6.12633
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2355.5 0
+TimeEvent> 302 1 6.74206
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2350.82 0
+TimeEvent> 303 1 5.72811
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2358.42 0
+TimeEvent> 304 1 6.55926
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2355.93 0
+TimeEvent> 305 1 5.6594
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2360.36 0
+TimeEvent> 306 1 5.33526
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2335.71 0
+TimeEvent> 307 1 6.08238
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2333.7 0
+TimeEvent> 308 1 5.22532
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2345.99 0
+TimeEvent> 309 1 6.82234
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2348.07 0
+TimeEvent> 310 1 6.3597
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2343.22 0
+TimeEvent> 311 1 5.23521
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2354.04 0
+TimeEvent> 312 1 6.74745
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2351.55 0
+TimeEvent> 313 1 6.16116
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2354.82 0
+TimeEvent> 314 1 5.38349
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2350.88 0
+TimeEvent> 315 1 5.86094
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2342.06 0
+TimeEvent> 316 1 6.00794
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2342.02 0
+TimeEvent> 317 1 6.05219
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2339.75 0
+TimeEvent> 318 1 5.90842
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2338.69 0
+TimeEvent> 319 1 5.94104
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2336.29 0
+TimeEvent> 320 1 5.92065
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2331.71 0
+TimeEvent> 321 1 5.51037
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2342.68 0
+TimeEvent> 322 1 6.69278
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2356.15 0
+TimeEvent> 323 1 7.14951
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2355.18 0
+TimeEvent> 324 1 5.90491
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2348.95 0
+TimeEvent> 325 1 6.03584
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2397.8 0
+TimeEvent> 326 1 8.15844
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2396.91 0
+TimeEvent> 327 1 6.34697
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2393.08 0
+TimeEvent> 328 1 5.67854
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2383.47 0
+TimeEvent> 329 1 6.2534
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2372.56 0
+TimeEvent> 330 1 6.51465
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2368.25 0
+TimeEvent> 331 1 6.16287
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2365.06 0
+TimeEvent> 332 1 6.08952
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2365.46 0
+TimeEvent> 333 1 7.07647
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2364.6 0
+TimeEvent> 334 1 5.34144
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2360.76 0
+TimeEvent> 335 1 5.76034
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2359.84 0
+TimeEvent> 336 1 5.86225
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2355.69 0
+TimeEvent> 337 1 6.02624
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2380.37 0
+TimeEvent> 338 1 7.52002
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2378.03 0
+TimeEvent> 339 1 5.4613
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2372.47 0
+TimeEvent> 340 1 6.47625
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2370.73 0
+TimeEvent> 341 1 5.60951
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2368.3 0
+TimeEvent> 342 1 7.32354
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2370.36 0
+TimeEvent> 343 1 5.84476
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2368.03 0
+TimeEvent> 344 1 6.48777
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2363.73 0
+TimeEvent> 345 1 6.0062
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2364.65 0
+TimeEvent> 346 1 6.47938
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2367.45 0
+TimeEvent> 347 1 6.48826
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2375.61 0
+TimeEvent> 348 1 6.88898
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2375.19 0
+TimeEvent> 349 1 5.80017
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2376.05 0
+TimeEvent> 350 1 6.31999
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2387.5 0
+TimeEvent> 351 1 7.08708
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.21 0
+TimeEvent> 352 1 6.23585
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2384.71 0
+TimeEvent> 353 1 6.44578
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.96 0
+TimeEvent> 354 1 6.35383
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2379.81 0
+TimeEvent> 355 1 6.34495
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2379.16 0
+TimeEvent> 356 1 6.65604
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2374.49 0
+TimeEvent> 357 1 6.2237
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2373.27 0
+TimeEvent> 358 1 5.94599
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2379.11 0
+TimeEvent> 359 1 6.52442
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2383.18 0
+TimeEvent> 360 1 6.57584
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.61 0
+TimeEvent> 361 1 6.03837
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2416.12 0
+TimeEvent> 362 1 8.10158
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2409.61 0
+TimeEvent> 363 1 6.49684
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2405.41 0
+TimeEvent> 364 1 7.28384
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2404.4 0
+TimeEvent> 365 1 6.16827
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2402.38 0
+TimeEvent> 366 1 6.69613
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2397.84 0
+TimeEvent> 367 1 6.43113
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.23 0
+TimeEvent> 368 1 5.90303
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2380.71 0
+TimeEvent> 369 1 6.23249
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2377.21 0
+TimeEvent> 370 1 5.6111
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.59 0
+TimeEvent> 371 1 7.15272
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.79 0
+TimeEvent> 372 1 6.96469
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2384.14 0
+TimeEvent> 373 1 6.65917
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.11 0
+TimeEvent> 374 1 6.60267
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2384.75 0
+TimeEvent> 375 1 5.60858
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2407.24 0
+TimeEvent> 376 1 8.01005
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2404.88 0
+TimeEvent> 377 1 6.38838
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2402.93 0
+TimeEvent> 378 1 6.42937
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.1 0
+TimeEvent> 379 1 5.99102
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2382.46 0
+TimeEvent> 380 1 5.82469
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2418.04 0
+TimeEvent> 381 1 8.07966
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2416.52 0
+TimeEvent> 382 1 6.5514
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2410.95 0
+TimeEvent> 383 1 5.8393
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2409.43 0
+TimeEvent> 384 1 7.42697
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2405.27 0
+TimeEvent> 385 1 6.63942
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2400.34 0
+TimeEvent> 386 1 5.86202
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2409.17 0
+TimeEvent> 387 1 7.80847
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2412.75 0
+TimeEvent> 388 1 6.44628
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2413.04 0
+TimeEvent> 389 1 5.93207
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2379.93 0
+TimeEvent> 390 1 6.45045
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2377.21 0
+TimeEvent> 391 1 5.70034
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2387.19 0
+TimeEvent> 392 1 6.58515
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2384.21 0
+TimeEvent> 393 1 6.2
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2397.18 0
+TimeEvent> 394 1 7.1162
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.79 0
+TimeEvent> 395 1 5.95169
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.3 0
+TimeEvent> 396 1 6.22495
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2407.94 0
+TimeEvent> 397 1 8.10036
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2405.48 0
+TimeEvent> 398 1 5.96969
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2400 0
+TimeEvent> 399 1 6.46521
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2397.51 0
+TimeEvent> 400 1 6.33922
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2393.97 0
+TimeEvent> 401 1 7.14606
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2397.18 0
+TimeEvent> 402 1 7.05087
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.18 0
+TimeEvent> 403 1 6.23758
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2389.88 0
+TimeEvent> 404 1 6.74026
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2390.26 0
+TimeEvent> 405 1 6.86243
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2387.82 0
+TimeEvent> 406 1 6.44261
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.55 0
+TimeEvent> 407 1 6.25356
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2385.55 0
+TimeEvent> 408 1 6.62151
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2383.24 0
+TimeEvent> 409 1 6.59265
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2402 0
+TimeEvent> 410 1 7.24034
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2399.3 0
+TimeEvent> 411 1 6.85467
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2402.69 0
+TimeEvent> 412 1 6.1794
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.38 0
+TimeEvent> 413 1 6.32046
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.44 0
+TimeEvent> 414 1 6.85533
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2382.91 0
+TimeEvent> 415 1 6.38485
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2377.09 0
+TimeEvent> 416 1 6.54114
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2389.18 0
+TimeEvent> 417 1 6.91499
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2404.34 0
+TimeEvent> 418 1 7.42381
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2417.39 0
+TimeEvent> 419 1 8.25907
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2408.44 0
+TimeEvent> 420 1 5.98837
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2395.5 0
+TimeEvent> 421 1 6.14251
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2391.5 0
+TimeEvent> 422 1 6.37208
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.06 0
+TimeEvent> 423 1 7.11475
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2387.14 0
+TimeEvent> 424 1 6.47924
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.02 0
+TimeEvent> 425 1 6.72469
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.51 0
+TimeEvent> 426 1 6.84113
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.53 0
+TimeEvent> 427 1 7.19101
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2396.04 0
+TimeEvent> 428 1 6.73756
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2402.79 0
+TimeEvent> 429 1 7.32338
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2406.86 0
+TimeEvent> 430 1 6.85789
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.48 0
+TimeEvent> 431 1 6.65346
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2396.84 0
+TimeEvent> 432 1 7.38082
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2396.6 0
+TimeEvent> 433 1 6.94693
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2394.69 0
+TimeEvent> 434 1 6.94455
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2396.59 0
+TimeEvent> 435 1 7.12386
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.88 0
+TimeEvent> 436 1 7.34894
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2401.99 0
+TimeEvent> 437 1 7.06145
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2399.74 0
+TimeEvent> 438 1 7.03379
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.86 0
+TimeEvent> 439 1 6.19423
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.79 0
+TimeEvent> 440 1 6.43921
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2389.17 0
+TimeEvent> 441 1 6.74432
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2387.6 0
+TimeEvent> 442 1 6.42172
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.61 0
+TimeEvent> 443 1 6.92129
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2400.48 0
+TimeEvent> 444 1 6.85322
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2401.47 0
+TimeEvent> 445 1 7.13129
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.51 0
+TimeEvent> 446 1 6.86288
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2393.29 0
+TimeEvent> 447 1 6.85572
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2391.6 0
+TimeEvent> 448 1 6.88526
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2385.11 0
+TimeEvent> 449 1 6.26863
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2381.09 0
+TimeEvent> 450 1 6.28812
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2377.68 0
+TimeEvent> 451 1 6.24917
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2383.27 0
+TimeEvent> 452 1 6.55539
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2392.11 0
+TimeEvent> 453 1 6.89451
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2390.08 0
+TimeEvent> 454 1 6.28217
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.86 0
+TimeEvent> 455 1 6.72579
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2385.94 0
+TimeEvent> 456 1 6.69931
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2385.02 0
+TimeEvent> 457 1 6.64517
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.08 0
+TimeEvent> 458 1 6.75091
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2411.59 0
+TimeEvent> 459 1 7.77014
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2412.97 0
+TimeEvent> 460 1 7.56431
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2416.24 0
+TimeEvent> 461 1 7.28298
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2412.66 0
+TimeEvent> 462 1 6.67973
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2403.7 0
+TimeEvent> 463 1 6.48639
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2399.36 0
+TimeEvent> 464 1 6.9334
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2395.73 0
+TimeEvent> 465 1 6.63916
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2394.23 0
+TimeEvent> 466 1 6.8767
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2388.67 0
+TimeEvent> 467 1 6.22264
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2393.74 0
+TimeEvent> 468 1 6.96979
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2393.05 0
+TimeEvent> 469 1 6.68007
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2430.32 0
+TimeEvent> 470 1 8.0434
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2421.66 0
+TimeEvent> 471 1 6.86385
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2410.43 0
+TimeEvent> 472 1 7.70107
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2406.91 0
+TimeEvent> 473 1 6.93749
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2408.87 0
+TimeEvent> 474 1 6.65428
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2426.09 0
+TimeEvent> 475 1 8.28795
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2421.32 0
+TimeEvent> 476 1 8.01442
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2398.52 0
+TimeEvent> 477 1 7.37638
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2378.41 0
+TimeEvent> 478 1 6.41697
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2389.46 0
+TimeEvent> 479 1 6.8726
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2386.21 0
+TimeEvent> 480 1 6.25759
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2261.89 0
+TimeEvent> 481 1 8.11291
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2267.49 0
+TimeEvent> 482 1 7.43967
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2265.36 0
+TimeEvent> 483 1 7.00337
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2259.7 0
+TimeEvent> 484 1 6.6937
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2259.07 0
+TimeEvent> 485 1 7.10094
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2253.74 0
+TimeEvent> 486 1 6.40518
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2251.56 0
+TimeEvent> 487 1 6.7218
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2260.26 0
+TimeEvent> 488 1 7.59137
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2263.82 0
+TimeEvent> 489 1 6.7988
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2272.16 0
+TimeEvent> 490 1 7.56307
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.48 0
+TimeEvent> 491 1 6.65028
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2277.77 0
+TimeEvent> 492 1 7.75139
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2275.89 0
+TimeEvent> 493 1 7.26362
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.3 0
+TimeEvent> 494 1 7.38181
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2290.52 0
+TimeEvent> 495 1 8.53392
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2283.98 0
+TimeEvent> 496 1 7.20775
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.43 0
+TimeEvent> 497 1 7.39967
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2266.03 0
+TimeEvent> 498 1 7.21149
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2261.5 0
+TimeEvent> 499 1 6.97385
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2254.48 0
+TimeEvent> 500 1 6.61823
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2253.06 0
+TimeEvent> 501 1 7.33161
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2259.01 0
+TimeEvent> 502 1 6.94118
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2255.47 0
+TimeEvent> 503 1 6.94571
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2270.31 0
+TimeEvent> 504 1 7.67872
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2272.96 0
+TimeEvent> 505 1 7.14297
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2266.86 0
+TimeEvent> 506 1 6.84334
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2263.31 0
+TimeEvent> 507 1 6.83767
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2264.75 0
+TimeEvent> 508 1 7.46733
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2260.98 0
+TimeEvent> 509 1 6.53119
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2274.43 0
+TimeEvent> 510 1 7.59541
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2270.43 0
+TimeEvent> 511 1 7.05595
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2265.76 0
+TimeEvent> 512 1 6.84201
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2263.83 0
+TimeEvent> 513 1 7.01991
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2258.5 0
+TimeEvent> 514 1 7.18627
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2256.43 0
+TimeEvent> 515 1 6.90502
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.36 0
+TimeEvent> 516 1 7.57492
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.95 0
+TimeEvent> 517 1 7.02738
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2292.12 0
+TimeEvent> 518 1 8.46598
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2287.93 0
+TimeEvent> 519 1 7.77208
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2280.26 0
+TimeEvent> 520 1 7.05664
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2274.43 0
+TimeEvent> 521 1 7.27017
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2270.91 0
+TimeEvent> 522 1 6.8031
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2268.66 0
+TimeEvent> 523 1 7.42226
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2262.65 0
+TimeEvent> 524 1 6.8624
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2256.83 0
+TimeEvent> 525 1 7.88916
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2255.7 0
+TimeEvent> 526 1 6.81845
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2258.42 0
+TimeEvent> 527 1 7.30522
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2268.55 0
+TimeEvent> 528 1 7.16556
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2259.24 0
+TimeEvent> 529 1 7.12432
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.84 0
+TimeEvent> 530 1 7.45697
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2264.41 0
+TimeEvent> 531 1 7.45533
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2274.5 0
+TimeEvent> 532 1 7.51857
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.75 0
+TimeEvent> 533 1 6.96128
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2283.34 0
+TimeEvent> 534 1 7.64982
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2267.58 0
+TimeEvent> 535 1 7.23826
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2264.09 0
+TimeEvent> 536 1 7.16635
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2261.61 0
+TimeEvent> 537 1 7.09468
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2260.89 0
+TimeEvent> 538 1 6.87596
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2277.29 0
+TimeEvent> 539 1 8.40279
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2281.01 0
+TimeEvent> 540 1 7.11402
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2302.88 0
+TimeEvent> 541 1 8.97756
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2289.72 0
+TimeEvent> 542 1 6.90126
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2278.47 0
+TimeEvent> 543 1 7.18472
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.7 0
+TimeEvent> 544 1 7.39917
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2275.99 0
+TimeEvent> 545 1 7.09981
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.75 0
+TimeEvent> 546 1 7.61662
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2270.77 0
+TimeEvent> 547 1 6.89161
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.16 0
+TimeEvent> 548 1 7.42108
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.3 0
+TimeEvent> 549 1 7.2731
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2263 0
+TimeEvent> 550 1 7.28806
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2259.89 0
+TimeEvent> 551 1 6.77936
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2277.36 0
+TimeEvent> 552 1 7.68903
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2271.55 0
+TimeEvent> 553 1 6.89186
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.13 0
+TimeEvent> 554 1 7.2555
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2284.48 0
+TimeEvent> 555 1 7.92311
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2281.7 0
+TimeEvent> 556 1 6.68094
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2276.68 0
+TimeEvent> 557 1 7.27319
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2271 0
+TimeEvent> 558 1 7.30786
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2274.04 0
+TimeEvent> 559 1 7.49763
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2268.84 0
+TimeEvent> 560 1 7.16018
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2281.61 0
+TimeEvent> 561 1 7.87572
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2281.3 0
+TimeEvent> 562 1 6.94721
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2277.97 0
+TimeEvent> 563 1 7.74864
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.35 0
+TimeEvent> 564 1 7.36963
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2265.5 0
+TimeEvent> 565 1 6.70725
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2270.17 0
+TimeEvent> 566 1 7.40817
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.1 0
+TimeEvent> 567 1 7.58377
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.89 0
+TimeEvent> 568 1 7.69266
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2269.66 0
+TimeEvent> 569 1 6.88309
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2272.74 0
+TimeEvent> 570 1 7.56773
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2292.01 0
+TimeEvent> 571 1 8.26406
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2285.45 0
+TimeEvent> 572 1 7.3563
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2273.89 0
+TimeEvent> 573 1 7.46503
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2282.36 0
+TimeEvent> 574 1 7.81456
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2279.85 0
+TimeEvent> 575 1 7.54288
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2280.75 0
+TimeEvent> 576 1 7.11078
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2291.62 0
+TimeEvent> 577 1 7.31242
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2288.25 0
+TimeEvent> 578 1 7.22201
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2328.5 0
+TimeEvent> 579 1 8.49384
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2334.62 0
+TimeEvent> 580 1 7.47224
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2338.16 0
+TimeEvent> 581 1 7.51067
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2336.41 0
+TimeEvent> 582 1 7.2178
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2356.93 0
+TimeEvent> 583 1 7.86736
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2365.84 0
+TimeEvent> 584 1 7.07374
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2373.01 0
+TimeEvent> 585 1 6.8286
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2368.76 0
+TimeEvent> 586 1 7.14835
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2387.33 0
+TimeEvent> 587 1 7.83798
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2412.45 0
+TimeEvent> 588 1 8.19681
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2415.84 0
+TimeEvent> 589 1 7.26735
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2412.17 0
+TimeEvent> 590 1 6.84746
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2425.42 0
+TimeEvent> 591 1 7.73333
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2447.02 0
+TimeEvent> 592 1 8.23397
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2454.76 0
+TimeEvent> 593 1 6.66825
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2448.46 0
+TimeEvent> 594 1 7.74939
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2452.27 0
+TimeEvent> 595 1 7.60948
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2464.24 0
+TimeEvent> 596 1 7.44082
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2446.86 0
+TimeEvent> 597 1 6.89401
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2463.85 0
+TimeEvent> 598 1 7.58011
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2493.23 0
+TimeEvent> 599 1 8.65257
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2489.32 0
+TimeEvent> 600 1 6.84086
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2475.12 0
+TimeEvent> 601 1 7.26027
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2460.67 0
+TimeEvent> 602 1 7.36716
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2465.23 0
+TimeEvent> 603 1 7.40578
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2466.32 0
+TimeEvent> 604 1 7.17522
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2480.11 0
+TimeEvent> 605 1 8.37891
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2467.79 0
+TimeEvent> 606 1 7.63623
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2460.34 0
+TimeEvent> 607 1 7.44846
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2459.11 0
+TimeEvent> 608 1 7.40959
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2463.11 0
+TimeEvent> 609 1 7.40737
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2476.14 0
+TimeEvent> 610 1 8.24611
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2475.16 0
+TimeEvent> 611 1 7.88246
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2473.07 0
+TimeEvent> 612 1 7.69494
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2475.07 0
+TimeEvent> 613 1 7.77533
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2474.15 0
+TimeEvent> 614 1 7.09587
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2470.69 0
+TimeEvent> 615 1 7.14907
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2465.73 0
+TimeEvent> 616 1 7.44024
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2462.02 0
+TimeEvent> 617 1 6.85404
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2455.5 0
+TimeEvent> 618 1 6.92901
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2449.56 0
+TimeEvent> 619 1 6.84319
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2447.93 0
+TimeEvent> 620 1 7.21918
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2461.92 0
+TimeEvent> 621 1 7.58531
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2455.48 0
+TimeEvent> 622 1 7.09678
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2448.36 0
+TimeEvent> 623 1 7.03133
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2457.32 0
+TimeEvent> 624 1 7.5306
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2453 0
+TimeEvent> 625 1 7.0621
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2472.28 0
+TimeEvent> 626 1 8.09141
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2470.61 0
+TimeEvent> 627 1 7.57929
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2464.38 0
+TimeEvent> 628 1 7.54878
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2460.56 0
+TimeEvent> 629 1 7.38923
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2480.23 0
+TimeEvent> 630 1 8.9397
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2475.75 0
+TimeEvent> 631 1 8.20345
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2470.96 0
+TimeEvent> 632 1 7.8202
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2467.22 0
+TimeEvent> 633 1 7.67449
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2467.86 0
+TimeEvent> 634 1 7.20628
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2466.65 0
+TimeEvent> 635 1 7.06341
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2462.98 0
+TimeEvent> 636 1 7.23591
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2506.96 0
+TimeEvent> 637 1 9.20796
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2493.45 0
+TimeEvent> 638 1 7.53087
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2473.26 0
+TimeEvent> 639 1 7.15009
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2488.23 0
+TimeEvent> 640 1 8.0865
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2505.79 0
+TimeEvent> 641 1 8.83891
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2499.37 0
+TimeEvent> 642 1 8.08682
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2490.14 0
+TimeEvent> 643 1 7.40056
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2473.45 0
+TimeEvent> 644 1 7.13113
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2473.46 0
+TimeEvent> 645 1 6.97289
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2490.21 0
+TimeEvent> 646 1 8.12406
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2493.12 0
+TimeEvent> 647 1 7.31025
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2499.28 0
+TimeEvent> 648 1 8.19846
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2499.67 0
+TimeEvent> 649 1 7.91512
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2515.92 0
+TimeEvent> 650 1 8.78457
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2504.31 0
+TimeEvent> 651 1 7.57177
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2487.8 0
+TimeEvent> 652 1 7.15755
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2506.59 0
+TimeEvent> 653 1 8.01995
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2517.88 0
+TimeEvent> 654 1 7.36118
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2520.04 0
+TimeEvent> 655 1 8.25297
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2523.82 0
+TimeEvent> 656 1 7.3879
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2529.88 0
+TimeEvent> 657 1 6.98092
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2535.82 0
+TimeEvent> 658 1 7.47001
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2552.31 0
+TimeEvent> 659 1 8.36533
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2554.95 0
+TimeEvent> 660 1 6.95572
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2583.25 0
+TimeEvent> 661 1 9.36541
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2574.08 0
+TimeEvent> 662 1 7.98033
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2583.8 0
+TimeEvent> 663 1 8.23138
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2591.6 0
+TimeEvent> 664 1 8.01825
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2581.07 0
+TimeEvent> 665 1 7.54019
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2586.27 0
+TimeEvent> 666 1 7.69651
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2596.26 0
+TimeEvent> 667 1 7.7085
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2600.68 0
+TimeEvent> 668 1 7.35124
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2619.18 0
+TimeEvent> 669 1 8.28519
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2631.2 0
+TimeEvent> 670 1 8.04551
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2636.77 0
+TimeEvent> 671 1 7.87956
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2632.62 0
+TimeEvent> 672 1 7.54979
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2657.57 0
+TimeEvent> 673 1 8.68234
+MemoryCheck: event : VSIZE 3493.22 0 RSS 2650.59 0
+TimeEvent> 674 1 7.6169
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2687.01 0
+TimeEvent> 675 1 9.18889
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2639.58 0
+TimeEvent> 676 1 7.57412
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2650.2 0
+TimeEvent> 677 1 8.0624
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2655.5 0
+TimeEvent> 678 1 7.45897
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2659.01 0
+TimeEvent> 679 1 7.92225
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2657.93 0
+TimeEvent> 680 1 7.4888
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2656.18 0
+TimeEvent> 681 1 7.91438
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2651.18 0
+TimeEvent> 682 1 7.71267
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2658.43 0
+TimeEvent> 683 1 8.31347
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2653.96 0
+TimeEvent> 684 1 7.7634
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2655.35 0
+TimeEvent> 685 1 7.75856
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2665.03 0
+TimeEvent> 686 1 7.47839
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2667.2 0
+TimeEvent> 687 1 8.23325
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2662.98 0
+TimeEvent> 688 1 7.27083
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2663.39 0
+TimeEvent> 689 1 8.52774
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2656.64 0
+TimeEvent> 690 1 7.45587
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2647 0
+TimeEvent> 691 1 6.92764
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2646.77 0
+TimeEvent> 692 1 7.76025
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.33 0
+TimeEvent> 693 1 7.47977
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.6 0
+TimeEvent> 694 1 7.56878
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2638.2 0
+TimeEvent> 695 1 7.20772
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.87 0
+TimeEvent> 696 1 7.73585
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2636.98 0
+TimeEvent> 697 1 7.17737
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2656.83 0
+TimeEvent> 698 1 8.59419
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2663.89 0
+TimeEvent> 699 1 9.01498
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2651.2 0
+TimeEvent> 700 1 7.99865
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2650.16 0
+TimeEvent> 701 1 8.24681
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2647.32 0
+TimeEvent> 702 1 7.80649
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.7 0
+TimeEvent> 703 1 7.58785
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2645.69 0
+TimeEvent> 704 1 8.27845
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2661.76 0
+TimeEvent> 705 1 9.23655
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.06 0
+TimeEvent> 706 1 7.52833
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2626.92 0
+TimeEvent> 707 1 7.26722
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2648.01 0
+TimeEvent> 708 1 8.54929
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2643.2 0
+TimeEvent> 709 1 8.11921
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2636.29 0
+TimeEvent> 710 1 7.50079
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2629.09 0
+TimeEvent> 711 1 7.68946
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2632.29 0
+TimeEvent> 712 1 7.91951
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2631.32 0
+TimeEvent> 713 1 7.76065
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.25 0
+TimeEvent> 714 1 8.5303
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2639.37 0
+TimeEvent> 715 1 7.0511
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2635.59 0
+TimeEvent> 716 1 8.00137
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2646.6 0
+TimeEvent> 717 1 8.54039
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2638.51 0
+TimeEvent> 718 1 7.05851
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2645.42 0
+TimeEvent> 719 1 8.86181
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2628.67 0
+TimeEvent> 720 1 7.58538
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2634.94 0
+TimeEvent> 721 1 8.59326
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2632.78 0
+TimeEvent> 722 1 7.58927
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2620.9 0
+TimeEvent> 723 1 7.65411
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2633.94 0
+TimeEvent> 724 1 8.304
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2640.34 0
+TimeEvent> 725 1 8.24989
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2628.91 0
+TimeEvent> 726 1 7.89008
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2620.79 0
+TimeEvent> 727 1 7.83627
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2618.91 0
+TimeEvent> 728 1 7.40819
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2643.59 0
+TimeEvent> 729 1 8.87111
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2633.09 0
+TimeEvent> 730 1 7.83531
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2620.82 0
+TimeEvent> 731 1 7.45058
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2620.18 0
+TimeEvent> 732 1 7.72363
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2621.77 0
+TimeEvent> 733 1 7.86828
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2620.86 0
+TimeEvent> 734 1 7.681
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2642.63 0
+TimeEvent> 735 1 8.48671
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2633.15 0
+TimeEvent> 736 1 8.03172
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2632.84 0
+TimeEvent> 737 1 8.37257
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2627.91 0
+TimeEvent> 738 1 7.53679
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2624.75 0
+TimeEvent> 739 1 7.72463
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2631.33 0
+TimeEvent> 740 1 8.43144
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2629.25 0
+TimeEvent> 741 1 7.77407
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2626.03 0
+TimeEvent> 742 1 7.99782
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2622.28 0
+TimeEvent> 743 1 7.75222
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2639.6 0
+TimeEvent> 744 1 8.89713
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2637.27 0
+TimeEvent> 745 1 8.56941
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2637.96 0
+TimeEvent> 746 1 8.90136
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2623.31 0
+TimeEvent> 747 1 8.35994
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2625.36 0
+TimeEvent> 748 1 8.16647
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2623.23 0
+TimeEvent> 749 1 7.36713
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2621.68 0
+TimeEvent> 750 1 8.3032
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2620.08 0
+TimeEvent> 751 1 7.47411
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2615.34 0
+TimeEvent> 752 1 7.98468
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2611.68 0
+TimeEvent> 753 1 7.66982
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2607.01 0
+TimeEvent> 754 1 7.27266
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2604.77 0
+TimeEvent> 755 1 7.57554
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2606.22 0
+TimeEvent> 756 1 7.65297
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2618.42 0
+TimeEvent> 757 1 8.21121
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2625.87 0
+TimeEvent> 758 1 8.27967
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2629.91 0
+TimeEvent> 759 1 8.32432
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2618.82 0
+TimeEvent> 760 1 7.50499
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2604.86 0
+TimeEvent> 761 1 8.2455
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2619.9 0
+TimeEvent> 762 1 8.45154
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2615.03 0
+TimeEvent> 763 1 7.85989
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2607.59 0
+TimeEvent> 764 1 7.83832
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2604.8 0
+TimeEvent> 765 1 7.7194
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2612.59 0
+TimeEvent> 766 1 8.02358
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2615.08 0
+TimeEvent> 767 1 8.51323
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2616.45 0
+TimeEvent> 768 1 8.14738
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2621.42 0
+TimeEvent> 769 1 8.53979
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2614.29 0
+TimeEvent> 770 1 7.40855
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2619.69 0
+TimeEvent> 771 1 8.14969
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2611.7 0
+TimeEvent> 772 1 7.84376
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2610.6 0
+TimeEvent> 773 1 7.68728
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2628.37 0
+TimeEvent> 774 1 9.68865
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2614.64 0
+TimeEvent> 775 1 8.4553
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2588.42 0
+TimeEvent> 776 1 7.52437
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2602.62 0
+TimeEvent> 777 1 9.02424
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2581.07 0
+TimeEvent> 778 1 7.59755
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2571.8 0
+TimeEvent> 779 1 8.11476
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2563.7 0
+TimeEvent> 780 1 8.23698
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2568.32 0
+TimeEvent> 781 1 7.96438
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2572.57 0
+TimeEvent> 782 1 8.25897
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2584.56 0
+TimeEvent> 783 1 8.78381
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2567.18 0
+TimeEvent> 784 1 7.5502
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2553.6 0
+TimeEvent> 785 1 7.70325
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2563.48 0
+TimeEvent> 786 1 7.93369
+MemoryCheck: event : VSIZE 4133.22 0 RSS 2561.17 0
+TimeEvent> 787 1 7.36372
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2585.74 0
+TimeEvent> 788 1 9.00293
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2565.61 0
+TimeEvent> 789 1 7.87831
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2559.32 0
+TimeEvent> 790 1 7.65714
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2559.44 0
+TimeEvent> 791 1 7.84834
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2558.09 0
+TimeEvent> 792 1 8.1932
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2564.27 0
+TimeEvent> 793 1 8.40996
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2560.12 0
+TimeEvent> 794 1 7.30451
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2558.71 0
+TimeEvent> 795 1 7.86314
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2551.1 0
+TimeEvent> 796 1 7.82289
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2551.59 0
+TimeEvent> 797 1 7.61959
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2562.05 0
+TimeEvent> 798 1 8.18211
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2566.16 0
+TimeEvent> 799 1 8.24574
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2562.3 0
+TimeEvent> 800 1 8.11588
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2559.32 0
+TimeEvent> 801 1 8.18185
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2562.69 0
+TimeEvent> 802 1 8.35586
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2567.95 0
+TimeEvent> 803 1 8.41054
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2569.2 0
+TimeEvent> 804 1 8.07372
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2564.03 0
+TimeEvent> 805 1 8.08405
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2564.35 0
+TimeEvent> 806 1 7.97317
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2558.48 0
+TimeEvent> 807 1 7.63979
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2551.93 0
+TimeEvent> 808 1 7.73695
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2609.38 0
+TimeEvent> 809 1 9.92442
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2566.67 0
+TimeEvent> 810 1 7.99923
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2586.34 0
+TimeEvent> 811 1 9.10287
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2566.66 0
+TimeEvent> 812 1 8.41436
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2568.63 0
+TimeEvent> 813 1 8.75676
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2556.45 0
+TimeEvent> 814 1 7.71287
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2562.3 0
+TimeEvent> 815 1 8.35719
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2559.69 0
+TimeEvent> 816 1 7.74476
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2552.05 0
+TimeEvent> 817 1 7.67284
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2572.2 0
+TimeEvent> 818 1 9.03766
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2569.38 0
+TimeEvent> 819 1 8.97815
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2581.45 0
+TimeEvent> 820 1 9.24395
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2554.34 0
+TimeEvent> 821 1 7.71753
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2549.78 0
+TimeEvent> 822 1 8.22592
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2565.4 0
+TimeEvent> 823 1 9.07642
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2564 0
+TimeEvent> 824 1 8.44779
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2565.6 0
+TimeEvent> 825 1 8.9893
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2554.49 0
+TimeEvent> 826 1 7.47734
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2554.49 0
+TimeEvent> 827 1 8.37725
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2554.65 0
+TimeEvent> 828 1 7.99948
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2551.03 0
+TimeEvent> 829 1 7.75987
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2551.04 0
+TimeEvent> 830 1 8.91012
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2559.43 0
+TimeEvent> 831 1 8.94866
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2556.07 0
+TimeEvent> 832 1 8.28071
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2547.77 0
+TimeEvent> 833 1 7.92638
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2553.21 0
+TimeEvent> 834 1 8.39374
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2557.18 0
+TimeEvent> 835 1 8.68019
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2563.51 0
+TimeEvent> 836 1 8.77888
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2551.29 0
+TimeEvent> 837 1 8.56191
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2547.53 0
+TimeEvent> 838 1 8.5384
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2549.7 0
+TimeEvent> 839 1 8.30866
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2541.09 0
+TimeEvent> 840 1 7.89658
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2563.6 0
+TimeEvent> 841 1 9.2293
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2542.97 0
+TimeEvent> 842 1 7.58883
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2547.98 0
+TimeEvent> 843 1 8.73468
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2541.73 0
+TimeEvent> 844 1 8.38274
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2541.44 0
+TimeEvent> 845 1 8.29774
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2540.54 0
+TimeEvent> 846 1 7.86201
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2538.12 0
+TimeEvent> 847 1 7.82871
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2554.22 0
+TimeEvent> 848 1 8.9158
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2556.07 0
+TimeEvent> 849 1 9.07346
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2548.63 0
+TimeEvent> 850 1 8.32117
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2539.84 0
+TimeEvent> 851 1 7.95779
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2544.33 0
+TimeEvent> 852 1 8.96759
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2533.18 0
+TimeEvent> 853 1 8.24592
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2540.61 0
+TimeEvent> 854 1 8.62664
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2532.99 0
+TimeEvent> 855 1 7.46021
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2532.78 0
+TimeEvent> 856 1 8.27886
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2539.07 0
+TimeEvent> 857 1 8.43405
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2531.18 0
+TimeEvent> 858 1 8.05605
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2532.17 0
+TimeEvent> 859 1 8.41296
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2530.44 0
+TimeEvent> 860 1 7.51137
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2523.22 0
+TimeEvent> 861 1 7.48636
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2560.61 0
+TimeEvent> 862 1 10.2171
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2534.14 0
+TimeEvent> 863 1 8.25883
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2540.04 0
+TimeEvent> 864 1 8.871
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2546.54 0
+TimeEvent> 865 1 8.77057
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2539.49 0
+TimeEvent> 866 1 8.38859
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2527.02 0
+TimeEvent> 867 1 8.21801
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2525.31 0
+TimeEvent> 868 1 7.78742
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2544.35 0
+TimeEvent> 869 1 8.80506
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2534.64 0
+TimeEvent> 870 1 8.68322
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2527.71 0
+TimeEvent> 871 1 8.2647
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2546.32 0
+TimeEvent> 872 1 9.13795
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2553.93 0
+TimeEvent> 873 1 9.38909
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2534.17 0
+TimeEvent> 874 1 8.61407
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2522.47 0
+TimeEvent> 875 1 8.10384
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2525.93 0
+TimeEvent> 876 1 8.33962
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2525.16 0
+TimeEvent> 877 1 8.26481
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2519.71 0
+TimeEvent> 878 1 7.88294
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2518.58 0
+TimeEvent> 879 1 7.92627
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2517.53 0
+TimeEvent> 880 1 7.9942
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2532.74 0
+TimeEvent> 881 1 8.80742
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2533.05 0
+TimeEvent> 882 1 8.66576
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2526.95 0
+TimeEvent> 883 1 8.88135
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2518.18 0
+TimeEvent> 884 1 7.90536
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2527.75 0
+TimeEvent> 885 1 8.37839
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2531.31 0
+TimeEvent> 886 1 8.41998
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2529.34 0
+TimeEvent> 887 1 8.33247
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2538.87 0
+TimeEvent> 888 1 8.51602
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2542.36 0
+TimeEvent> 889 1 9.32602
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2526.96 0
+TimeEvent> 890 1 8.37429
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2524.68 0
+TimeEvent> 891 1 8.16611
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2526.23 0
+TimeEvent> 892 1 8.01752
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2519.54 0
+TimeEvent> 893 1 7.69554
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2523.7 0
+TimeEvent> 894 1 8.20174
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2534.27 0
+TimeEvent> 895 1 8.38645
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2539.85 0
+TimeEvent> 896 1 8.84218
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2527.54 0
+TimeEvent> 897 1 8.17298
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2508 0
+TimeEvent> 898 1 8.1869
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2530.62 0
+TimeEvent> 899 1 8.47356
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2533.8 0
+TimeEvent> 900 1 8.45124
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2524.79 0
+TimeEvent> 901 1 7.96091
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2516.61 0
+TimeEvent> 902 1 7.98133
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2517.37 0
+TimeEvent> 903 1 7.99732
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2519.22 0
+TimeEvent> 904 1 8.2054
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2520.16 0
+TimeEvent> 905 1 8.27991
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2521.44 0
+TimeEvent> 906 1 7.85503
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2518.5 0
+TimeEvent> 907 1 7.55949
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2514.52 0
+TimeEvent> 908 1 7.8412
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2510.6 0
+TimeEvent> 909 1 7.8903
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2516.33 0
+TimeEvent> 910 1 8.15699
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2518.16 0
+TimeEvent> 911 1 7.97457
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2515.39 0
+TimeEvent> 912 1 8.07125
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2539.66 0
+TimeEvent> 913 1 9.16134
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2520.3 0
+TimeEvent> 914 1 7.73573
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2520.88 0
+TimeEvent> 915 1 8.57296
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2515.53 0
+TimeEvent> 916 1 8.09368
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2525.16 0
+TimeEvent> 917 1 8.44155
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2520.39 0
+TimeEvent> 918 1 8.07955
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2521.06 0
+TimeEvent> 919 1 8.219
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2524.41 0
+TimeEvent> 920 1 8.30054
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2579.78 0
+TimeEvent> 921 1 10.1081
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2542.3 0
+TimeEvent> 922 1 8.13435
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2549.23 0
+TimeEvent> 923 1 8.57072
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2549.86 0
+TimeEvent> 924 1 7.86314
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2561.71 0
+TimeEvent> 925 1 8.22621
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2581.63 0
+TimeEvent> 926 1 8.53163
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2617.11 0
+TimeEvent> 927 1 9.57439
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2596.75 0
+TimeEvent> 928 1 8.73455
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2597.83 0
+TimeEvent> 929 1 8.42962
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2616.35 0
+TimeEvent> 930 1 8.75756
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2623.73 0
+TimeEvent> 931 1 8.67901
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2632.91 0
+TimeEvent> 932 1 8.18473
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2652.25 0
+TimeEvent> 933 1 8.8595
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2656.36 0
+TimeEvent> 934 1 8.30304
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2657.66 0
+TimeEvent> 935 1 8.55592
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2668.18 0
+TimeEvent> 936 1 8.41888
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2676.32 0
+TimeEvent> 937 1 8.25928
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2681.05 0
+TimeEvent> 938 1 8.10231
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2712.49 0
+TimeEvent> 939 1 9.09976
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2708.24 0
+TimeEvent> 940 1 8.44863
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2722.1 0
+TimeEvent> 941 1 8.57639
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2716.07 0
+TimeEvent> 942 1 8.1181
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2735.64 0
+TimeEvent> 943 1 8.66326
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2739.52 0
+TimeEvent> 944 1 8.41801
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2739.02 0
+TimeEvent> 945 1 8.37979
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2744.53 0
+TimeEvent> 946 1 8.6827
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2731.4 0
+TimeEvent> 947 1 7.9359
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2750.57 0
+TimeEvent> 948 1 9.11688
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2745.81 0
+TimeEvent> 949 1 8.70614
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2742.99 0
+TimeEvent> 950 1 8.05103
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2743.43 0
+TimeEvent> 951 1 8.26998
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2747.76 0
+TimeEvent> 952 1 8.75024
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2739.9 0
+TimeEvent> 953 1 8.16607
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2747.62 0
+TimeEvent> 954 1 9.09496
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2743.89 0
+TimeEvent> 955 1 8.82835
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2750.94 0
+TimeEvent> 956 1 8.81977
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2739.27 0
+TimeEvent> 957 1 8.52966
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2733.43 0
+TimeEvent> 958 1 8.2845
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2740.66 0
+TimeEvent> 959 1 8.51401
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2770.54 0
+TimeEvent> 960 1 10.165
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2736.93 0
+TimeEvent> 961 1 8.70406
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2744.02 0
+TimeEvent> 962 1 9.22359
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2725.33 0
+TimeEvent> 963 1 8.56721
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2729.12 0
+TimeEvent> 964 1 9.20939
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2721.8 0
+TimeEvent> 965 1 7.69462
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2726.86 0
+TimeEvent> 966 1 8.44455
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2723.97 0
+TimeEvent> 967 1 8.32051
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2730.99 0
+TimeEvent> 968 1 8.85387
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2738.71 0
+TimeEvent> 969 1 8.71017
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2752.1 0
+TimeEvent> 970 1 8.85611
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2754.23 0
+TimeEvent> 971 1 8.63564
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2749.02 0
+TimeEvent> 972 1 8.38765
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2745.21 0
+TimeEvent> 973 1 8.16046
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2759.8 0
+TimeEvent> 974 1 8.06651
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2766.55 0
+TimeEvent> 975 1 8.18485
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2782.46 0
+TimeEvent> 976 1 8.55437
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2791.05 0
+TimeEvent> 977 1 8.25811
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2796.81 0
+TimeEvent> 978 1 8.68477
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2807.57 0
+TimeEvent> 979 1 8.61948
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2821.7 0
+TimeEvent> 980 1 9.16695
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2812.48 0
+TimeEvent> 981 1 8.24067
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2814.87 0
+TimeEvent> 982 1 8.16891
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2820 0
+TimeEvent> 983 1 8.30165
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2835.29 0
+TimeEvent> 984 1 8.36613
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2847.7 0
+TimeEvent> 985 1 9.20361
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2855.4 0
+TimeEvent> 986 1 8.50236
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2858.18 0
+TimeEvent> 987 1 8.30652
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2869.93 0
+TimeEvent> 988 1 8.46236
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2889.2 0
+TimeEvent> 989 1 9.37899
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2878.06 0
+TimeEvent> 990 1 8.34371
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2885.07 0
+TimeEvent> 991 1 8.30223
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2905.05 0
+TimeEvent> 992 1 8.51523
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2916.34 0
+TimeEvent> 993 1 8.47136
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2924.91 0
+TimeEvent> 994 1 8.43352
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2920.76 0
+TimeEvent> 995 1 8.34652
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2941.31 0
+TimeEvent> 996 1 8.75168
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2965.68 0
+TimeEvent> 997 1 9.90943
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2939.71 0
+TimeEvent> 998 1 8.53393
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2934.07 0
+TimeEvent> 999 1 8.40532
+MemoryCheck: event : VSIZE 4133.23 0 RSS 2944.05 0
+TimeEvent> 1000 1 8.40703

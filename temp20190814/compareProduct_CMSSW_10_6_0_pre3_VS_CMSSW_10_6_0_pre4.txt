@@ -1,0 +1,51 @@
+Checking process _RECO CMSSW_10_6_0_pre3/src/TimeMemory/step3.root and CMSSW_10_6_0_pre4/src/TimeMemory/step3.root (if above 100 or 20%):
+-------------------------------------------------------------
+ or, B       new, B      delta, B   delta, %   deltaJ, %    branch 
+-------------------------------------------------------------
+       37 ->          59         22     46.6   0.00     recoCaloClusteredmPtredmValueMap_particleFlowSuperClusterHGCalFromMultiCl_PFClusterAssociationEBEE_RECO.
+    17567 ->       17677        110      0.6   0.00     recoPFCandidates_particleFlow__RECO.
+     2769 ->        2925        156      5.5   0.00     recoTrackExtras_electronGsfTracks__RECO.
+ 13041200 ->    13283000     241800      1.8   1.70     DetIdfloatstdmap_hgcalLayerClusters__RECO.
+    13073 ->       13292        219      1.7   0.00     TrackingRecHitsOwned_trackExtenderWithMTD__RECO.
+      276 ->         367         91     28.3   0.00     floatedmValueMap_trackExtenderWithMTD_generalTrackt0_RECO.
+     1472 ->        1607        136      8.8   0.00     recoGsfElectrons_ecalDrivenGsfElectronsFromMultiCl__RECO.
+      170 ->         217         46     23.9   0.00     floatedmValueMap_tofPID_probPi_RECO.
+    20151 ->       20030       -121     -0.6  -0.00     FTLUncalibratedRecHitsSorted_mtdUncalibratedRecHits_FTLBarrel_RECO.
+    25897 ->       26208        311      1.2   0.00     recoPFTaus_combinatoricRecoTaus__RECO.
+      222 ->         291         69     26.7   0.00     floatedmValueMap_trackExtenderWithMTD_generalTrackBeta_RECO.
+     4527 ->        4675        148      3.2   0.00     FTLClusteredmNewDetSetVector_mtdClusters_FTLEndcap_RECO.
+    16412 ->       16852        440      2.6   0.00     recoTracks_trackExtenderWithMTD__RECO.
+     2525 ->        2730        204      7.8   0.00     recoTrackExtras_electronGsfTracksFromMultiCl__RECO.
+    30325 ->       30207       -119     -0.4  -0.00     Phase2TrackerCluster1DedmNewDetSetVector_siPhase2Clusters__RECO.
+    14690 ->       15512        822      5.4   0.01     recoGsfTrackExtras_electronGsfTracks__RECO.
+        5 ->           7          2     24.2   0.00     HFRecHitsSorted_reducedHcalRecHits_hfreco_RECO.
+    10854 ->       11370        516      4.6   0.00     recoElectronSeeds_electronMergedSeeds__RECO.
+    13347 ->       14403       1056      7.6   0.01     recoGsfTrackExtras_electronGsfTracksFromMultiCl__RECO.
+       10 ->           5         -4    -58.1  -0.00     recoTrackExtras_uncleanedOnlyCkfInOutTracksFromConversions__RECO.
+   189452 ->      192640       3188      1.7   0.02     HGCRecHitsSorted_HGCalRecHit_HGCEERecHits_RECO.
+      258 ->         339         81     27.1   0.00     floatedmValueMap_trackExtenderWithMTD_generalTrackPathLength_RECO.
+      258 ->         339         81     27.2   0.00     floatedmValueMap_trackExtenderWithMTD_pathLength_RECO.
+    12704 ->       12804        100      0.8   0.00     recoSuperClusters_particleFlowSuperClusterHGCal__RECO.
+        6 ->           7          1     21.0   0.00     recoGsfElectrons_uncleanedOnlyGsfElectrons__RECO.
+        0 ->          16         16     NEWO   0.00     recoTracksedmAssociation_lowPtGsfToTrackLinks__RECO.
+      130 ->         162         32     21.9   0.00     floatedmValueMap_tofPID_probP_RECO.
+   130761 ->      123920      -6841     -5.4  -0.05     recoCaloClusters_hgcalLayerClusters__RECO.
+    83024 ->       83272        248      0.3   0.00     recoTrackExtras_generalTracks__RECO.
+      166 ->         212         46     24.2   0.00     floatedmValueMap_tofPID_probK_RECO.
+    13453 ->       13572        118      0.9   0.00     recoCaloClusters_particleFlowSuperClusterHGCal__RECO.
+    21884 ->       22029        145      0.7   0.00     EcalRecHitsSorted_ecalRecHit_EcalRecHitsEB_RECO.
+    14837 ->       19151       4314     25.4   0.03     recoHGCalMultiClusters_hgcalMultiClusters__RECO.
+      274 ->         365         91     28.4   0.00     floatedmValueMap_tofPID_t0_RECO.
+    90078 ->       89964       -114     -0.1  -0.00     recoPFClusters_particleFlowClusterHGCal__RECO.
+        7 ->           5         -2    -33.0  -0.00     recoTracks_uncleanedOnlyCkfInOutTracksFromConversions__RECO.
+     1195 ->        1309        114      9.1   0.00     CSCDetIdCSCSegmentsOwnedRangeMap_cscSegments__RECO.
+      274 ->         365         90     28.2   0.00     floatedmValueMap_trackExtenderWithMTD_generalTracksigmat0_RECO.
+     7943 ->        9366       1424     16.5   0.01     recoElectronSeeds_electronMergedSeedsFromMultiCl__RECO.
+    68539 ->       69199        661      1.0   0.00     recoTrackExtras_trackExtenderWithMTD__RECO.
+     5575 ->        6114        539      9.2   0.00     recoCaloClusters_particleFlowSuperClusterHGCalFromMultiCl__RECO.
+    22590 ->       22736        146      0.6   0.00     EcalRecHitsSorted_ecalDetailedTimeRecHit_EcalRecHitsEB_RECO.
+     5335 ->        5580        245      4.5   0.00     recoSuperClusters_particleFlowSuperClusterHGCalFromMultiCl__RECO.
+      274 ->         365         91     28.4   0.00     floatedmValueMap_tofPID_t0safe_RECO.
+    31831 ->       32702        871      2.7   0.01     recoPFClusters_particleFlowClusterHGCalFromMultiCl__RECO.
+-------------------------------------------------------------
+ 14233609 ->    14486969     253361             1.8     ALL BRANCHES
