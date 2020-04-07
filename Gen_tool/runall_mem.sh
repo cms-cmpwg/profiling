@@ -17,10 +17,18 @@ cd TimeMemory
 echo "My loc"
 echo $CMSSW_BASE
 
+#step1
+igprof -d -mp -o igprofMEM_step1.mp -D 100evts cmsRun ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py  >& /dev/null
+
+
+#step2
+#igprof -d -mp -o igprofMEM_step2.mp -D 100evts cmsRun ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >& /dev/null
+
+
 #step3
-igprof -d -mp -o igprofMEM_step3.mp -D 100evts cmsRun /x5/cms/jwkim/ServiceWork/tmp/$CMSSW_v/src/TimeMemory/step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >& /dev/null 
+#igprof -d -mp -o igprofMEM_step3.mp -D 100evts cmsRun ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >& /dev/null 
 
 
 #step4
-#igprof -d -mp -o igprofMEM_step4.mp -D 100evts cmsRun /x5/cms/jwkim/ServiceWork/tmp/$CMSSW_v/src/TimeMemory/step4_PAT_PU.py >& /dev/null
+#igprof -d -mp -o igprofMEM_step4.mp -D 100evts cmsRun ./step4_PAT_PU.py >& /dev/null
 

@@ -37,29 +37,33 @@ cd TimeMemory
 
 # --3. Make cmdLog run_option  -- Set N events
 cat << EOF >> read.py
+#!/usr/bin/env pyhton
 import subprocess
 
 with open('cmdLog','r') as f:
-	cnt=0
-	for line in f:
-		line=line.rstrip()
-		if line.startswith(' cmsDriver'):
-			cnt+=1
+        cnt=0
+        for line in f:
+                line=line.rstrip()
+                if line.startswith(' cmsDriver'):
+                        cnt+=1
 ## --Set N events
-            #line=line.replace("-n 10","-n 1000")
-			if cnt==3:
-				line_list = line.split()
-				logfile = line_list[-2]
-				line_list.insert(-7,"--customise=Validation/Performance/TimeMemoryInfo.py")
-				line=' '.join(line_list)
-				line=line.replace(logfile,"step3.log")
+                        line=line.replace("-n 10","-n 1000")
+                        if cnt!=5:
+                                line_list = line.split()
+                                logfile = line_list[-2]
+                                line_list.insert(-3,'--nThreads 8')
+                                line_list.insert(-3,'--no_exec')
+                                line_list.insert(-9,"--customise Validation/Performance/TimeMemoryInfo.py")
+                                line=' '.join(line_list)
+                                line=line.replace(logfile,"step%s.log"%cnt)
+                                line=line.replace('file:', 'file:$TMPDIR/')
 ## --Do not run step4
-			if cnt==4: break
+                        else:
+                                 break
 ## --Excute cmsDriver
-            #subprocess.check_output (line,shell=True)
-			print(line)
-			print(" ")
-
+                        print(line)
+                        print(" ")
+                        subprocess.check_output (line,shell=True)
 EOF
 
 # run cmsDriver.py
@@ -70,7 +74,7 @@ EOF
 
 
 
-EOF
+#EOF
 
 cat << EOF >> profile.sh
 #!/bin/bash
@@ -79,25 +83,39 @@ cat << EOF >> profile.sh
 ## --For web-based report
 
 
+## -step1
+#   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step1.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_$1\.sql3 >& MEMsql.log
+#   igprof-analyse --sqlite -v -d -g igprofCPU_step1.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_$1\.sql3 >& CPUsql.log
+
+## -step2
+#   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step2.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_$1\.sql3 >& MEMsql.log
+#   igprof-analyse --sqlite -v -d -g igprofCPU_step2.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_$1\.sql3 >& CPUsql.log
+
 ## -step3
 #   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_$1\.sql3 >& MEMsql.log
 #   igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_$1\.sql3 >& CPUsql.log
 
 ## -step4
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_CMSSW11_0_0PAT.sql3 >& MEMsql.log
-    igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_CMSSW11_0_0PAT.sql3 >& CPUsql.log
+#    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_CMSSW11_0_0PAT.sql3 >& MEMsql.log
+#    igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_CMSSW11_0_0PAT.sql3 >& CPUsql.log
 
 
 ## --For ascii-based report
+
+## -step1
+#   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step1.mp >& RES_MEM_$1\.res
+#   igprof-analyse  -v -d -g igprofCPU_step1.gz >& RES_CPU_$1\.res
+
+## -step2
+#   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step2.mp >& RES_MEM_$1\.res
+#   igprof-analyse  -v -d -g igprofCPU_step2.gz >& RES_CPU_$1\.res
 
 ## -step3
 #   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_MEM_$1\.res
 #   igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_CPU_$1\.res
 
 ## -step4
-    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_PAT_MEM_$1\.res
-    igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_PAT_CPU_$1\.res
-
-
+#    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_PAT_MEM_$1\.res
+#    igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_PAT_CPU_$1\.res
 
 EOF
