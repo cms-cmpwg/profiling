@@ -10,12 +10,12 @@ echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh
 
 echo "Start install $CMSSW_v ..."
-scramv1 project $CMSSW_v
+#scramv1 project $CMSSW_v
 echo "Install success"
 echo "Set CMSSW environment and compiling..'"
 cd $CMSSW_v/src
 eval `scramv1 runtime -sh`
-scram b -j 6
+#scram b -j 6
 
 
 ## --2. "RunThematrix" dry run
@@ -23,15 +23,15 @@ scram b -j 6
 
 #runTheMatrix.py -l 29034.21 -w upgrade --dryRun # NoPU
 
-runTheMatrix.py -l 20634.21 -w upgrade --dryRun	# 200PU for 4 5 6 
+#runTheMatrix.py -l 20634.21 -w upgrade --dryRun	# 200PU for 4 5 6 
 #runTheMatrix.py -w upgrade -l 29234.21 --dryRun #200PU for 11_0_0_pre1 2 3 
 
 
-tail *.log
+#tail *.log
 
-for i in $(ls -d */); do 
-outname=${i%%/}; done
-mv $outname TimeMemory
+#for i in $(ls -d */); do 
+#outname=${i%%/}; done
+#mv $outname TimeMemory
 cd TimeMemory
 
 
@@ -76,6 +76,14 @@ cat << EOF >> profile.sh
 
 ## --For web-based report
 
+## -step1
+   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step1.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
+   igprof-analyse --sqlite -v -d -g igprofCPU_step1.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
+
+## -step3
+   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step2.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
+   igprof-analyse --sqlite -v -d -g igprofCPU_step2.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
+
 ## -step3
    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
    igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
@@ -86,6 +94,14 @@ cat << EOF >> profile.sh
 
 
 ## --For ascii-based report
+## -step1
+   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step1.mp >& RES_MEM_${1}.res
+   igprof-analyse  -v -d -g igprofCPU_step1.gz >& RES_CPU_${1}.res
+
+## -step2
+   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step2.mp >& RES_MEM_${1}.res
+   igprof-analyse  -v -d -g igprofCPU_step2.gz >& RES_CPU_${1}.res
+
 ## -step3
    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_MEM_${1}.res
    igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_CPU_${1}.res
