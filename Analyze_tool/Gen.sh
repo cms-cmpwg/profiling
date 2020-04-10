@@ -3,18 +3,18 @@
 CMSSW_v=$1
 
 ## --1. Install CMSSW version and setup environment
-echo "Your SCRAM_ARCH "
-export SCRAM_ARCH=slc7_amd64_gcc900
-export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
-source $VO_CMS_SW_DIR/cmsset_default.sh
+#echo "Your SCRAM_ARCH "
+#export SCRAM_ARCH=slc7_amd64_gcc900
+#export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+#echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
+#source $VO_CMS_SW_DIR/cmsset_default.sh
 
-echo "Start install $CMSSW_v ..."
+#echo "Start install $CMSSW_v ..."
 #scramv1 project $CMSSW_v
-echo "Install success"
-echo "Set CMSSW environment and compiling..'"
+#echo "Install success"
+#echo "Set CMSSW environment and compiling..'"
 cd $CMSSW_v/src
-eval `scramv1 runtime -sh`
+#eval `scramv1 runtime -sh`
 #scram b -j 6
 
 
@@ -70,41 +70,41 @@ cd TimeMemory
 
 
 
-cat << EOF >> profile.sh
+cat << EOF >> analyze.sh
 #!/bin/bash
 
 
 ## --For web-based report
 
 ## -step1
-   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step1.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
-   igprof-analyse --sqlite -v -d -g igprofCPU_step1.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
+   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step1.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_MEM_GENSIM_${1}.sql3 
+   igprof-analyse --sqlite -v -d -g igprofCPU_step1.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_CPU_GENSIM_${1}.sql3 
+
+## -step2
+   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step2.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_MEM_DIGIRAW_${1}.sql3 
+   igprof-analyse --sqlite -v -d -g igprofCPU_step2.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_CPU_DIGIRAW_${1}.sql3
 
 ## -step3
-   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step2.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
-   igprof-analyse --sqlite -v -d -g igprofCPU_step2.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
-
-## -step3
-   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}.sql3 >& MEMsql.log
-   igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}.sql3 >& CPUsql.log
+   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_MEM_RECO_${1}.sql3
+   igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_CPU_RECO_${1}.sql3
 
 ## -step4
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_${1}PAT.sql3 >& MEMsql.log
-    igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_${1}PAT.sql3 >& CPUsql.log
+    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_MEM_PAT_${1}.sql3
+    igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_CPU_PAT_${1}.sql3
 
 
 ## --For ascii-based report
 ## -step1
-   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step1.mp >& RES_MEM_${1}.res
-   igprof-analyse  -v -d -g igprofCPU_step1.gz >& RES_CPU_${1}.res
+   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step1.mp >& RES_GENSIM_MEM_${1}.res
+   igprof-analyse  -v -d -g igprofCPU_step1.gz >& RES_GENSIM_CPU_${1}.res
 
 ## -step2
-   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step2.mp >& RES_MEM_${1}.res
-   igprof-analyse  -v -d -g igprofCPU_step2.gz >& RES_CPU_${1}.res
+   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step2.mp >& RES_DIGIRAW_MEM_${1}.res
+   igprof-analyse  -v -d -g igprofCPU_step2.gz >& RES_DIGIRAW._CPU_${1}.res
 
 ## -step3
-   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_MEM_${1}.res
-   igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_CPU_${1}.res
+   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_RECO_MEM_${1}.res
+   igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_RECO_CPU_${1}.res
 
 ## -step4
     igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_PAT_MEM_${1}.res
@@ -112,12 +112,14 @@ cat << EOF >> profile.sh
 
 EOF
 
-mkdir igprofs
-mkdir logs
+chmod +x analyze.sh
 
-EOF cat << EOF >> sendtoCERN.sh
-scp cmdLog  jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/results/phase2/cmdlog_$1
-scp igprofs/*.res jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/results/phase2
-scp igprofs/*.sql3 jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/cgi-bin/data
-EOF
+#mkdir igprofs
+#mkdir logs
+
+#cat << EOF >> sendtoCERN.sh
+#scp cmdLog  jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/results/phase2/cmdlog_$1
+#scp igprofs/*.res jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/results/phase2
+#scp igprofs/*.sql3 jiwoong@lxplus.cern.ch:/eos/user/j/jiwoong/www/cgi-bin/data
+#EOF
 
