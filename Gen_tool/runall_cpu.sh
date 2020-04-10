@@ -20,16 +20,16 @@ echo $CMSSW_BASE
 
 
 #step1
-igprof -d -pp -z -o igprofCPU_step1.gz -t cmsRun cmsRun ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py > /dev/null 2>&1 
+igprof -pp -z -o igprofCPU_step1.gz -t cmsRun cmsRun ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >& step1_cpu.log
 
 
 #step2
-igprof -d -pp -z -o igprofCPU_step2.gz -t cmsRun cmsRun ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py > /dev/null 2>&1 
+igprof -pp -z -o igprofCPU_step2.gz -t cmsRun cmsRun ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >& step2_cpu.log
 
 
 #step3
-igprof -d -pp -z -o igprofCPU_step3.gz -t cmsRun cmsRun ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py > /dev/null 2>&1 
+igprof -pp -z -o igprofCPU_step3.gz -t cmsRun cmsRun ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >& step3_cpu.log
 
 
 #step4
-igprof -d -pp -z -o igprofCPU_step4.gz -t cmsRun cmsRun ./step4_PAT_PU.py > /dev/null 2>&1 
+igprof -pp -z -o igprofCPU_step4.gz -t cmsRun cmsRun ./step4_PAT_PU.py >& step4_cpu.log
