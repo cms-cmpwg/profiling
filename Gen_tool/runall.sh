@@ -18,17 +18,17 @@ echo "My loc"
 echo $CMSSW_BASE
 
 #step1
-igprof -mp -o ./igprofMEM_step1.mp -- cmsRun ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py  >& step1_mem.log
+cmsRun ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py  >& step1.log
 
 
 #step2
-igprof -mp -o ./igprofMEM_step2.mp -- cmsRun ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >& step2_mem.log
+cmsRun ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >& step2.log
 
 
 #step3
-igprof -mp -o ./igprofMEM_step3.mp -- cmsRun ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py  >& step3_mem.log
+cmsRun ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py  >& step3.log
 
 
 #step4
-igprof -mp -o ./igprofMEM_step4.mp -- cmsRun ./step4_PAT_PU.py  >& step4_mem.log
+cmsRun ./step4_PAT_PU.py  >& step4.log
 

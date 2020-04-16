@@ -113,6 +113,7 @@ cat << EOF >> analyze.sh
 EOF
 
 chmod +x analyze.sh
+./analyze.sh
 
 #mkdir igprofs
 #mkdir logs
