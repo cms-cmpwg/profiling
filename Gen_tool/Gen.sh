@@ -29,7 +29,7 @@ runTheMatrix.py -l 20634.21 -w upgrade --dryRun	# 200PU for 4 5 6
 
 #tail *.log
 
-for i in $(ls -d */); do 
+for i in $(ls -d 2*/); do 
 outname=${i%%/}; done
 mv $outname TimeMemory
 cd TimeMemory
@@ -37,7 +37,7 @@ cd TimeMemory
 
 # --3. Make cmdLog run_option  -- Set N events
 cat << EOF >> read.py
-#!/usr/bin/env pyhton
+#!/usr/bin/env python
 import subprocess
 
 with open('cmdLog','r') as f:
@@ -47,7 +47,7 @@ with open('cmdLog','r') as f:
                 if line.startswith(' cmsDriver'):
                         cnt+=1
 ## --Set N events
-                        line=line.replace("-n 10","-n 1000")
+                        line=line.replace("-n 10","-n 100")
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]

@@ -18,4 +18,5 @@ if [[ "${LASTNIGHTLY}" != "${LATESTNIGHTLY}" ]];then
      mkdir -p ${EOSWWWDIR}/results/${LATESTNIGHTLY}
      cp -pv ${WORKDIR}/${LATESTNIGHTLY}/src/TimeMemory/*.res ${EOSWWWDIR}/results/${LATESTNIGHTLY}
      cp -pv ${WORKDIR}/${LATESTNIGHTLY}/src/TimeMemory/*.sql3 ${EOSWWWDIR}/cgi-bin/data
+     rm -fv *.root
 fi
