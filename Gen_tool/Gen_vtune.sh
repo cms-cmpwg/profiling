@@ -90,5 +90,17 @@ vtune -collect hotspots -collect gpu-offload -collect threading  $(which cmsRun)
 vtune -collect hotspots -collect gpu-offload -collect threading  $(which cmsRun) ./step4_PAT_PU.py >step4.log 2>&1
 EOF
 
+# execute the workflows under vtune to gather the profiling data
 chmod +x vtune.sh
 ./vtune.sh
+
+# optionally start the vtune-backend server to make the reports web accessible with this command 
+# cd path to TimeMemory
+# vtune-backend --web-port 9090 --data-directory $PWD --log-to-console --disable-server-profiling
+#
+# the console will display the url with a one time password
+# https://localhost:9090?pw=############
+# you will be prompted to enter a new password when you connect.
+# the is saved in a session cookie
+# the connection is self signed you will get a warnings from your browser
+# you will have to make a ssh tunnel for port 9090 to 127.0.0.1:9900
