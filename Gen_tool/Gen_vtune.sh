@@ -84,10 +84,10 @@ cat << EOF >> vtune.sh
 eval $(scram runtime -sh)
 which cmsRun
 which vtune
-vtune -collect hotspots -collect gpu-offload -collect threading  $(which cmsRun) ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log 2>&1
-vtune -collect hotspots -collect gpu-offload -collect threading  $(which cmsRun) ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log 2>&1
-vtune -collect hotspots -collect gpu-offload -collect threading  $(which cmsRun) ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log 2>&1
-vtune -collect hotspots -collect gpu-offload -collect threading  $(which cmsRun) ./step4_PAT_PU.py >step4.log 2>&1
+vtune -collect hotspots $(which cmsRun) ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log 2>&1
+vtune -collect hotspots $(which cmsRun) ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log 2>&1
+vtune -collect hotspots $(which cmsRun) ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log 2>&1
+vtune -collect hotspots $(which cmsRun) ./step4_PAT_PU.py >step4.log 2>&1
 EOF
 
 # execute the workflows under vtune to gather the profiling data
