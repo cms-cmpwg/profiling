@@ -82,10 +82,14 @@ cat << EOF >> vtune.sh
 eval \$(scram runtime -sh\)
 CMSRUN=\$\(which cmsRun\)
 VTUNE=\$\(which vtune\)
-VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log
-VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log
-VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log
-VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step4_PAT_PU.py >step4.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step4_PAT_PU.py >step4.log
+\$VTUNE -report gprof-cc -r r000hs -format=csv -csv-delimiter=semicolon >r000hs.gprof_cc.csv
+\$VTUNE -report gprof-cc -r r001hs -format=csv -csv-delimiter=semicolon >r001hs.gprof_cc.csv
+\$VTUNE -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon >r002hs.gprof_cc.csv
+\$VTUNE -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon >r003hs.gprof_cc.csv
 EOF
 
 # execute the workflows under vtune to gather the profiling data
