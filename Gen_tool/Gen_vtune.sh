@@ -47,13 +47,11 @@ with open('cmdLog','r') as f:
                 if line.startswith(' cmsDriver'):
                         cnt+=1
 ## --Set N events
-                        line=line.replace("-n 10","-n 160")
+                        line=line.replace("-n 10","-n 20")
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]
-                                line_list.insert(-3,'--nThreads 16')
                                 line_list.insert(-3,'--no_exec')
-                                line_list.insert(-9,"--customise Validation/Performance/TimeMemoryInfo.py")
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
@@ -78,29 +76,33 @@ chmod +x read.py
 #EOF
 
 cat << EOF >> vtune.sh
-#!/bin/bash -x
-. /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/intel/oneapi-2021.1-beta05/inteloneapi/setvars.sh
+#!/bin/bash
+. /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/intel/oneapi-2021.1-beta06/inteloneapi/setvars.sh
 . /cvmfs/cms.cern.ch/cmsset_default.sh
-eval $(scram runtime -sh)
-which cmsRun
-which vtune
-vtune -collect hotspots $(which cmsRun) ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log 2>&1
-vtune -collect hotspots $(which cmsRun) ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log 2>&1
-vtune -collect hotspots $(which cmsRun) ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log 2>&1
-vtune -collect hotspots $(which cmsRun) ./step4_PAT_PU.py >step4.log 2>&1
+eval \$(scram runtime -sh\)
+CMSRUN=\$\(which cmsRun\)
+VTUNE=\$\(which vtune\)
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log
+\$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step4_PAT_PU.py >step4.log
+\$VTUNE -report gprof-cc -r r000hs -format=csv -csv-delimiter=semicolon >r000hs.gprof_cc.csv
+\$VTUNE -report gprof-cc -r r001hs -format=csv -csv-delimiter=semicolon >r001hs.gprof_cc.csv
+\$VTUNE -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon >r002hs.gprof_cc.csv
+\$VTUNE -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon >r003hs.gprof_cc.csv
 EOF
 
 # execute the workflows under vtune to gather the profiling data
 chmod +x vtune.sh
-./vtune.sh
-
-# optionally start the vtune-backend server to make the reports web accessible with this command 
-# cd path to TimeMemory
-# vtune-backend --web-port 9090 --data-directory $PWD --log-to-console --disable-server-profiling
-#
-# the console will display the url with a one time password
-# https://localhost:9090?pw=############
-# you will be prompted to enter a new password when you connect.
-# the is saved in a session cookie
-# the connection is self signed you will get a warnings from your browser
-# you will have to make a ssh tunnel for port 9090 to 127.0.0.1:9900
+cat ./vtune.sh
+echo  Run ./vtune.sh to generate profiling data
+echo  optionally start the vtune-backend server to make the reports web accessible with this command 
+echo  cd path to TimeMemory
+echo  vtune-backend --web-port 9090 --data-directory $PWD --log-to-console --disable-server-profiling
+echo 
+echo  the console will display the url with a one time password
+echo  https://localhost:9090?pw=############
+echo  you will be prompted to enter a new password when you connect.
+echo  the is saved in a session cookie
+echo  the connection is self signed you will get a warnings from your browser
+echo  you will have to make a ssh tunnel for port 9090 to 127.0.0.1:9900
