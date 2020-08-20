@@ -17,16 +17,16 @@ echo $CMSSW_BASE
 
 
 #step1
-igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >& step1_cpu.log
+igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
 #step2
-igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >& step2_cpu.log
+igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $(ls step2*.py) >& step2_cpu.log
 
 
 #step3
-igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >& step3_cpu.log
+igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $(ls step3*.py) >& step3_cpu.log
 
 
 #step4
-igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun ./step4_PAT_PU.py >& step4_cpu.log
+igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $(ls step4*.py) >& step4_cpu.log

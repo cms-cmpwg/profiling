@@ -16,17 +16,17 @@ echo "My loc"
 echo $CMSSW_BASE
 
 #step1
-cmsRun$VDT ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py  >& step1$VDT.log
+cmsRun$VDT $(ls *_GEN_SIM.py)  >& step1$VDT.log
 
 
 #step2
-cmsRun$VDT ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >& step2$VDT.log
+cmsRun$VDT $(ls step2*.py) >& step2$VDT.log
 
 
 #step3
-cmsRun$VDT ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py  >& step3$VDT.log
+cmsRun$VDT $(ls step3*.py)  >& step3$VDT.log
 
 
 #step4
-cmsRun$VDT ./step4_PAT_PU.py  >& step4$VDT.log
+cmsRun$VDT $(ls step4*.py)  >& step4$VDT.log
 
