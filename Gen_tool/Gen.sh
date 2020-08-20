@@ -5,8 +5,9 @@ export SCRAM_ARCH=$ARCHITECTURE
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 source $VO_CMS_SW_DIR/cmsset_default.sh
 
-scramv1 project $RELEASE_FORMAT
-cd ${RELEASE_FORMAT}/src
+#scramv1 project $RELEASE_FORMAT
+#cd ${RELEASE_FORMAT}/src
+cd src
 eval `scramv1 runtime -sh`
 
 ## --2. "RunThematrix" dry run
