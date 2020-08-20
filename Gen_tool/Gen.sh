@@ -1,25 +1,17 @@
 #!/bin/bash
 
-CMSSW_v=$1
 ## --1. Install CMSSW version and setup environment
-echo "Your SCRAM_ARCH "
-export SCRAM_ARCH=slc7_amd64_gcc900
+export SCRAM_ARCH=$ARCHITECTURE
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh
 
-echo "Start install $CMSSW_v ..."
-scramv1 project $CMSSW_v
-echo "Install success"
-echo "Set CMSSW environment ...'"
-cd ${CMSSW_v}/src
+scramv1 project $RELEASE_FORMAT
+cd ${RELEASE_FORMAT}/src
 eval `scramv1 runtime -sh`
-#echo "Compiling ...'"
-#scram b -j 6
 
 ## --2. "RunThematrix" dry run
 
-runTheMatrix.py -w upgrade $WORKFLOWS --dryRun #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --command '-n $EVENTS --nThreads 1 --customise Validation/Performance/TimeMemoryInfo.py' --dryRun #200PU for 11_2_X
 
 #tail *.log
 
@@ -41,7 +33,7 @@ with open('cmdLog','r') as f:
                 if line.startswith(' cmsDriver'):
                         cnt+=1
 ## --Set N events
-                        line=line.replace("-n 10","-n 20")
+                        line=line.replace("-n 10","-n $EVENTS")
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]
@@ -58,6 +50,7 @@ with open('cmdLog','r') as f:
                         print(line)
                         print(" ")
                         subprocess.check_output (line,shell=True)
+
 EOF
 
 # run cmsDriver.py
@@ -66,10 +59,6 @@ chmod +x read.py
 
 
 ## --4. Make profiler 
-
-
-
-#EOF
 
 cat << EOF >> profile.sh
 #!/bin/bash
