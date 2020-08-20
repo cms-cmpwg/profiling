@@ -11,7 +11,7 @@ eval `scramv1 runtime -sh`
 
 ## --2. "RunThematrix" dry run
 
-runTheMatrix.py -w upgrade $WORKFLOWS --command '-n $EVENTS --nThreads 1 --customise Validation/Performance/TimeMemoryInfo.py' --dryRun #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --command '--number=$EVENTS --nThreads=1 --customise Validation/Performance/TimeMemoryInfo.py --no_exec' --dryRun #200PU for 11_2_X
 
 #tail *.log
 
@@ -33,13 +33,9 @@ with open('cmdLog','r') as f:
                 if line.startswith(' cmsDriver'):
                         cnt+=1
 ## --Set N events
-                        line=line.replace("-n 10","-n $EVENTS")
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]
-                                line_list.insert(-3,'--nThreads 1')
-                                line_list.insert(-3,'--no_exec')
-                                line_list.insert(-9,"--customise Validation/Performance/TimeMemoryInfo.py")
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
