@@ -12,7 +12,7 @@ eval `scramv1 runtime -sh`
 
 ## --2. "RunThematrix" dry run
 
-runTheMatrix.py -w upgrade $WORKFLOWS --command \"--number=$EVENTS --nThreads=1 --customise Validation/Performance/TimeMemoryInfo.py --no_exec\" --dryRun #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=1\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
 
 #tail *.log
 
