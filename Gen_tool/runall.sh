@@ -4,7 +4,7 @@ CMSSW_v=$RELEASE_FORMAT
 VDT=""
 
 echo "Your SCRAM_ARCH "
-export SCRAM_ARCH=slc7_amd64_gcc900
+export SCRAM_ARCH=$ARCHITECTURE
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh

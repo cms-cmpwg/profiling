@@ -16,17 +16,17 @@ echo "My loc"
 echo $CMSSW_BASE
 
 #step1
-igprof -mp -o ./igprofMEM_step1.mp -- cmsRun $(ls *GEN_SIM.py)  >& step1_mem.log
+igprof -mp -o ./igprofMEM_step1.mp -- cmsRun  $WORKSPACE/profiling/wrapper.py $(ls *GEN_SIM.py)  >& step1_mem.log
 
 
 #step2
-igprof -mp -o ./igprofMEM_step2.mp -- cmsRun $(ls step2*.py) >& step2_mem.log
+igprof -mp -o ./igprofMEM_step2.mp -- cmsRun $WORKSPACE/profiling/wrapper.py $(ls step2*.py) >& step2_mem.log
 
 
 #step3
-igprof -mp -o ./igprofMEM_step3.mp -- cmsRun $(ls step3*.py)  >& step3_mem.log
+igprof -mp -o ./igprofMEM_step3.mp -- cmsRun $WORKSPACE/profiling/wrapper.py $(ls step3*.py)  >& step3_mem.log
 
 
 #step4
-igprof -mp -o ./igprofMEM_step4.mp -- cmsRun $(ls step4*.py)  >& step4_mem.log
+igprof -mp -o ./igprofMEM_step4.mp -- cmsRun $WORKSPACE/profiling/wrapper.py $(ls step4*.py)  >& step4_mem.log
 
