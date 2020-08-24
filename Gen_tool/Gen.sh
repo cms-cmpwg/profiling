@@ -8,7 +8,8 @@ export SCRAM_ARCH=slc7_amd64_gcc900
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh
-
+source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
+voms-proxy-init
 echo "Start install $CMSSW_v ..."
 scramv1 project $CMSSW_v
 echo "Install success"
