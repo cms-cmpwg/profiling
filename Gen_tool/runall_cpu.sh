@@ -1,35 +1,51 @@
 #!/bin/bash
 
-CMSSW_v=$1
+# WORKSPACE is defined in Jenkins job
+
+if [ "X$RELEASE_FORMAT" != "X"];then
+  CMSSW_v=$RELEASE_FORMAT
+else
+  CMSSW_v=$1
+fi
 
 ## --1. Install CMSSW version and setup environment
 echo "Your SCRAM_ARCH "
-#export SCRAM_ARCH=slc7_amd64_gcc700
-export SCRAM_ARCH=slc7_amd64_gcc900
-export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
-source $VO_CMS_SW_DIR/cmsset_default.sh
+if [ "X$ARCHITECTURE" != "X" ];then
+  export SCRAM_ARCH=$ARCHITECTURE
+else 
+  export SCRAM_ARCH=slc7_amd64_gcc900
+  export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+  echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
+  source $VO_CMS_SW_DIR/cmsset_default.sh
+fi
 
-echo "Start install $CMSSW_v ..."
-#scramv1 project $CMSSW_v
-cd $CMSSW_v/src
+if [ "X$WORKSPACE" != "X" ];then
+  cd $WORKSPACE/$CMSSW_v/src
+else
+  cd $CMSSW_v/src
+fi 
+
 eval `scramv1 runtime -sh`
 cd TimeMemory
 echo "My loc"
 echo $CMSSW_BASE
 
+if [ "X$WORKSPACE" != "X" ];then
+  export WRAPPER=$WORKSPACE/profiling/wrapper.py 
+fi
 
 #step1
-igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $(ls *GEN_SIM.py) >& step1_cpu.log
+
+igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
 #step2
-igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $(ls step2*.py) >& step2_cpu.log
+igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
 
 
 #step3
-igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $(ls step3*.py) >& step3_cpu.log
+igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
 
 
 #step4
-igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $(ls step4*.py) >& step4_cpu.log
+igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log

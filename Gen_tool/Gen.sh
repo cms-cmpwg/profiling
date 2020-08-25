@@ -1,34 +1,46 @@
 #!/bin/bash
-
-CMSSW_v=$1
+# ARCHITECTURE, RELEASE_FORMAT and WORKFLOWS are defined in Jenkins job
+# voms-proxy-init is run in Jenkins Singularity wrapper script.
 
 ## --1. Install CMSSW version and setup environment
-echo "Your SCRAM_ARCH "
-export SCRAM_ARCH=slc7_amd64_gcc900
-export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
-source $VO_CMS_SW_DIR/cmsset_default.sh
-source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
-voms-proxy-init
-echo "Start install $CMSSW_v ..."
-scramv1 project $CMSSW_v
-echo "Install success"
-echo "Set CMSSW environment ...'"
-cd ${CMSSW_v}/src
+if [ "X$ARCHITECTURE" != "X" ];then
+  export SCRAM_ARCH=$ARCHITECTURE
+else
+  export SCRAM_ARCH=slc7_amd64_gcc900
+fi
+
+
+if [ "X$RELEASE_FORMAT" == "X" ]; then
+  # first argument must be CMSSW_11_2_X... 
+  export CMSSW_v=$1
+  export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+  source $VO_CMS_SW_DIR/cmsset_default.sh
+  source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
+  voms-proxy-init
+  echo "Start install ${CMSSW_v} ..."
+  scramv1 project ${CMSSW_v}
+  echo "Install success"
+  echo "Set CMSSW environment ...'"
+  cd ${CMSSW_v}/src
+else
+  #Jenkins Singularity wrapper script runs 'scram project $RELEASE_FORMAT'
+  cd src
+fi 
+
 eval `scramv1 runtime -sh`
-#echo "Compiling ...'"
-#scram b -j 6
 
 ## --2. "RunThematrix" dry run
 
-
-export WORKFLOWS="-l 23434.21"
-export EVENTS=10
+if [ "X$WORKFLOWS" == "X" ];then
+  export WORKFLOWS="-l 23434.21"
+  export EVENTS=10
+fi 
 runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=1\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
-tail *.log
 
+# find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 for i in $(ls -d [0-9]*/); do 
 outname=${i%%/}; done
+# rename the WF subdir to TimeMemory
 mv $outname TimeMemory
 cd TimeMemory
 
@@ -58,6 +70,7 @@ with open('cmdLog','r') as f:
                         print(line)
                         print(" ")
                         subprocess.check_output (line,shell=True)
+
 EOF
 
 # run cmsDriver.py
@@ -66,7 +79,6 @@ chmod +x read.py
 
 
 ## --4. Make profiler 
-
 
 cat << EOF >> profile.sh
 #!/bin/bash
