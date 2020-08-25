@@ -2,7 +2,7 @@
 
 # WORKSPACE is defined in Jenkins job
 
-if [ "X$RELEASE_FORMAT" != "X"];then
+if [ "X$RELEASE_FORMAT" != "X" ];then
   CMSSW_v=$RELEASE_FORMAT
 else
   CMSSW_v=$1
