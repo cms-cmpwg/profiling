@@ -66,8 +66,9 @@ with open('cmdLog','r') as f:
                                 line_list = line.split()
                                 logfile = line_list[-2]
                                 line_list.insert(-3,'--no_exec')
-                                line_list.insert(-9,'-customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob')
+                                line_list.insert(-9,'--customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob')
                                 line=' '.join(line_list)
+                                line=line.replace('--customise=Validation/Performance/TimeMemoryInfo.py','')
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
                                 line=line.replace("--nThreads=4","--nThreads=1")
