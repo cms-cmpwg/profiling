@@ -35,7 +35,13 @@ if [ "X$WORKFLOWS" == "X" ];then
   export WORKFLOWS="-l 23434.21"
   export EVENTS=10
 fi 
-runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=1\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
+
+if [ "X$WORKSPACE" != "X" ];then
+#running on Jenkins WORKSPACE is defined and we want to generate and run the config files
+runTheMatrix.py -w upgrade $WORKFLOWS --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+else
+runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
+fi
 
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 for i in $(ls -d [0-9]*/); do 
@@ -63,6 +69,7 @@ with open('cmdLog','r') as f:
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
+                                line=line.replace("--nThreads=4","--nThreads=1")
 ## --Do not run step4
                         else:
                                  break
