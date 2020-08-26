@@ -6,7 +6,7 @@
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 else
-  export SCRAM_ARCH=slc7_amd64_gcc900
+  export SCRAM_ARCH=slc7_amd64_gcc820
 fi
 
 
@@ -38,9 +38,9 @@ fi
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-runTheMatrix.py -w upgrade $WORKFLOWS --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob #200PU for 11_2_X
 else
-runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob #200PU for 11_2_X
 fi
 
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
