@@ -40,7 +40,7 @@ if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
 runTheMatrix.py -w upgrade $WORKFLOWS --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
 else
-runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
 fi
 
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
@@ -66,6 +66,7 @@ with open('cmdLog','r') as f:
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]
+                                line_list.insert(-3,'--no_exec')
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
