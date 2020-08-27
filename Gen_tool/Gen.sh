@@ -71,7 +71,6 @@ with open('cmdLog','r') as f:
                                 line=line.replace('--customise=Validation/Performance/TimeMemoryInfo.py','')
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
-                                line=line.replace("--nThreads=4","--nThreads=1")
                         else:
                                  break
 ## --Excute cmsDriver

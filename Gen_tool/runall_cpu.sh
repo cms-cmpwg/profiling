@@ -31,7 +31,7 @@ echo "My loc"
 echo $CMSSW_BASE
 
 if [ "X$WORKSPACE" != "X" ];then
-  export WRAPPER=$WORKSPACE/profiling/wrapper.py 
+  export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py 
 fi
 
 #step1
