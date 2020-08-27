@@ -19,16 +19,16 @@ else
   source $VO_CMS_SW_DIR/cmsset_default.sh
 fi
 
-if [ "X$WORKSPACE" != "X" ];then
-  cd $WORKSPACE/$CMSSW_v/src
+if [ "X$WORKSPACE" != "X" ]; then
+  WF=`$WORKFLOWS | cut -d" " -f2`
+  cd $WORKSPACE/$CMSSW_v/src/$WF
 else
-  cd $CMSSW_v/src
-fi 
-
+  cd $CMSSW_v/src/TimeMemory
+fi
 eval `scramv1 runtime -sh`
-cd TimeMemory
+
 echo "My loc"
-echo $CMSSW_BASE
+echo $PWD
 
 if [ "X$WORKSPACE" != "X" ];then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py 
