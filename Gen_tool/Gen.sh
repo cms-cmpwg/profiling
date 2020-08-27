@@ -33,12 +33,12 @@ eval `scramv1 runtime -sh`
 
 if [ "X$WORKFLOWS" == "X" ];then
   export WORKFLOWS="-l 23434.21"
-  export EVENTS=10
+  export EVENTS=20
 fi 
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-runTheMatrix.py -w upgrade $WORKFLOWS --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+runTheMatrix.py -w upgrade $WORKFLOWS --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
 else
 runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
 fi
@@ -46,11 +46,17 @@ fi
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 for i in $(ls -d [0-9]*/); do 
 outname=${i%%/}; done
+
+if [ "X$WORKSPACE" != "X" ];then
+# rename the WF subdir to WF num
+  dir=`echo $WORKFLOWS | cut -d" " -f2`
+  mv $outname $dir
+  cd $dir
+else
 # rename the WF subdir to TimeMemory
-mv $outname TimeMemory
-cd TimeMemory
-
-
+  mv $outname TimeMemory
+  cd TimeMemory
+fi
 # --3. Make cmdLog run_option  -- Set N events
 cat << EOF >> read.py
 #!/usr/bin/env python
@@ -70,7 +76,6 @@ with open('cmdLog','r') as f:
                                 line=' '.join(line_list)
                                 line=line.replace('--customise=Validation/Performance/TimeMemoryInfo.py','')
                                 line=line.replace(logfile,"step%s.log"%cnt)
-                                line=line.replace('file:', 'file:${OUTPUT_DIR:-"."}/')
                         else:
                                  break
 ## --Excute cmsDriver

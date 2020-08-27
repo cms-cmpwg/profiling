@@ -1,23 +1,38 @@
 #!/bin/bash
 
-CMSSW_v=$RELEASE_FORMAT
+if [ "X$WORKSPACE" != "X" ]; then
+  CMSSW_v=$RELEASE_FORMAT
+else 
+  CMSSW_v=$1
 VDT=""
 
 echo "Your SCRAM_ARCH "
-export SCRAM_ARCH=$ARCHITECTURE
+
+if [ "X$WORKSPACE" != "X" ]; then
+  export SCRAM_ARCH=$ARCHITECTURE
+else
+  export SCRAM_ARCH=slc7_amd64_gcc820
+fi
+
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
 echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh
 
-cd $WORKSPACE/$CMSSW_v/src
+if [ "X$WORKSPACE" != "X" ]; then
+  WF=`$WORKFLOWS | cut -d" " -f2`
+  cd $WORKSPACE/$CMSSW_v/src/$WF
+else
+  cd $CMSSW_v/src/TimeMemory
+fi
 eval `scramv1 runtime -sh`
-cd TimeMemory
+
 echo "My loc"
-echo $CMSSW_BASE
+echo $PWD
 
 if [ "X$WORKSPACE" != "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
 fi
+
 #step1
 cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
 
