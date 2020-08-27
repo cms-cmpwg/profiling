@@ -17,7 +17,7 @@ echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh
 
 if [ "X$WORKSPACE" != "X" ]; then
-  WF=`$WORKFLOWS | cut -d" " -f2`
+  WF=`echo $WORKFLOWS | cut -d" " -f2`
   cd $WORKSPACE/$CMSSW_v/src/$WF
 else
   cd $CMSSW_v/src/TimeMemory
