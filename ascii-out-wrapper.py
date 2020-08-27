@@ -5,4 +5,3 @@ process = getattr(__import__(config,fromlist=["process"]),"process")
 outputs = process.outputModules_()
 for output in outputs:
 	setattr(process,output,cms.OutputModule("AsciiOutputModule", outputCommands = getattr(getattr(process,output),"outputCommands")))
-process.options.numberOfThreads = cms.untracked.uint32(1)
