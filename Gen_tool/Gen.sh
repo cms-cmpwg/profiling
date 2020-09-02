@@ -1,5 +1,5 @@
 #!/bin/bash
-# ARCHITECTURE, RELEASE_FORMAT and WORKFLOWS are defined in Jenkins job
+# ARCHITECTURE, RELEASE_FORMAT and PROFILING_WORKFLOW are defined in Jenkins job
 # voms-proxy-init is run in Jenkins Singularity wrapper script.
 
 ## --1. Install CMSSW version and setup environment
@@ -31,16 +31,16 @@ eval `scramv1 runtime -sh`
 
 ## --2. "RunThematrix" dry run
 
-if [ "X$WORKFLOWS" == "X" ];then
-  export WORKFLOWS="-l 23434.21"
+if [ "X$PROFILING_WORKFLOW" == "X" ];then
+  export PROFILING_WORKFLOW="23434.21"
   export EVENTS=20
 fi 
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
+runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
 else
-runTheMatrix.py -w upgrade $WORKFLOWS --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob #200PU for 11_2_X
+runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob #200PU for 11_2_X
 fi
 
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
@@ -49,7 +49,7 @@ outname=${i%%/}; done
 
 if [ "X$WORKSPACE" != "X" ];then
 # rename the WF subdir to WF num
-  dir=`echo $WORKFLOWS | cut -d" " -f2`
+  dir=$PROFILING_WORKFLOW
   mv $outname $dir
   cd $dir
 else
