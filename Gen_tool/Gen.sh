@@ -3,16 +3,23 @@
 # voms-proxy-init is run in Jenkins Singularity wrapper script.
 
 ## --1. Install CMSSW version and setup environment
+
+CMSSW_v=$1
+if [ "X$RELEASE_FORMAT" != "X" ];then
+  CMSSW_v=$RELEASE_FORMAT
+fi
+
+if [ "X$CMSSW_IB" != "X" ]; then
+  CMSSW_v=$CMSSW_IB
+fi
+
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 else
   export SCRAM_ARCH=slc7_amd64_gcc820
 fi
 
-
-if [ "X$RELEASE_FORMAT" == "X" ]; then
-  # first argument must be CMSSW_11_2_X... 
-  export CMSSW_v=$1
+if [ "X$RELEASE_FORMAT" == "X" -o  "X$CMSSW_IB" == "X" ]; then
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
   source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
@@ -22,11 +29,9 @@ if [ "X$RELEASE_FORMAT" == "X" ]; then
   echo "Install success"
   echo "Set CMSSW environment ...'"
   cd ${CMSSW_v}/src
-else
-  #Jenkins Singularity wrapper script runs 'scram project $RELEASE_FORMAT'
-  cd src
 fi 
 
+cd ${CMSSW_v}/src
 eval `scramv1 runtime -sh`
 
 ## --2. "RunThematrix" dry run
