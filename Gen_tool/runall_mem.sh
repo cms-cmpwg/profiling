@@ -1,8 +1,10 @@
 #!/bin/bash
+  CMSSW_v=$1
 if [ "X$RELEASE_FORMAT" != "X" ];then
   CMSSW_v=$RELEASE_FORMAT
-else
-  CMSSW_v=$1
+fi
+if [ "X$CMSSW_IB" != "X" ]; then
+  CMSSW_v=$CMSSW_IB
 fi
 
 ## --1. Install CMSSW version and setup environment
