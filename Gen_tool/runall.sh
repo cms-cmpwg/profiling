@@ -1,15 +1,18 @@
 #!/bin/bash
+CMSSW_v=$1
 
-if [ "X$WORKSPACE" != "X" ]; then
-  CMSSW_v=$RELEASE_FORMAT
-else 
-  CMSSW_v=$1
+if [ "X$RELEASE_FORMAT" != "X" ]; then
+  CMSSW_v=$RELEASE_FORMAT 
 fi
+if [ "X$CMSSW_IB" != "X" ]; then
+  CMSSW_v=$CMSSW_IB
+fi
+
 VDT=""
 
 echo "Your SCRAM_ARCH "
 
-if [ "X$WORKSPACE" != "X" ]; then
+if [ "X$ARCHITECTURE" != "X" ]; then
   export SCRAM_ARCH=$ARCHITECTURE
 else
   export SCRAM_ARCH=slc7_amd64_gcc820
