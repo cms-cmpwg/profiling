@@ -1,12 +1,5 @@
 #!/bin/bash
   CMSSW_v=$1
-if [ "X$RELEASE_FORMAT" != "X" ];then
-  CMSSW_v=$RELEASE_FORMAT
-fi
-if [ "X$CMSSW_IB" != "X" ]; then
-  CMSSW_v=$CMSSW_IB
-fi
-
 ## --1. Install CMSSW version and setup environment
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
