@@ -12,14 +12,16 @@ fi
 if [ "X$CMSSW_IB" != "X" ]; then
   CMSSW_v=$CMSSW_IB
 fi
+echo $CMSSW_v
 
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 else
   export SCRAM_ARCH=slc7_amd64_gcc820
 fi
+echo $SCRAM_ARCH
 
-if [ "X$RELEASE_FORMAT" == "X" -o  "X$CMSSW_IB" == "X" ]; then
+if [ "X$RELEASE_FORMAT" == "X" -a  "X$CMSSW_IB" == "X" ]; then
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
   source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
@@ -29,10 +31,10 @@ if [ "X$RELEASE_FORMAT" == "X" -o  "X$CMSSW_IB" == "X" ]; then
   echo "Install success"
   echo "Set CMSSW environment ...'"
   cd ${CMSSW_v}/src
+  eval `scramv1 runtime -sh`  
+else
+  cd $WORKSPACE/${CMSSW_v}/src
 fi 
-
-cd ${CMSSW_v}/src
-eval `scramv1 runtime -sh`
 
 ## --2. "RunThematrix" dry run
 
