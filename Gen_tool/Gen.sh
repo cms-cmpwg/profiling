@@ -38,9 +38,9 @@ fi
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
+runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
 else
-runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob #200PU for 11_2_X
+runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob #200PU for 11_2_X
 fi
 
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
@@ -74,6 +74,7 @@ with open('cmdLog','r') as f:
                                 line_list.insert(-3,'--no_exec')
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
+                                line=line.replace('HLTrigger/Timer/FastTimer.customise_timer_service_singlejob', 'Validation/Performance/TimeMemoryInfo.py')
                         else:
                                  break
 ## --Excute cmsDriver
