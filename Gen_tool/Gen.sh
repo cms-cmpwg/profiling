@@ -72,9 +72,10 @@ with open('cmdLog','r') as f:
                                 line_list = line.split()
                                 logfile = line_list[-2]
                                 line_list.insert(-3,'--no_exec')
+                                line_list.insert(-9, '--customize=Validation/Performance/TimeMemoryInfo.py')
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
-                                line=line.replace('HLTrigger/Timer/FastTimer.customise_timer_service_singlejob', 'Validation/Performance/TimeMemoryInfo.py')
+                                line=line.replace('--customize=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob', '')
                         else:
                                  break
 ## --Excute cmsDriver
