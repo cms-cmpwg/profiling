@@ -11,8 +11,10 @@ parser.add_argument('--old', type=str,
             help="old version ex. CMSSW11_0_0_pre1 or CMSSW11_0_0_pre1PAT")
 parser.add_argument('--new', type=str,
             help="new version ex. CMSSW11_0_0_pre2 or CMSSW11_0_0_pre2PAT")
-parser.add_argument('--baseurl', type=str, default='https://cmssdt.cern.ch/SDT/cgi-bin/igprof-navigator', required=False,
-            help="base url for igprof-navigator ex. https://cmssdt.cern.ch/SDT/cgi-bin/igprof-navigator")
+parser.add_argument('--baseurl', type=str, default='https://cmssdt.cern.ch', required=False,
+            help="base url for igprof-navigator ex. https://cmssdt.cern.ch")
+parser.add_argument('--igprof', type=str, default='/SDT/cgi-bin/igprof-navigator', required=False,
+            help="path to igprof-navigator from base url, ex. /SDT/cgi-bin/igprof-navigator")
 parser.add_argument('--arch', type=str, default='slc7_amd64_gcc820', required=False,
             help="arch of version, ex slc7_amd64_gcc820")
 parser.add_argument('--workflow', type=str, default='23434.21', required=False,
@@ -24,17 +26,15 @@ isPAT=False
 if args.old[-3:] == 'PAT':
     isPAT=True
 
-baseurl='https://cmssdt.cern.ch/SDT/cgi-bin/igprof-navigator'
-
-oldlink='%s/%s/%s/profiling/%s/igprofCPU_step3' % (args.baseurl,args.old,args.arch,args.workflow)
-newlink='%s/%s/%s/profiling/%s/igprofCPU_step3' % (args.baseurl,args.new,args.arch,args.workflow)
+oldlink='%s/%s/%s/%s/profiling/%s/igprofCPU_step3' % (args.baseurl,args.igprof,args.old,args.arch,args.workflow)
+newlink='%s/%s/%s/%s/profiling/%s/igprofCPU_step3' % (args.baseurl,args.igprof,args.new,args.arch,args.workflow)
 
 
-new_req=requests.get(newlink)
+new_req=requests.get(newlink, verify=False)
 new_html = new_req.text
 new_soup = BeautifulSoup(new_html,'html.parser')
 
-old_req=requests.get(oldlink)
+old_req=requests.get(oldlink, verify=False)
 old_html = old_req.text
 old_soup = BeautifulSoup(old_html,'html.parser')
 
@@ -121,7 +121,7 @@ for str2 in list_str2:
 	            
 	if not link_list:
 		continue;
-	old_str2_link=baseurl+link_list[0]
+	old_str2_link=args.baseurl+link_list[0]
 	
 	link_list=[]
 	for link in new_soup.findAll("a"):
@@ -133,13 +133,13 @@ for str2 in list_str2:
 	
 	if not link_list:
 		continue;            
-	new_str2_link=baseurl+link_list[0]
+	new_str2_link=args.baseurl+link_list[0]
 	
-	old_req=requests.get(old_str2_link)
+	old_req=requests.get(old_str2_link, verify=False)
 	old_html = old_req.text
 	old_str2_soup = BeautifulSoup(old_html,'html.parser')
 	
-	new_req=requests.get(new_str2_link)
+	new_req=requests.get(new_str2_link, verify=False)
 	new_html = new_req.text
 	new_str2_soup = BeautifulSoup(new_html,'html.parser')
 	
