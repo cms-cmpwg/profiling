@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # ARCHITECTURE, RELEASE_FORMAT and PROFILING_WORKFLOW are defined in Jenkins job
 # voms-proxy-init is run in Jenkins Singularity wrapper script.
 
@@ -33,27 +33,31 @@ fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="23434.21"
+fi 
+if [ "X$EVENTS" == "X" ];then
   export EVENTS=20
 fi 
 
-if [ "X$WORKSPACE" != "X" ];then
-#running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
-else
-runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=4\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+if [ "$ADDITIONAL_TEST_NAME" == "profiling" ]; then
+  NTHREADS=4
+else 
+  NTHREADS=8
 fi
 
-# find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
-for i in $(ls -d [0-9]*/); do 
-outname=${i%%/}; done
-
 if [ "X$WORKSPACE" != "X" ];then
-# rename the WF subdir to WF num
-  dir=$PROFILING_WORKFLOW
-  mv $outname $dir
-  cd $dir
+#running on Jenkins WORKSPACE is defined and we want to generate and run the config files
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+  outname=$(ls -d ${PROFILING_WORKFLOW}*) 
+  mv $outname TimeMemory
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
+  outname=$(ls -d ${PROFILING_WORKFLOW}*) 
+  mv $outname $PROFILING_WORKFLOW
+  cd $PROFILING_WORKFLOW
 else
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+# find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 # rename the WF subdir to TimeMemory
+  outname=$(ls $PROFILING_WORKFLOW*) 
   mv $outname TimeMemory
   cd TimeMemory
 fi
@@ -71,11 +75,9 @@ with open('cmdLog','r') as f:
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]
-                                line_list.insert(-3,'--no_exec')
-                                line_list.insert(-9, '-customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob')
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
-                                line=line.replace('---customise=Validation/Performance/TimeMemoryInfo.py', '')
+                                line=line.replace('--customise=Validation/Performance/TimeMemoryInfo.py', '')
                         else:
                                  break
 ## --Excute cmsDriver
