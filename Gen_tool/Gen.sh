@@ -46,15 +46,15 @@ fi
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
   outname=$(ls -d ${PROFILING_WORKFLOW}*) 
   mv $outname TimeMemory
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob  #200PU for 11_2_X
   outname=$(ls -d ${PROFILING_WORKFLOW}*) 
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
 else
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --dryRun --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py #200PU for 11_2_X
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 # rename the WF subdir to TimeMemory
   outname=$(ls $PROFILING_WORKFLOW*) 
