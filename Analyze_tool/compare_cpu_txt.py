@@ -99,11 +99,14 @@ self_marker='- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -'
 
 re_selftime=re.compile(r"(\[\d+\])\s*((\d+['])?\d+\.?\d+)\s*((\d+['])?\d+\.?\d+)\s*((\d+['])?\d+\.?\d+)\s/\s((\d+['])?\d+\.?\d+)\s*(.*)")
 m=re_selftime.match('[19]        9.8     254.59       0.12 / 254.47     TrackstersProducer::produce(edm::Event&, edm::EventSetup const&)')
+#print(displaymatch(m))
 assert(m)
 re_parentfunc=re.compile(r"(\s*)((\d+['])?\d+\.?\d+)\s*(.........)\s*((\d+['])?\d+\.?\d+)\s/\s((\d+['])?\d+\.?\d+)\s*(.*)\s*(\[\d+\])")
 n=re_parentfunc.match("            4.9  .........     127.31 / 2'361.48     edm::stream::EDProducerAdaptorBase::doEvent(edm::EventPrincipal const&, edm::EventSetupImpl const&, edm::ActivityRegistry*, edm::ModuleCallingContext const*) [15]")
+#print(displaymatch(n))
 assert(n)
 o=re_selftime.match("[1]       100.0   2'597.60       0.00 / 2'597.60   <spontaneous>\n")
+#print(displaymatch(o))
 assert(o)
 
 inBlock=False
@@ -114,12 +117,12 @@ with open(args.old) as f:
         if inBlock:
             n=re_parentfunc.match(line.strip())
             if n and not parentSeen:
-                dfcontent=[n.groups()[9],n.groups()[1],n.groups()[2],n.groups()[4],n.groups()[6],n.groups()[8]]
+                dfcontent=[n.groups()[9],n.groups()[1],n.groups()[2],n.groups()[4],n.groups()[6],n.groups()[8].strip()]
                 alldfcontents.append(dfcontent)
-                parentSeen=n.groups()[8]
+                parentSeen=n.groups()[8].strip()
             m=re_selftime.match(line.strip())
             if m and parentSeen in list_str2:
-                dfcontent=[m.groups()[0],m.groups()[1],m.groups()[3],m.groups()[5],m.groups()[7],m.groups()[9]]
+                dfcontent=[m.groups()[0],m.groups()[1],m.groups()[3],m.groups()[5],m.groups()[7],m.groups()[9].strip()]
                 alldfcontents.append(dfcontent)
             if line.strip() == self_marker:
                 parentSeen=False
@@ -142,12 +145,11 @@ with open(args.new) as f:
         if inBlock:
             n=re_parentfunc.match(line.strip())
             if n and not parentSeen:
-                dfcontent=[n.groups()[9],n.groups()[1],n.groups()[2],n.groups()[4],n.groups()[6],n.groups()[8]]
-                alldfcontents.append(dfcontent)
-                parentSeen = n.groups()[8]
+                dfcontent=[n.groups()[9],n.groups()[1],n.groups()[2],n.groups()[4],n.groups()[6],n.groups()[8].strip()]
+                parentSeen = n.groups()[8].strip()
             m=re_selftime.match(line.strip())
             if m and parentSeen in list_str2:
-                dfcontent=[m.groups()[0],m.groups()[1],m.groups()[3],m.groups()[5],m.groups()[7],m.groups()[9]]
+                dfcontent=[m.groups()[0],m.groups()[1],m.groups()[3],m.groups()[5],m.groups()[7],m.groups()[9].strip()]
                 alldfcontents.append(dfcontent)
             if line.strip() == self_marker:
                 parentSeen=False
@@ -166,6 +168,9 @@ new_str2_df = new_str2_df.dropna()
 
 global_old_df = pd.concat([global_old_df,old_str2_df],ignore_index=True)
 global_new_df = pd.concat([global_new_df,new_str2_df],ignore_index=True)
+
+global_old_df['PercentageTotal'] =global_old_df['PercentageTotal'].astype('float')
+global_new_df['PercentageTotal'] =global_new_df['PercentageTotal'].astype('float')
 	
 global_old_df['SelfTotal'] =global_old_df['SelfTotal'].str.replace("'",'').astype('float')
 global_new_df['SelfTotal'] =global_new_df['SelfTotal'].str.replace("'",'').astype('float')
@@ -188,11 +193,12 @@ sorted_df = global_old_df
 Tot_strs  = sorted_df['Function']
 
 oldAll_=list(old_df[old_df['Function']=="<spontaneous>"][comul])
-
 if oldAll_:
-	oldAll=list(new_df.loc[new_df['Function']=="<spontaneous>"][comul])[0]
-else:
 	oldAll=list(old_df.loc[old_df['Function']=="<spontaneous>"][comul])[0]
+	newAll=list(old_df.loc[old_df['Function']=="<spontaneous>"][comul])[1]
+elif newAll_:
+	oldAll=list(new_df.loc[new_df['Function']=="<spontaneous>"][comul])[0]
+	newAll=list(new_df.loc[new_df['Function']=="<spontaneous>"][comul])[0]
 	
 
 
@@ -242,14 +248,14 @@ for Tot_str in Tot_strs:
 	
 	oldVal=global_old_df.loc[idx_old[0]]["SelfTotal"]
 	newVal=global_new_df.loc[idx_new[0]]["SelfTotal"]
-        print(oldVal, newVal)	
-	#oldVal_sum += oldVal
-	#newVal_sum += newVal
+        #print(oldVal, newVal)	
+	oldVal_sum += oldVal
+	newVal_sum += newVal
 	
-	delta	  = round((newVal - oldVal) / oldAll * 100.0,2)	
+	delta	  = round((newVal/newAll - oldVal/oldAll) * 100.0,2)	
 	#delta_sum = round((newVal_sum - oldVal_sum) / oldAll * 100.0,2)	
 
-	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}  - {7:<9} / {8:<9} *100% ] = [{9:<6}% ]         {10:<50}".format(idx_old[0],idx_new[0], global_old_df.loc[idx_old[0]]['total'],global_new_df.loc[idx_new[0]]['total'],global_old_df.loc[idx_old[0]]['SelfTotal'],global_new_df.loc[idx_new[0]]['SelfTotal'],newVal,oldVal,oldAll,delta,out_name))
+	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}/{7:<9} - {8:<9}/{9:<9} *100% ] = [{10:<6}% ]         {11:<50}".format(idx_old[0],idx_new[0], global_old_df.loc[idx_old[0]]['PercentageTotal'],global_new_df.loc[idx_new[0]]['PercentageTotal'],global_old_df.loc[idx_old[0]]['SelfTotal'],global_new_df.loc[idx_new[0]]['SelfTotal'],newVal,newAll,oldVal,oldAll,delta,out_name))
 
 
 print("\n")

@@ -6,7 +6,7 @@
 
 
 ## -- step3 AOD
-path_="../$1/src/TimeMemory/logs/step3.log"
+path_="$1"
 
 ## -- step4 MINIAOD
 #path_="../$1/src/TimeMemory/logs/step4.log"
@@ -16,10 +16,10 @@ path_="../$1/src/TimeMemory/logs/step3.log"
 ## --------------------- mode1 makes summary mode2 makes input if N05_makehist.py
 
 ## mode1
-#grep "^MemoryCheck\|^TimeEvent>" $path_  | awk -f getTimeMemSummary.awk
+grep "^MemoryCheck\|^TimeEvent>" $path_  | awk -f getTimeMemSummary.awk
 
 
 ## mode2 -- For make hist
 #grep "^MemoryCheck\|^TimeEvent>" $path_  > SUM_$1\.txt
-grep "^MemoryCheck\|^TimeEvent>" $path_  
+#grep "^MemoryCheck\|^TimeEvent>" $path_  
 #grep "^MemoryCheck\|^TimeEvent>" $path_  > PAT_SUM_$1\.txt
