@@ -7,8 +7,8 @@
 #sl="/x5/cms/jwkim/ServiceWork/tmp/$2/src/TimeMemory/logs/step3.log"
 
 # --- step4 MINIAOD
-ol="../$1/src/TimeMemory/logs/step4.log"
-sl="../$2/src/TimeMemory/logs/step4.log"
+ol="$1"
+sl="$2"
 
 
 ##--------------------- Args End
