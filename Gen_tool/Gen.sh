@@ -38,7 +38,7 @@ if [ "X$EVENTS" == "X" ];then
   export EVENTS=20
 fi 
 
-if [ "$ADDITIONAL_TEST_NAME" == "profiling" ]; then
+if [[ $NODE_NAME == "lxplus"* ]]; then
   NTHREADS=4
 else 
   NTHREADS=8
