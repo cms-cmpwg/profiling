@@ -6,8 +6,8 @@ if [ "X$ARCHITECTURE" != "X" ];then
 else
   export SCRAM_ARCH=slc7_amd64_gcc900
 fi
+echo "Your SCRAM_ARCH $SCRAM_ARCH"
 export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
 source $VO_CMS_SW_DIR/cmsset_default.sh
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
@@ -28,17 +28,17 @@ if [ "X$WORKSPACE" != "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
 fi
 
-#step1
+echo step1
 igprof -mp -o ./igprofMEM_step1.mp -- cmsRun  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
 
 
-#step2
+echo step2
 igprof -mp -o ./igprofMEM_step2.mp -- cmsRun $WRAPPER $(ls step2*.py) >& step2_mem.log
 
 
-#step3
+echo step3
 igprof -mp -o ./igprofMEM_step3.mp -- cmsRun $WRAPPER $(ls step3*.py)  >& step3_mem.log
 
 
-#step4
+echo step4
 igprof -mp -o ./igprofMEM_step4.mp -- cmsRun $WRAPPER $(ls step4*.py)  >& step4_mem.log
