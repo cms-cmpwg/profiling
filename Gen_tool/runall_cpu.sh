@@ -33,14 +33,17 @@ if [ "X$WORKSPACE" != "X" ];then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py 
 fi
 
-echo step1
+if [ "X$RUNALLSTEPS" != "X" ]; then
 
-igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
+  echo step1
+
+  igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
-echo step2
-igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
+  echo step2
+  igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
 
+fi
 
 echo step3
 igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
