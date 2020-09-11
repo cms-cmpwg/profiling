@@ -172,4 +172,4 @@ cat << EOF >> profile_mem.sh
 
 EOF
 
-chmod +x profile.sh
+chmod +x profile_mem.sh
