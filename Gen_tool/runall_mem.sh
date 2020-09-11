@@ -29,11 +29,11 @@ if [ "X$WORKSPACE" != "X" ]; then
 fi
 
 #step1
-igprof -mp -o ./igprofMEM_step1.mp -- cmsRun  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
+#igprof -mp -o ./igprofMEM_step1.mp -- cmsRun  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
 
 
 #step2
-igprof -mp -o ./igprofMEM_step2.mp -- cmsRun $WRAPPER $(ls step2*.py) >& step2_mem.log
+#igprof -mp -o ./igprofMEM_step2.mp -- cmsRun $WRAPPER $(ls step2*.py) >& step2_mem.log
 
 
 #step3
