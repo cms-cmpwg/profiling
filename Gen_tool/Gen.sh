@@ -47,12 +47,12 @@ fi
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
   if [ "X$RUNTIMEMEMORY" != "X" ]; then
-      runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
+      runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=1\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
       outname=$(ls -d ${PROFILING_WORKFLOW}*) 
       mkdir -p TimeMemory
       mv $outname TimeMemory/$PROFILING_WORKFLOW
   fi
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=1\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
   outname=$(ls -d ${PROFILING_WORKFLOW}*) 
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
