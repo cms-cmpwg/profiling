@@ -21,9 +21,9 @@ if [ "X$PROFILING_WORKFLOW" == "X" ];then
 fi 
 
 if [ "X$WORKSPACE" != "X" ]; then
-  cd $WORKSPACE/$CMSSW_v/src/$PROFILING_WORKFLOW
+  cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
 else
-  cd $CMSSW_v/src/TimeMemory
+  cd $CMSSW_v/TimeMemory
 fi
 
 eval `scramv1 runtime -sh`
