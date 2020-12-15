@@ -26,7 +26,7 @@ if [ "X$RELEASE_FORMAT" == "X" -a  "X$CMSSW_IB" == "X" ]; then
   cd ${CMSSW_v}/src
   eval `scramv1 runtime -sh`  
 else
-  cd $WORKSPACE/${CMSSW_v}/src
+  cd $WORKSPACE/${CMSSW_v}
 fi 
 
 ## --2. "RunThematrix" dry run
