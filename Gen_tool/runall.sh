@@ -23,10 +23,12 @@ fi
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
 else
+  export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+  echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
+  source $VO_CMS_SW_DIR/cmsset_default.sh
   cd $CMSSW_v/TimeMemory
+  eval `scramv1 runtime -sh`
 fi
-
-eval `scramv1 runtime -sh`
 
 echo "My loc"
 echo $PWD
