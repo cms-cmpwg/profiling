@@ -7,8 +7,6 @@ else
   export SCRAM_ARCH=slc7_amd64_gcc900
 fi
 echo "Your SCRAM_ARCH $SCRAM_ARCH"
-export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-source $VO_CMS_SW_DIR/cmsset_default.sh
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="23434.21"
@@ -17,9 +15,11 @@ fi
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
 else
+  export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+  source $VO_CMS_SW_DIR/cmsset_default.sh
   cd $CMSSW_v/TimeMemory
+  eval `scramv1 runtime -sh`
 fi
-eval `scramv1 runtime -sh`
 
 echo "My loc"
 echo $PWD
