@@ -193,9 +193,10 @@ sorted_df = global_old_df
 Tot_strs  = sorted_df['Function']
 
 oldAll_=list(old_df[old_df['Function']=="<spontaneous>"][comul])
+newAll_=list(new_df[new_df['Function']=="<spontaneous>"][comul])
 if oldAll_:
-	oldAll=list(old_df.loc[old_df['Function']=="<spontaneous>"][comul])[0]
-	newAll=list(old_df.loc[old_df['Function']=="<spontaneous>"][comul])[1]
+	oldAll=list(old_df.loc[old_df['Function']=="<spontaneous>"][comul])[1]
+	newAll=list(old_df.loc[old_df['Function']=="<spontaneous>"][comul])[0]
 elif newAll_:
 	oldAll=list(new_df.loc[new_df['Function']=="<spontaneous>"][comul])[0]
 	newAll=list(new_df.loc[new_df['Function']=="<spontaneous>"][comul])[0]
@@ -252,7 +253,7 @@ for Tot_str in Tot_strs:
 	oldVal_sum += oldVal
 	newVal_sum += newVal
 	
-	delta	  = round((newVal/newAll) - (oldVal/oldAll) * 100.0,2)
+	delta	  = round(((newVal/newAll) - (oldVal/oldAll)) * 100.0,2)
 	#delta_sum = round((newVal_sum - oldVal_sum) / oldAll * 100.0,2)	
 
 	print("[{0:<4} -> {1:<4}] [{2:<6} -> {3:<6}]  [{4:<9} -> {5:<9}]         [ {6:<9}/{7:<9} - {8:<9}/{9:<9} *100% ] = [{10:<6}% ]         {11:<50}".format(idx_old[0],idx_new[0], global_old_df.loc[idx_old[0]]['PercentageTotal'],global_new_df.loc[idx_new[0]]['PercentageTotal'],global_old_df.loc[idx_old[0]]['SelfTotal'],global_new_df.loc[idx_new[0]]['SelfTotal'],newVal,newAll,oldVal,oldAll,delta,out_name))
