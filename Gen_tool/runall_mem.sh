@@ -27,7 +27,7 @@ echo $PWD
 if [ "X$WORKSPACE" != "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
 fi
-
+LC_ALL=C
 if [ "X$RUNALLSTEPS" != "X" ]; then
 
   echo step1

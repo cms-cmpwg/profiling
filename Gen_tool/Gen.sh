@@ -18,12 +18,14 @@ if [ "X$RELEASE_FORMAT" == "X" -a  "X$CMSSW_IB" == "X" ]; then
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
   source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
-  voms-proxy-init
+  grid-proxy-init
+  unset PYTHONPATH
+  export LC_ALL=C
   echo "Start install ${CMSSW_v} ..."
   scramv1 project ${CMSSW_v}
   echo "Install success"
   echo "Set CMSSW environment ...'"
-  cd ${CMSSW_v}/src
+  cd ${CMSSW_v}
   eval `scramv1 runtime -sh`  
 else
   cd $WORKSPACE/${CMSSW_v}
@@ -35,13 +37,13 @@ if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="23434.21"
 fi 
 if [ "X$EVENTS" == "X" ];then
-  export EVENTS=20
+  export EVENTS=100
 fi 
 
 if [[ $NODE_NAME == "lxplus"* ]]; then
   NTHREADS=4
 else 
-  NTHREADS=8
+  NTHREADS=16
 fi
 
 if [ "X$WORKSPACE" != "X" ];then
@@ -57,10 +59,11 @@ if [ "X$WORKSPACE" != "X" ];then
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
 else
+  PYTHONPATH=$PYTHON3PATH:$PYTHONPATH
   runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 # rename the WF subdir to TimeMemory
-  outname=$(ls $PROFILING_WORKFLOW*) 
+  outname=$(ls -d $PROFILING_WORKFLOW*) 
   mv $outname TimeMemory
   cd TimeMemory
 fi

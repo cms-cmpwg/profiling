@@ -23,6 +23,8 @@ else
   echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
   source $VO_CMS_SW_DIR/cmsset_default.sh
   cd $CMSSW_v/TimeMemory
+  unset PYTHONPATH
+  export LC_ALL=C
   eval `scramv1 runtime -sh`
 fi
 
