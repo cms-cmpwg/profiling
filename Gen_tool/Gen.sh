@@ -40,10 +40,9 @@ if [ "X$EVENTS" == "X" ];then
   export EVENTS=100
 fi 
 
-if [[ $NODE_NAME == "lxplus"* ]]; then
-  NTHREADS=4
-else 
-  NTHREADS=16
+if [ "X$NTHREADS" == "X" ]; then
+  NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
+  NTHREADS=${NCPU/2}
 fi
 
 if [ "X$WORKSPACE" != "X" ];then
