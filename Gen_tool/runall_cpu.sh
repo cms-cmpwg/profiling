@@ -26,13 +26,13 @@ else
   if [ ! -f $LOCALRT/ibeos_cache.txt ];then
       curl -L -s $LOCALRT/ibeos_cache.txt https://raw.githubusercontent.com/cms-sw/cms-sw.github.io/master/das_queries/ibeos.txt
   fi
-  if [ -f $CMSSW_RELEASE_BASE/src/Utilities/General/ibeos ];then
-    PATH=$CMSSW_BASE/src/Utilities/General:$PATH
+  if [ -d $CMSSW_RELEASE_BASE/src/Utilities/General/ibeos ];then
+    PATH=$CMSSW_BASE/src/Utilities/General/ibeos:$PATH
     CMS_PATH=/cvmfs/cms-ib.cern.ch
     CMSSW_USE_IBEOS=true
   fi
-  if [ -f $CMSSW_BASE/src/Utilities/General/ibeos ];then
-    PATH=$CMSSW_BASE/src/Utilities/General:$PATH
+  if [ -d $CMSSW_BASE/src/Utilities/General/ibeos ];then
+    PATH=$CMSSW_BASE/src/Utilities/General/ibeos:$PATH
     CMS_PATH=/cvmfs/cms-ib.cern.ch
     CMSSW_USE_IBEOS=true
   fi

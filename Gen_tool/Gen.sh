@@ -42,7 +42,7 @@ fi
 
 if [ "X$NTHREADS" == "X" ]; then
   NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
-  NTHREADS=${NCPU/2}
+  NTHREADS=$((NCPU/2))
 fi
 
 if [ "X$WORKSPACE" != "X" ];then
