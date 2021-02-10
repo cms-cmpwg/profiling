@@ -48,18 +48,23 @@ if [ "X$WORKSPACE" != "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
 fi
 
+if [ "X$TIMEOUT" == "X" ];then
+    export TIMEOUT=14400
+fi
+
+
 echo step1
-cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
+timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
 
 
 echo step2
-cmsRun$VDT $WRAPPER $(ls step2*.py) >& step2$VDT.log
+timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step2*.py) >& step2$VDT.log
 
 
 echo step3
-cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
+timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
 
 
 echo step4
-cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
+timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
 

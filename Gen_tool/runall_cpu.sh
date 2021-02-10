@@ -45,24 +45,30 @@ if [ "X$WORKSPACE" != "X" ];then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py 
 fi
 LC_ALL=C
+
+
+if [ "X$TIMEOUT" == "X" ];then
+    export TIMEOUT=14400
+fi
+
 if [ "X$RUNALLSTEPS" != "X" ]; then
 
   echo step1
 
-  igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
+  timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
   echo step2
-  igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
+  timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
 
 fi
 
 echo step3
-igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
+timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
 
 
 echo step4
-igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log
+timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log
 
 echo generating products sizes files
 if [ "X$WORKSPACE" != "X" ];then
