@@ -53,21 +53,21 @@ fi
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
 
-  echo step1
+  echo step1 w/igprof -pp
 
   timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
-  echo step2
+  echo step2  w/igprof -pp
   timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
 
 fi
 
-echo step3
+echo step3  w/igprof -pp
 timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
 
 
-echo step4
+echo step4  w/igprof -pp
 timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log
 
 echo generating products sizes files
