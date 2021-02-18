@@ -49,17 +49,17 @@ fi
 if [ "X$RUNALLSTEPS" != "X" ]; then
 
   echo step1 w/igprof -mp
-  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step1.mp -- cmsRun  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
+  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGLibC  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
 
 
   echo step2 w/igprof -mp
-  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step2.mp -- cmsRun $WRAPPER $(ls step2*.py) >& step2_mem.log
+  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC $WRAPPER $(ls step2*.py) >& step2_mem.log
 
 fi
 
 echo step3 w/igprof -mp
-timeout $TIMEOUT igprof -mp -o ./igprofMEM_step3.mp -- cmsRun $WRAPPER $(ls step3*.py)  >& step3_mem.log
+timeout $TIMEOUT igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC $WRAPPER $(ls step3*.py)  >& step3_mem.log
 
 
 echo step4 w/igprof -mp
-timeout $TIMEOUT igprof -mp -o ./igprofMEM_step4.mp -- cmsRun $WRAPPER $(ls step4*.py)  >& step4_mem.log
+timeout $TIMEOUT igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  $WRAPPER $(ls step4*.py)  >& step4_mem.log
