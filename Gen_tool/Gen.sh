@@ -42,14 +42,13 @@ fi
 
 if [ "X$NTHREADS" == "X" ]; then
   NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
-  NTHREADS=NCPU
-#  NTHREADS=$((NCPU/2))
+  NTHREADS=$((NCPU/2))
 fi
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
   if [ "X$RUNTIMEMEMORY" != "X" ]; then
-      runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=1\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
+      runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
       outname=$(ls -d ${PROFILING_WORKFLOW}*) 
       mkdir -p TimeMemory
       mv $outname TimeMemory/$PROFILING_WORKFLOW
@@ -78,6 +77,8 @@ with open('cmdLog','r') as f:
                 line=line.rstrip()
                 if line.startswith(' cmsDriver'):
                         cnt+=1
+                        if cnt<3:
+                                line=line.replace('--customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob', '')
                         if cnt!=5:
                                 line_list = line.split()
                                 logfile = line_list[-2]

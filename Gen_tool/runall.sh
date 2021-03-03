@@ -53,12 +53,12 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 
-echo step1 circles-wrapper optional
-cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
+echo step1 
+cmsRun$VDT $(ls *_GEN_SIM.py)  >& step1$VDT.log
 
 
-echo step2 circles-wrapper optional
-cmsRun$VDT $WRAPPER $(ls step2*.py) >& step2$VDT.log
+echo step2 
+cmsRun$VDT $(ls step2*.py) >& step2$VDT.log
 
 
 echo step3 circles-wrapper optional
