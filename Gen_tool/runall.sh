@@ -44,7 +44,7 @@ fi
 echo "My loc"
 echo $PWD
 
-if [ "X$WORKSPACE" != "X" ]; then
+if [ "X$WORKSPACE" != "X" -a "X$WRAPPER" == "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
 fi
 
