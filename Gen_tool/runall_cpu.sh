@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # WORKSPACE is defined in Jenkins job
 
@@ -55,20 +55,20 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
 
   echo step1 w/igprof -pp
 
-  timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
+  gprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
   echo step2  w/igprof -pp
-  timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
+  igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun $WRAPPER $(ls step2*.py) >& step2_cpu.log
 
 fi
 
 echo step3  w/igprof -pp
-timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
+igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step3_cpu.log
 
 
 echo step4  w/igprof -pp
-timeout $TIMEOUT igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log
+igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log
 
 echo generating products sizes files
 if [ "X$WORKSPACE" != "X" ];then

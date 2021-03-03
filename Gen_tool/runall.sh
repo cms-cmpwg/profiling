@@ -44,7 +44,7 @@ fi
 echo "My loc"
 echo $PWD
 
-if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" != "Xtrue" ]; then
+if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" == "Xfalse" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
 fi
 
@@ -54,21 +54,17 @@ fi
 
 
 echo step1 circles-wrapper optional
-echo timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
-timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
+cmsRun$VDT $WRAPPER $(ls *_GEN_SIM.py)  >& step1$VDT.log
 
 
 echo step2 circles-wrapper optional
-echo timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step2*.py) >& step2$VDT.log
-timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step2*.py) >& step2$VDT.log
+cmsRun$VDT $WRAPPER $(ls step2*.py) >& step2$VDT.log
 
 
 echo step3 circles-wrapper optional
-echo timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
-timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
+cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
 
 
 echo step4 circles-wrapper optional
-echo timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
-timeout $TIMEOUT cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
+cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
 
