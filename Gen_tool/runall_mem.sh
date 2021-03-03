@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
   CMSSW_v=$1
 ## --1. Install CMSSW version and setup environment
 if [ "X$ARCHITECTURE" != "X" ];then
@@ -43,23 +43,23 @@ fi
 LC_ALL=C
 
 if [ "X$TIMEOUT" == "X" ];then
-    export TIMEOUT=14400
+    export TIMEOUT=43200
 fi
 
-if [ "X$RUNALLSTEPS" != "X" ]; then
+if [ "X$RUNALLSTEPS" == "Xtrue" ]; then
 
   echo step1 w/igprof -mp
-  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGLibC  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
+  igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGLibC  $WRAPPER $(ls *GEN_SIM.py)  >& step1_mem.log
 
 
   echo step2 w/igprof -mp
-  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC $WRAPPER $(ls step2*.py) >& step2_mem.log
+  igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC $WRAPPER $(ls step2*.py) >& step2_mem.log
 
 fi
 
 echo step3 w/igprof -mp
-timeout $TIMEOUT igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC $WRAPPER $(ls step3*.py)  >& step3_mem.log
+igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC $WRAPPER $(ls step3*.py)  >& step3_mem.log
 
 
 echo step4 w/igprof -mp
-timeout $TIMEOUT igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  $WRAPPER $(ls step4*.py)  >& step4_mem.log
+igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  $WRAPPER $(ls step4*.py)  >& step4_mem.log
