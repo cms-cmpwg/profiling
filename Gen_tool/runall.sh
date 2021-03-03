@@ -49,7 +49,7 @@ if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" != "Xtrue" ]; then
 fi
 
 if [ "X$TIMEOUT" == "X" ];then
-    export TIMEOUT=14400
+    export TIMEOUT=43200
 fi
 
 
