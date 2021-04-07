@@ -55,7 +55,7 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
 
   echo step1 w/igprof -pp
 
-  gprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
+  igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun $WRAPPER $(ls *GEN_SIM.py) >& step1_cpu.log
 
 
   echo step2  w/igprof -pp
