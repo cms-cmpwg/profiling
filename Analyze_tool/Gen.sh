@@ -92,6 +92,10 @@ cat << EOF >> analyze.sh
     igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_MEM_PAT_${1}.sql3
     igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_CPU_PAT_${1}.sql3
 
+## -step5
+    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step5.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_MEM_PAT_${1}.sql3
+    igprof-analyse --sqlite -v -d -g igprofCPU_step5.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprof_CPU_PAT_${1}.sql3
+
 
 ## --For ascii-based report
 ## -step1
@@ -109,6 +113,10 @@ cat << EOF >> analyze.sh
 ## -step4
     igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_PAT_MEM_${1}.res
     igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_PAT_CPU_${1}.res
+
+## -step5
+    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step5.mp >& RES_PAT_MEM_${1}.res
+    igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_PAT_CPU_${1}.res
 
 EOF
 
