@@ -2,23 +2,18 @@
 
 CMSSW_v=$1
 
-## --1. Install CMSSW version and setup environment
-echo "Your SCRAM_ARCH "
-export SCRAM_ARCH=slc7_amd64_gcc900
-export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
-source $VO_CMS_SW_DIR/cmsset_default.sh
-source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
-voms-proxy-init
-echo "Start install $CMSSW_v ..."
-scramv1 project $CMSSW_v
-echo "Install success"
-echo "Set CMSSW environment ...'"
-cd ${CMSSW_v}/src
-eval `scramv1 runtime -sh`
-#echo "Compiling ...'"
-#scram b -j 6
-
+  export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+  source $VO_CMS_SW_DIR/cmsset_default.sh
+  source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
+  grid-proxy-init
+  unset PYTHONPATH
+  export LC_ALL=C
+  echo "Start install ${CMSSW_v} ..."
+  scramv1 project ${CMSSW_v}
+  echo "Install success"
+  echo "Set CMSSW environment ...'"
+  cd ${CMSSW_v}
+  eval `scramv1 runtime -sh`  
 ## --2. "RunThematrix" dry run
 
 
@@ -78,11 +73,11 @@ chmod +x read.py
 
 cat << EOF >> vtune.sh
 #!/bin/bash
-. /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/intel/oneapi-2021.1-beta06/inteloneapi/setvars.sh
+. /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2021/vtune/latest/vtune-vars.sh
 . /cvmfs/cms.cern.ch/cmsset_default.sh
-eval \$(scram runtime -sh\)
-CMSRUN=\$\(which cmsRun\)
-VTUNE=\$\(which vtune\)
+eval \$(scram runtime -sh)
+CMSRUN=\$(which cmsRun)
+VTUNE=\$(which vtune)
 \$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./TTbar_14TeV_TuneCP5_cfi_GEN_SIM.py >step1.log
 \$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step2_DIGI_L1_L1TrackTrigger_DIGI2RAW_HLT_PU.py >step2.log
 \$VTUNE -collect hotspots -collect gpu-offload -collect threading -data-limit=10000 -knob sampling-mode=hw -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN ./step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.py >step3.log
