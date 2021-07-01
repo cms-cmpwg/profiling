@@ -68,3 +68,7 @@ cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
 echo step4 circles-wrapper optional
 cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
 
+
+echo step5 circles-wrapper optional
+cmsRun$VDT $WRAPPER $(ls step5*.py)  >& step5$VDT.log
+
