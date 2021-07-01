@@ -70,11 +70,16 @@ igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun $WRAPPER $(ls step3*.py) >& step
 echo step4  w/igprof -pp
 igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun $WRAPPER $(ls step4*.py) >& step4_cpu.log
 
+echo step5  w/igprof -pp
+igprof -pp -z -o ./igprofCPU_step5.gz -- cmsRun $WRAPPER $(ls step5*.py) >& step5_cpu.log
+
 echo generating products sizes files
 if [ "X$WORKSPACE" != "X" ];then
   edmEventSize -v ${WORKSPACE}/step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt
   edmEventSize -v ${WORKSPACE}/step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt
+  edmEventSize -v ${WORKSPACE}/step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt
 else
   edmEventSize -v step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt
   edmEventSize -v step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt
+  edmEventSize -v step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt
 fi
