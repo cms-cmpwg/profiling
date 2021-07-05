@@ -81,9 +81,9 @@ echo generating products sizes files
 if [ "X$WORKSPACE" != "X" ];then
   edmEventSize -v ${WORKSPACE}/step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt
   edmEventSize -v ${WORKSPACE}/step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt
-  if [ $(ls -d step5*.py | wc -l) -eq 0 ]; then edmEventSize -v ${WORKSPACE}/step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; fi
+  if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then edmEventSize -v ${WORKSPACE}/step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; fi
 else
   edmEventSize -v step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt
   edmEventSize -v step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt
-  if [ $(ls -d step5*.py | wc -l) -eq 0 ]; then edmEventSize -v step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; fi;
+  if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then edmEventSize -v step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; fi;
 fi
