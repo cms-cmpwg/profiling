@@ -68,7 +68,10 @@ cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
 echo step4 circles-wrapper optional
 cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
 
-
-echo step5 circles-wrapper optional
-cmsRun$VDT $WRAPPER $(ls step5*.py)  >& step5$VDT.log
+if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then 
+    echo step5 circles-wrapper optional
+    cmsRun$VDT $WRAPPER $(ls step5*.py)  >& step5$VDT.log
+else
+    echo skipping step5 circles-wrapper optional    
+fi
 
