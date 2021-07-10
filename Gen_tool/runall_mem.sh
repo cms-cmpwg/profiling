@@ -63,3 +63,10 @@ igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC $WRAPPER $(ls step3*.py)  >& s
 
 echo step4 w/igprof -mp
 igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  $WRAPPER $(ls step4*.py)  >& step4_mem.log
+
+if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then 
+    echo step5 w/igprof -mp
+    igprof -mp -o ./igprofMEM_step5.mp -- cmsRunGlibC  $WRAPPER $(ls step5*.py)  >& step5_mem.log
+else
+    echo skipping step5 w/igprof -mp
+fi
