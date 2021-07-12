@@ -79,14 +79,12 @@ with open('cmdLog','r') as f:
                         cnt+=1
                         if cnt<3:
                                 line=line.replace('--customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob', '')
-                        if cnt!=5:
+                        else:
                                 line_list = line.split()
                                 logfile = line_list[-2]
                                 line=' '.join(line_list)
                                 line=line.replace(logfile,"step%s.log"%cnt)
                                 line=line.replace('--customise=Validation/Performance/TimeMemoryInfo.py', '')
-                        else:
-                                 break
 ## --Excute cmsDriver
                         print(line)
                         print(" ")
@@ -120,6 +118,11 @@ cat << EOF >> profile.sh
 ## -step4
     igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step4.sql3 >& CPUsql_step4.log
 
+## -step5
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
+        igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_CPU_step5.txt
+    fi
+
 
 ## --For ascii-based report
 
@@ -138,6 +141,11 @@ awk -v module=doEvent 'BEGIN { total = 0; } { if(substr(\$0,0,1)=="-"){good = 0;
 
 ## -step4
     igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_CPU_step4.txt
+
+## -step5
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
+        igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_CPU_step5.txt
+    fi
 
 EOF
 chmod +x profile.sh
@@ -160,6 +168,11 @@ cat << EOF >> profile_mem.sh
 
 ## -step4
     igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step4.sql3 >& MEMsql_step4.log
+    
+## -step5
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
+        igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step5.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step5.sql3 >& MEMsql_step5.log
+    fi
 
 
 ## --For ascii-based report
@@ -175,6 +188,11 @@ cat << EOF >> profile_mem.sh
 
 ## -step4
     igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_MEM_step4.txt
+
+## -step5
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
+        igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step5.mp >& RES_MEM_step5.txt
+    fi
 
 EOF
 
