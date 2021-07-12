@@ -121,7 +121,7 @@ cat << EOF >> profile.sh
     igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step4.sql3 >& CPUsql_step4.log
 
 ## -step5
-    if [ $(ls -d igprofCPU_step5* | wc -l) -gt 0 ]; then 
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
         igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_CPU_step5.txt
     fi
 
@@ -145,7 +145,7 @@ awk -v module=doEvent 'BEGIN { total = 0; } { if(substr(\$0,0,1)=="-"){good = 0;
     igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_CPU_step4.txt
 
 ## -step5
-    if [ $(ls -d igprofCPU_step5* | wc -l) -gt 0 ]; then 
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
         igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_CPU_step5.txt
     fi
 
@@ -172,7 +172,7 @@ cat << EOF >> profile_mem.sh
     igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step4.sql3 >& MEMsql_step4.log
     
 ## -step5
-    if [ $(ls -d igprofMEM_step5* | wc -l) -gt 0 ]; then 
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
         igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step5.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step5.sql3 >& MEMsql_step5.log
     fi
 
@@ -192,7 +192,7 @@ cat << EOF >> profile_mem.sh
     igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_MEM_step4.txt
 
 ## -step5
-    if [ $(ls -d igprofMEM_step5* | wc -l) -gt 0 ]; then 
+    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
         igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step5.mp >& RES_MEM_step5.txt
     fi
 
