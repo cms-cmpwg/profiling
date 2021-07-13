@@ -120,7 +120,7 @@ cat << EOF >> profile.sh
 
 ## -step5
     if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
-        igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_CPU_step5.txt
+        igprof-analyse --sqlite -v -d -g igprofCPU_step5.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step5.sql3 >& CPUsql_step5.log
     fi
 
 
