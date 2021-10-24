@@ -3,8 +3,11 @@
 # voms-proxy-init is run in Jenkins Singularity wrapper script.
 
 ## --1. Install CMSSW version and setup environment
-
-CMSSW_v=$1
+if [ "X$CMSSW_VERSION" == "X" ];then
+  CMSSW_v=$1
+else
+  CMSSW_v=$CMSSW_VERSION
+fi
 echo $CMSSW_v
 
 if [ "X$ARCHITECTURE" != "X" ];then
@@ -41,159 +44,90 @@ if [ "X$EVENTS" == "X" ];then
 fi 
 
 if [ "X$NTHREADS" == "X" ]; then
-  NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
-  NTHREADS=$((NCPU/2))
+  export NTHREADS=1
 fi
+
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-  if [ "X$RUNTIMEMEMORY" != "X" ]; then
-      runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE #200PU for 11_2_X
-      outname=$(ls -d ${PROFILING_WORKFLOW}*) 
-      mkdir -p TimeMemory
-      mv $outname TimeMemory/$PROFILING_WORKFLOW
-  fi
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=1\ --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
   outname=$(ls -d ${PROFILING_WORKFLOW}*) 
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
 else
-  PYTHONPATH=$PYTHON3PATH:$PYTHONPATH
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --customise=Validation/Performance/TimeMemoryInfo.py\ --no_exec #200PU for 11_2_X
+  NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
+  NTHREADS=$((NCPU/2))
+  EVENTS=$((NTHREADS*20))
+  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec #200PU for 11_2_X
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 # rename the WF subdir to TimeMemory
-  outname=$(ls -d $PROFILING_WORKFLOW*) 
+  outname=$(ls -d ${PROFILING_WORKFLOW}_*) 
   mv $outname TimeMemory
   cd TimeMemory
 fi
-# --3. Make cmdLog run_option  -- Set N events
-cat << EOF >> read.py
-#!/usr/bin/env python
-import subprocess
 
-with open('cmdLog','r') as f:
-        cnt=0
-        for line in f:
-                line=line.rstrip()
-                if line.startswith(' cmsDriver'):
-                        cnt+=1
-                        if cnt<3:
-                                line=line.replace('--customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob', '')
-                        else:
-                                line_list = line.split()
-                                logfile = line_list[-2]
-                                line=' '.join(line_list)
-                                line=line.replace(logfile,"step%s.log"%cnt)
-                                line=line.replace('--customise=Validation/Performance/TimeMemoryInfo.py', '')
-## --Excute cmsDriver
-                        print(line)
-                        print(" ")
-                        subprocess.check_output (line,shell=True)
+unset steps
+declare -a steps
+while IFS=$ read -r line; do     steps+=( "$line" ); done < <( grep cmsDriver.py cmdLog | cut -d\> -f1 )
 
-EOF
-
-# run cmsDriver.py
-chmod +x read.py
-./read.py
-
+echo "#!/bin/bash " > cmd_ft.sh
+echo "#!/bin/bash " > cmd_ig.sh
+echo "#!/bin/bash " > cmd_ts.sh
+declare -i step
+for ((step=0;step<${#steps[@]}; ++step));do 
+    echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py" >>cmd_ig.sh
+    echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands)\" --python_filename=step"$((step+1))"_igprof.py" >>cmd_ig.sh
+    if [ $step -eq 2 ];then
+        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step$((step+1))_fasttimer.py" >>cmd_ft.sh
+    fi
+    if [ $step -eq 3 ];then
+        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_PAT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step$((step+1))_fasttimer.py" >>cmd_ft.sh
+    fi
+    if [ $step -eq 4 ];then
+        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('ste5_NANO_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step$((step+1))_fasttimer.py" >>cmd_ft.sh
+    fi
+done
+. cmd_ft.sh
+. cmd_ig.sh
+. cmd_ts.sh
 
 ## --4. Make profiler 
 
 cat << EOF >> profile.sh
 #!/bin/bash
-
-
+for f in \$(ls igprofCPU_step*.gz 2>/dev/null);do
 ## --For web-based report
-
-
-## -step1
-   igprof-analyse --sqlite -v -d -g igprofCPU_step1.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step1.sql3 >& CPUsql_step1.log
-
-## -step2
-   igprof-analyse --sqlite -v -d -g igprofCPU_step2.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step2.sql3 >& CPUsql_step2.log
-
-## -step3
-   igprof-analyse --sqlite -v -d -g igprofCPU_step3.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step3.sql3 >& CPUsql_step3.log
-
-## -step4
-    igprof-analyse --sqlite -v -d -g igprofCPU_step4.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step4.sql3 >& CPUsql_step4.log
-
-## -step5
-    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
-        igprof-analyse --sqlite -v -d -g igprofCPU_step5.gz | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofCPU_step5.sql3 >& CPUsql_step5.log
-    fi
-
-
+    sqlf=\${f/gz/sql3}
+    sf=\${f/igprof/}
+    logf=\${sf/gz/log}
+    igprof-analyse --sqlite -v -d -g \$f | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 \$sqlf >& \$logf
 ## --For ascii-based report
+    rf=\${f/igprof/RES_}
+    txtf=\${rf/gz/txt}
+    igprof-analyse  -v -d -g \$f >& \$txtf
+done
 
-## -step1
-   igprof-analyse  -v -d -g igprofCPU_step1.gz >& RES_CPU_step1.txt
-
-## -step2
-   igprof-analyse  -v -d -g igprofCPU_step2.gz >& RES_CPU_step2.txt
-
-## -step3
-   igprof-analyse  -v -d -g igprofCPU_step3.gz >& RES_CPU_step3.txt
-
-export IGREP=RES_CPU_step3.txt
-export IGSORT=sorted_RES_CPU_step3.txt
-awk -v module=doEvent 'BEGIN { total = 0; } { if(substr(\$0,0,1)=="-"){good = 0;}; if(good&&length(\$0)>0){print \$0; total += \$3;}; if(substr(\$0,0,1)=="["&&index(\$0,module)!=0) {good = 1;} } END { print "Total: "total } ' \${IGREP} | sort -n -r -k1 | awk '{ if(index(\$0,"Total: ")!=0){total=\$0;} else{print \$0;} } END { print total; }' > \${IGSORT} 2>&1
-
-## -step4
-    igprof-analyse  -v -d -g igprofCPU_step4.gz >& RES_CPU_step4.txt
-
-## -step5
-    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
-        igprof-analyse  -v -d -g igprofCPU_step5.gz >& RES_CPU_step5.txt
-    fi
-
+if [ -f RES_CPU_step3.txt ]; then 
+  export IGREP=RES_CPU_step3.txt
+  export IGSORT=sorted_RES_CPU_step3.txt
+  awk -v module=doEvent 'BEGIN { total = 0; } { if(substr(\$0,0,1)=="-"){good = 0;}; if(good&&length(\$0)>0){print \$0; total += \$3;}; if(substr(\$0,0,1)=="["&&index(\$0,module)!=0) {good = 1;} } END { print "Total: "total } ' \${IGREP} | sort -n -r -k1 | awk '{ if(index(\$0,"Total: ")!=0){total=\$0;} else{print \$0;} } END { print total; }' > \${IGSORT} 2>&1
+fi
 EOF
 chmod +x profile.sh
 
 cat << EOF >> profile_mem.sh
 #!/bin/bash
 
-
+for f in \$(ls igprofMEM_step*.mp 2>/dev/null);do
 ## --For web-based report
-
-
-## -step1
-   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step1.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step1.sql3 >& MEMsql_step1.log
-
-## -step2
-   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step2.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step2.sql3 >& MEMsql_step2.log
-
-## -step3
-   igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step3.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step3.sql3 >& MEMsql_step3.log
-
-## -step4
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step4.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step4.sql3 >& MEMsql_step4.log
-    
-## -step5
-    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
-        igprof-analyse --sqlite -v -d -g -r MEM_LIVE igprofMEM_step5.mp |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 igprofMEM_step5.sql3 >& MEMsql_step5.log
-    fi
-
-
+    sqlf=\${f/mp/sql3}
+    sf=\${f/igprofMEM/MEMsql}
+    logf=\${sf/mp/log}
+    igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 \$sqlf >& \$logf
 ## --For ascii-based report
-
-## -step1
-   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step1.mp >& RES_MEM_step1.txt
-
-## -step2
-   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step2.mp >& RES_MEM_step2.txt
-
-## -step3
-   igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step3.mp >& RES_MEM_step3.txt
-
-## -step4
-    igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step4.mp >& RES_MEM_step4.txt
-
-## -step5
-    if [ $(ls -d *step5* | wc -l) -gt 0 ]; then 
-        igprof-analyse  -v -d -g -r MEM_LIVE igprofMEM_step5.mp >& RES_MEM_step5.txt
-    fi
-
+    rf=\${f/igprof/MEM_}
+    txtf=\${rf/mp/txt}
+    igprof-analyse  -v -d -g -r MEM_LIVE \$f >& \$txtf
+done
 EOF
-
 chmod +x profile_mem.sh

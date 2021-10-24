@@ -1,10 +1,11 @@
 #!/bin/bash -x
-CMSSW_v=$1
-
+if [ "X$CMSSW_VERSION" == "X" ];then
+  CMSSW_v=$1
+else
+  CMSSW_v=$CMSSW_VERSION
+fi
 
 VDT=""
-
-echo "Your SCRAM_ARCH "
 
 if [ "X$ARCHITECTURE" != "X" ]; then
   export SCRAM_ARCH=$ARCHITECTURE
@@ -41,11 +42,10 @@ else
   fi
 fi
 
-echo "My loc"
-echo $PWD
-
 if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" == "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
+else
+  export WRAPPER=$HOME/profiling/circles-wrapper.py
 fi
 
 if [ "X$TIMEOUT" == "X" ];then
@@ -53,25 +53,43 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 
-echo step1 
-cmsRun$VDT $(ls *_GEN_SIM.py)  >& step1$VDT.log
+echo step1 TimeMemory
+cmsRun$VDT step1_timememoryinfo.py >& step1_timememoryinfo$VDT.txt
 
+echo step2 TimeMemory
+cmsRun$VDT step2_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
 
-echo step2 
-cmsRun$VDT $(ls step2*.py) >& step2$VDT.log
-
-
-echo step3 circles-wrapper optional
-cmsRun$VDT $WRAPPER $(ls step3*.py)  >& step3$VDT.log
-
-
-echo step4 circles-wrapper optional
-cmsRun$VDT $WRAPPER $(ls step4*.py)  >& step4$VDT.log
-
-if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then 
-    echo step5 circles-wrapper optional
-    cmsRun$VDT $WRAPPER $(ls step5*.py)  >& step5$VDT.log
-else
-    echo skipping step5 circles-wrapper optional    
+if [ "X$RUNTIMEMEMORY" != "X" ]; then
+  echo step3 TimeMemory
+  cmsRun$VDT step3_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
+  
+  echo step4 TimeMemory 
+  cmsRun$VDT step3_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
+  
+  if [ -f step5_timememoryinfo.py ]; then 
+      echo step5 TimeMemory
+      cmsRun$VDT step5_timememoryinfo.py  >& step5_timememoryinfo$VDT.txt
+  fi
 fi
 
+echo step3 circles-wrapper optional
+cmsRun$VDT step3_fasttimer.py  >& step3_fasttimer$VDT.txt
+
+echo step4 circles-wrapper optional
+cmsRun$VDT step4_fasttimer.py  >& step4_fasttimer$VDT.txt
+
+if [ -f step5_fasttimer.py ]; then 
+    echo step5 circles-wrapper optional
+    cmsRun$VDT step5_fasttimer.py  >& step5_fasttimer$VDT.txt
+fi
+
+echo generating products sizes files
+if [ "X$WORKSPACE" != "X" ];then
+  edmEventSize -v ${WORKSPACE}/step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt
+  edmEventSize -v ${WORKSPACE}/step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt
+  if [ -f step5_fasttimer.py  ]; then edmEventSize -v ${WORKSPACE}/step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; else echo skipping step5; fi
+else
+  edmEventSize -v step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt
+  edmEventSize -v step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt
+  if [ -f step5_fasttimer.py  ]; then edmEventSize -v step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; else echo skipping step5; fi;
+fi
