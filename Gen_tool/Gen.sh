@@ -75,16 +75,16 @@ echo "#!/bin/bash " > cmd_ig.sh
 echo "#!/bin/bash " > cmd_ts.sh
 declare -i step
 for ((step=0;step<${#steps[@]}; ++step));do 
-    echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py" >>cmd_ig.sh
-    echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands)\" --python_filename=step"$((step+1))"_igprof.py" >>cmd_ig.sh
+    echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py --suffix \"-j step"$((step+1))"_JobReport.xml\"" >>cmd_ig.sh
+    echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands)\" --python_filename=step"$((step+1))"_igprof.py --suffix \"-j step"$((step+1))"_igprof_JobReport.xml\"" >>cmd_ig.sh
     if [ $step -eq 2 ];then
-        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step$((step+1))_fasttimer.py" >>cmd_ft.sh
+        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
     fi
     if [ $step -eq 3 ];then
-        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_PAT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step$((step+1))_fasttimer.py" >>cmd_ft.sh
+        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_PAT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
     fi
     if [ $step -eq 4 ];then
-        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('ste5_NANO_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step$((step+1))_fasttimer.py" >>cmd_ft.sh
+        echo "${steps[$step]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_NANO_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step5_fasttimer.py --suffix \"-j step5_fasttimer_JobReport.xml\"" >>cmd_ft.sh
     fi
 done
 . cmd_ft.sh
