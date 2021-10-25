@@ -125,7 +125,7 @@ for f in \$(ls igprofMEM_step*.mp 2>/dev/null);do
     logf=\${sf/mp/log}
     igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 \$sqlf >& \$logf
 ## --For ascii-based report
-    rf=\${f/igprof/MEM_}
+    rf=\${f/igprof/RES_}
     txtf=\${rf/mp/txt}
     igprof-analyse  -v -d -g -r MEM_LIVE \$f >& \$txtf
 done
