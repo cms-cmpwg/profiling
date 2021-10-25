@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/env python3
 import pandas as pd
 from IPython.display import display
 
