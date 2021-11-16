@@ -44,7 +44,7 @@ if [ "X$EVENTS" == "X" ];then
 fi 
 
 if [ "X$NTHREADS" == "X" ]; then
-  export NTHREADS=4
+  export NTHREADS=1
 fi
 
 
