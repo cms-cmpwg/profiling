@@ -75,7 +75,7 @@ rename_igprof igprofMEM_step3 mp
 
 
 echo step4 w/igprof -mp
-igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  step5_igprof.py  >& step4_igprof_mem.log
+igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  step4_igprof.py  >& step4_igprof_mem.log
 rename_igprof igprofMEM_step4 mp
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
