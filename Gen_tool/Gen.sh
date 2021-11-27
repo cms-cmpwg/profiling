@@ -89,12 +89,14 @@ echo "${steps[4]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_
 
 cat << EOF >> profile.sh
 #!/bin/bash
+wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
 for f in \$(ls igprofCPU_step*.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=\${f/gz/sql3}
     sf=\${f/igprof/}
     logf=\${sf/gz/log}
-    igprof-analyse --sqlite -v -d -g \$f | sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 \$sqlf >& \$logf
+    igprof-analyse --sqlite -v -d -g \$f >\$f.tmp
+    python fix-igprof-sql.py \$f.tmp |  sqlite3 \$sqlf >& \$logf
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/gz/txt}
@@ -117,7 +119,8 @@ for f in \$(ls igprofMEM_step*.mp 2>/dev/null);do
     sqlf=\${f/mp/sql3}
     sf=\${f/igprofMEM/MEMsql}
     logf=\${sf/mp/log}
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f |sed -e 's/INSERT INTO files VALUES (\([^,]*\), \"[^$]*/INSERT INTO files VALUES (\1, \"ABCD\");/g' | sqlite3 \$sqlf >& \$logf
+    igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f >\$f.tmp
+    python fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf >& \$logf
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/mp/txt}
