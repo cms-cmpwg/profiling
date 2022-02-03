@@ -17,7 +17,7 @@ CMSSW_v=$1
 ## --2. "RunThematrix" dry run
 
 
-runTheMatrix.py -w upgrade -l 35034.21 --dryRun #200PU for 11_2_X
+runTheMatrix.py -w upgrade -l 35234.21 --dryRun #200PU for 11_2_X
 
 #tail *.log
 

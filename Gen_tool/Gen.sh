@@ -37,7 +37,7 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="35034.21"
+  export PROFILING_WORKFLOW="35234.21"
 fi 
 if [ "X$EVENTS" == "X" ];then
   export EVENTS=20
