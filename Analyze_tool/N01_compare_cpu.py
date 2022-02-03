@@ -17,8 +17,8 @@ parser.add_argument('--igprof', type=str, default='/SDT/cgi-bin/igprof-navigator
             help="path to igprof-navigator from base url, ex. /SDT/cgi-bin/igprof-navigator")
 parser.add_argument('--arch', type=str, default='slc7_amd64_gcc820', required=False,
             help="arch of version, ex slc7_amd64_gcc820")
-parser.add_argument('--workflow', type=str, default='23434.21', required=False,
-            help="workflow used for profiling, ex 23434.21")
+parser.add_argument('--workflow', type=str, default='34834.21', required=False,
+            help="workflow used for profiling, ex 34834.21")
 
 args = parser.parse_args()
 
