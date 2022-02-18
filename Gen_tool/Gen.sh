@@ -47,10 +47,15 @@ if [ "X$NTHREADS" == "X" ]; then
   export NTHREADS=1
 fi
 
+if [ "$PROFILING_WORKFLOW" == "136.889" ]; then
+CATEGORY=all
+else
+CATEGORY=upgrade
+fi
 
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
+  runTheMatrix.py -w $CATEGORY -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
   outname=$(ls -d ${PROFILING_WORKFLOW}*) 
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
@@ -58,7 +63,7 @@ else
   NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
   NTHREADS=$((NCPU/2))
   EVENTS=$((NTHREADS*20))
-  runTheMatrix.py -w upgrade -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec #200PU for 11_2_X
+  runTheMatrix.py -w $CATEGORY -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec #200PU for 11_2_X
 # find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
 # rename the WF subdir to TimeMemory
   outname=$(ls -d ${PROFILING_WORKFLOW}_*) 
