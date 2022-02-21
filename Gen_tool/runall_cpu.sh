@@ -8,21 +8,20 @@ echo $CMSSW_v
 ## --1. Install CMSSW version and setup environment
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
-else 
+else
   export SCRAM_ARCH=slc7_amd64_gcc900
 fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="35234.21"
-fi 
+fi
 
-# WORKSPACE is defined in Jenkins job
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
 else
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
-  cd $CMSSW_v/TimeMemory
+  cd $CMSSW_v/$PROFILING_WORKFLOW
   eval `scramv1 runtime -sh`
   if [ ! -f $LOCALRT/ibeos_cache.txt ];then
       curl -L -s $LOCALRT/ibeos_cache.txt https://raw.githubusercontent.com/cms-sw/cms-sw.github.io/master/das_queries/ibeos.txt
@@ -41,9 +40,10 @@ fi
 
 
 if [ "X$WORKSPACE" != "X" ];then
-  export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py 
-else 
-  export WRAPPER=$HOME/profiling/ascii-out-wrapper.py 
+  export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
+else
+  export WRAPPER=$HOME/profiling/ascii-out-wrapper.py
+  export RUNALLSTEPS=1
 fi
 LC_ALL=C
 
@@ -63,10 +63,14 @@ done
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
 
-  echo step1 w/igprof -pp
+  if [ -f step1_igprof.py ]; then
+    echo step1 w/igprof -pp
 
-  igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
-  rename_igprof igprofCPU_step1 gz
+    igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
+    rename_igprof igprofCPU_step1 gz
+  else
+    echo no step1
+  fi
 
   echo step2  w/igprof -pp
   igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py >& step2_igprof_cpu.log

@@ -29,19 +29,19 @@ if [ "X$RELEASE_FORMAT" == "X" -a  "X$CMSSW_IB" == "X" ]; then
   echo "Install success"
   echo "Set CMSSW environment ...'"
   cd ${CMSSW_v}
-  eval `scramv1 runtime -sh`  
+  eval `scramv1 runtime -sh`
 else
   cd $WORKSPACE/${CMSSW_v}
-fi 
+fi
 
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="35234.21"
-fi 
+fi
 if [ "X$EVENTS" == "X" ];then
   export EVENTS=20
-fi 
+fi
 
 if [ "X$NTHREADS" == "X" ]; then
   export NTHREADS=1
@@ -49,10 +49,11 @@ fi
 
 (runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
 
+declare -a outname
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE  #200PU for 11_2_X
-  outname=$(ls -d ${PROFILING_WORKFLOW}*) 
+  outname=$(ls -d ${PROFILING_WORKFLOW}*)
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
 else
@@ -60,33 +61,50 @@ else
   NTHREADS=$((NCPU/2))
   EVENTS=$((NTHREADS*20))
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec #200PU for 11_2_X
-# find the workflow subdirectory created by runTheMatrix.py which always starts with the WF number
-# rename the WF subdir to TimeMemory
-  outname=$(ls -d ${PROFILING_WORKFLOW}_*) 
-  mv $outname TimeMemory
-  cd TimeMemory
+  outname=$(ls -d ${PROFILING_WORKFLOW}_*)
+  mv $outname $PROFILING_WORKFLOW
+  cd $PROFILING_WORKFLOW
 fi
 
 unset steps
 declare -a steps
 while IFS=$ read -r line; do     steps+=( "$line" ); done < <( grep cmsDriver.py cmdLog | cut -d\> -f1 )
+echo ${steps[@]}
+echo ${!steps[@]}
 
 echo "#!/bin/bash " > cmd_ft.sh
 echo "#!/bin/bash " > cmd_ig.sh
 echo "#!/bin/bash " > cmd_ts.sh
 declare -i step
-for ((step=0;step<${#steps[@]}; ++step));do 
-    echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py --suffix \"-j step"$((step+1))"_JobReport.xml\"" >>cmd_ig.sh
-    echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+1))"_igprof.py --suffix \"-j step"$((step+1))"_igprof_JobReport.xml\"" >>cmd_ig.sh
-done
-echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
-echo "${steps[3]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_PAT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py --suffix \"-j step4_fasttimer_JobReport.xml\"" >>cmd_ft.sh
-echo "${steps[4]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_NANO_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step5_fasttimer.py --suffix \"-j step5_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+# For reHLT workflows the steps are shifted
+if ( echo $outname | grep "reHLT" ); then
+  for ((step=0;step<${#steps[@]}; ++step));do
+      echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_timememoryinfo.py --suffix \"-j step"$((step+2))"_JobReport.xml\"" >>cmd_ts.sh
+      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_igprof.py --suffix \"-j step"$((step+2))"_igprof_JobReport.xml\"" >>cmd_ig.sh
+  done
+else
+  for ((step=0;step<${#steps[@]}; ++step));do
+      echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py --suffix \"-j step"$((step+1))"_JobReport.xml\"" >>cmd_ts.sh
+      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+1))"_igprof.py --suffix \"-j step"$((step+1))"_igprof_JobReport.xml\"" >>cmd_ig.sh
+  done
+fi
+
+# For reHLT workflows the steps are shifted
+if ( echo $outname | grep 'reHLT') ; then
+  echo "export RUNTIMEMEMORY=true" >>cmd_ft.sh
+  echo "${steps[0]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_L1REPACK_HLT.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step2_fasttimer.py --suffix \"-j step2_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+  echo "${steps[1]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_SKIM_PAT_ALCA_DQM.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+  echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_HARVESTING.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py --suffix \"-j step4_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+else
+  echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+  echo "${steps[3]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_PAT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py --suffix \"-j step4_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+  echo "${steps[4]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_NANO_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step5_fasttimer.py --suffix \"-j step5_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+fi
 . cmd_ft.sh
 . cmd_ig.sh
 . cmd_ts.sh
 
-## --4. Make profiler 
+## --4. Make profiler
 
 cat << EOF >> profile.sh
 #!/bin/bash
@@ -104,7 +122,7 @@ for f in \$(ls igprofCPU_step*.gz 2>/dev/null);do
     igprof-analyse  -v -d -g \$f >& \$txtf
 done
 
-if [ -f RES_CPU_step3.txt ]; then 
+if [ -f RES_CPU_step3.txt ]; then
   export IGREP=RES_CPU_step3.txt
   export IGSORT=sorted_RES_CPU_step3.txt
   awk -v module=doEvent 'BEGIN { total = 0; } { if(substr(\$0,0,1)=="-"){good = 0;}; if(good&&length(\$0)>0){print \$0; total += \$3;}; if(substr(\$0,0,1)=="["&&index(\$0,module)!=0) {good = 1;} } END { print "Total: "total } ' \${IGREP} | sort -n -r -k1 | awk '{ if(index(\$0,"Total: ")!=0){total=\$0;} else{print \$0;} } END { print total; }' > \${IGSORT} 2>&1

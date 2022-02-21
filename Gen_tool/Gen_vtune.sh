@@ -13,7 +13,7 @@ CMSSW_v=$1
   echo "Install success"
   echo "Set CMSSW environment ...'"
   cd ${CMSSW_v}
-  eval `scramv1 runtime -sh`  
+  eval `scramv1 runtime -sh`
 ## --2. "RunThematrix" dry run
 
 
@@ -21,7 +21,7 @@ runTheMatrix.py -w upgrade -l 35234.21 --dryRun #200PU for 11_2_X
 
 #tail *.log
 
-for i in $(ls -d 2*/); do 
+for i in $(ls -d 2*/); do
 outname=${i%%/}; done
 mv $outname TimeMemory
 cd TimeMemory
@@ -61,7 +61,7 @@ chmod +x read.py
 ./read.py
 
 
-## --4. Make profiler 
+## --4. Make profiler
 
 
 
@@ -88,10 +88,10 @@ EOF
 chmod +x vtune.sh
 cat ./vtune.sh
 echo  Run ./vtune.sh to generate profiling data
-echo  optionally start the vtune-backend server to make the reports web accessible with this command 
+echo  optionally start the vtune-backend server to make the reports web accessible with this command
 echo  cd path to TimeMemory
 echo  vtune-backend --web-port 9090 --data-directory $PWD --log-to-console --disable-server-profiling
-echo 
+echo
 echo  the console will display the url with a one time password
 echo  https://localhost:9090?pw=############
 echo  you will be prompted to enter a new password when you connect.
