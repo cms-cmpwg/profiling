@@ -46,6 +46,7 @@ if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" == "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
 else
   export WRAPPER=$HOME/profiling/circles-wrapper.py
+  RUNTIMEMEMORY=true
 fi
 
 if [ "X$TIMEOUT" == "X" ];then
@@ -62,10 +63,10 @@ cmsRun$VDT step2_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
 
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
   echo step3 TimeMemory
-  cmsRun$VDT step3_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
+  cmsRun$VDT step3_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
 
   echo step4 TimeMemory
-  cmsRun$VDT step3_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
+  cmsRun$VDT step4_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
 
   if [ -f step5_timememoryinfo.py ]; then
       echo step5 TimeMemory
