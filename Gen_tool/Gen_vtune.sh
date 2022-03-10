@@ -69,11 +69,9 @@ fi
 cat << EOF >> vtune.sh
 #!/bin/bash
 . /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtune-vars.sh
-. /cvmfs/cms.cern.ch/cmsset_default.sh
-cmsenv
-CMSRUN=cmsRun
-VTUNE=vtune
-\$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(TTbar*.py) >step1.log
+CMSRUN=`which cmsRun`
+VTUNE=`which vtune`
+\$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls TTbar*.py) >step1.log
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step2*.py) >step2.log
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step3*.py) >step3.log
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step4*.py) >step4.log
@@ -97,4 +95,3 @@ echo  you will be prompted to enter a new password when you connect.
 echo  the is saved in a session cookie
 echo  the connection is self signed you will get a warnings from your browser
 echo  you will have to make a ssh tunnel for port 9090 to 127.0.0.1:9900
-./vtune.sh
