@@ -70,9 +70,9 @@ cat << EOF >> vtune.sh
 #!/bin/bash
 . /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtune-vars.sh
 . /cvmfs/cms.cern.ch/cmsset_default.sh
-eval \$(scram runtime -sh)
-CMSRUN=\$(which cmsRun)
-VTUNE=\$(which vtune)
+cmsenv
+CMSRUN=cmsRun
+VTUNE=vtune
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(TTbar*.py) >step1.log
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step2*.py) >step2.log
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step3*.py) >step3.log
