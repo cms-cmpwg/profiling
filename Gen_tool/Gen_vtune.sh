@@ -67,7 +67,7 @@ else
 fi
 
 cat << EOF >> vtune.sh
-. /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtune-vars.sh
+source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtune-vars.sh
 CMSRUN=`which cmsRun`
 VTUNE=`which vtune`
 \$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls TTbar*.py) >step1.log
