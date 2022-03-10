@@ -40,11 +40,11 @@ if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="35234.21"
 fi
 if [ "X$EVENTS" == "X" ];then
-  export EVENTS=20
+  export EVENTS=16
 fi
 
 if [ "X$NTHREADS" == "X" ]; then
-  export NTHREADS=1
+  export NTHREADS=8
 fi
 
 (runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
@@ -66,15 +66,14 @@ else
   cd $PROFILING_WORKFLOW
 fi
 
-cat << EOF >> vtune.sh
+source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtune-vars.sh
 CMSRUN=`which cmsRun`
 VTUNE=`which vtune`
-\$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls TTbar*.py) >step1.log
-\$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step2*.py) >step2.log
-\$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step3*.py) >step3.log
-\$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- \$CMSRUN \$(ls step4*.py) >step4.log
-\$VTUNE -report gprof-cc -r r000hs -format=csv -csv-delimiter=semicolon >r000hs.gprof_cc.csv
-\$VTUNE -report gprof-cc -r r001hs -format=csv -csv-delimiter=semicolon >r001hs.gprof_cc.csv
-\$VTUNE -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon >r002hs.gprof_cc.csv
-\$VTUNE -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon >r003hs.gprof_cc.csv
-EOF
+$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- $CMSRUN $(ls TTbar*.py) >step1.log
+$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- $CMSRUN $(ls step2*.py) >step2.log
+$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- $CMSRUN $(ls step3*.py) >step3.log
+$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -- $CMSRUN $(ls step4*.py) >step4.log
+$VTUNE -report gprof-cc -r r000hs -format=csv -csv-delimiter=semicolon >r000hs.gprof_cc.csv
+$VTUNE -report gprof-cc -r r001hs -format=csv -csv-delimiter=semicolon >r001hs.gprof_cc.csv
+$VTUNE -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon >r002hs.gprof_cc.csv
+$VTUNE -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon >r003hs.gprof_cc.csv
