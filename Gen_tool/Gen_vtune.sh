@@ -97,4 +97,4 @@ echo  you will be prompted to enter a new password when you connect.
 echo  the is saved in a session cookie
 echo  the connection is self signed you will get a warnings from your browser
 echo  you will have to make a ssh tunnel for port 9090 to 127.0.0.1:9900
-
+./vtune.sh
