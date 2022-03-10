@@ -67,7 +67,6 @@ else
 fi
 
 cat << EOF >> vtune.sh
-#!/bin/bash
 . /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtune-vars.sh
 CMSRUN=`which cmsRun`
 VTUNE=`which vtune`
@@ -80,18 +79,3 @@ VTUNE=`which vtune`
 \$VTUNE -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon >r002hs.gprof_cc.csv
 \$VTUNE -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon >r003hs.gprof_cc.csv
 EOF
-
-# execute the workflows under vtune to gather the profiling data
-chmod +x vtune.sh
-cat ./vtune.sh
-echo  Run ./vtune.sh to generate profiling data
-echo  optionally start the vtune-backend server to make the reports web accessible with this command
-echo  cd path to TimeMemory
-echo  vtune-backend --web-port 9090 --data-directory $PWD
-echo
-echo  the console will display the url with a one time password
-echo  https://localhost:9090?pw=############
-echo  you will be prompted to enter a new password when you connect.
-echo  the is saved in a session cookie
-echo  the connection is self signed you will get a warnings from your browser
-echo  you will have to make a ssh tunnel for port 9090 to 127.0.0.1:9900
