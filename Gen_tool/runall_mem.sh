@@ -58,34 +58,39 @@ for f in $(ls -1 IgProf*.gz);do
 done
 }
 
+GLIBC="GlibC"
+if [ "SCRAM_ARCH" = "el8*"]; then
+  GLIBC=""
+fi
+
 if [ "X$RUNALLSTEPS" == "Xtrue" ]; then
 
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -mp
-    igprof -mp -o ./igprofMEM_step1.mp -- cmsRun  step1_igprof.py  >& step1_igprof_mem.log
+    igprof -mp -o ./igprofMEM_step1.mp -- cmsRun$GLIBC  step1_igprof.py  >& step1_igprof_mem.log
     rename_igprof igprofMEM_step1 mp
   echo
     echo no step1
   fi
 
   echo step2 w/igprof -mp
-  igprof -mp -o ./igprofMEM_step2.mp -- cmsRun step2_igprof.py >& step2_igprof_mem.log
+  igprof -mp -o ./igprofMEM_step2.mp -- cmsRun$GLIBC step2_igprof.py >& step2_igprof_mem.log
   rename_igprof igprofMEM_step1 mp
 
 fi
 
 echo step3 w/igprof -mp
-igprof -mp -o ./igprofMEM_step3.mp -- cmsRun step3_igprof.py  >& step3_igprof_mem.log
+igprof -mp -o ./igprofMEM_step3.mp -- cmsRun$GLIBC step3_igprof.py  >& step3_igprof_mem.log
 rename_igprof igprofMEM_step3 mp
 
 
 echo step4 w/igprof -mp
-igprof -mp -o ./igprofMEM_step4.mp -- cmsRun  step4_igprof.py  >& step4_igprof_mem.log
+igprof -mp -o ./igprofMEM_step4.mp -- cmsRun$GLIBC  step4_igprof.py  >& step4_igprof_mem.log
 rename_igprof igprofMEM_step4 mp
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
     echo step5 w/igprof -mp
-    igprof -mp -o ./igprofMEM_step5.mp -- cmsRun  step5_igprof.py  >& step5_igprof_mem.log
+    igprof -mp -o ./igprofMEM_step5.mp -- cmsRun$GLIBC  step5_igprof.py  >& step5_igprof_mem.log
     rename_igprof igprofMEM_step5 mp
 else
     echo no step5
