@@ -59,8 +59,8 @@ done
 }
 
 GLIBC="GlibC"
-if [ "SCRAM_ARCH" = "el8*"]; then
-  GLIBC=""
+if ( echo $SCRAM_ARCH | grep -Eq "^el8*" ) ; then
+   GLIBC=""
 fi
 
 if [ "X$RUNALLSTEPS" == "Xtrue" ]; then
