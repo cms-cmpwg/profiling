@@ -37,15 +37,15 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="35234.21"
+  export PROFILING_WORKFLOW="11834.21"
 fi
-if [ "X$EVENTS" == "X" ];then
-  export EVENTS=16
-fi
-
 if [ "X$NTHREADS" == "X" ]; then
   export NTHREADS=8
 fi
+if [ "X$EVENTS" == "X" ];then
+  export EVENTS=160
+fi
+
 
 (runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
 
