@@ -27,7 +27,7 @@ else
       curl -L -s $LOCALRT/ibeos_cache.txt https://raw.githubusercontent.com/cms-sw/cms-sw.github.io/master/das_queries/ibeos.txt
   fi
   if [ -d $CMSSW_RELEASE_BASE/src/Utilities/General/ibeos ];then
-    PATH=$CMSSW_BASE/src/Utilities/General/ibeos:$PATH
+    PATH=$CMSSW_RELEASE_BASE/src/Utilities/General/ibeos:$PATH
     CMS_PATH=/cvmfs/cms-ib.cern.ch
     CMSSW_USE_IBEOS=true
   fi
@@ -41,6 +41,7 @@ fi
 
 if [ "X$WORKSPACE" != "X" ];then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
+  export RUNALLSTEPS=1
 else
   export WRAPPER=$HOME/profiling/ascii-out-wrapper.py
   export RUNALLSTEPS=1
@@ -61,35 +62,40 @@ for f in $(ls -1 IgProf*.gz);do
 done
 }
 
+
+# ensure that compiler include paths are added to ROOT_INCLUDE_PATH 
+for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
+
+
 if [ "X$RUNALLSTEPS" != "X" ]; then
 
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -pp
 
-    igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
+    igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
     rename_igprof igprofCPU_step1 gz
   else
     echo no step1
   fi
 
   echo step2  w/igprof -pp
-  igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py >& step2_igprof_cpu.log
+  igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py >& step2_igprof_cpu.log
   rename_igprof igprofCPU_step2 gz
 
 fi
 
 echo step3  w/igprof -pp
-igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun step3_igprof.py >& step3_igprof_cpu.log
+igprof -pp -z -d -o ./igprofCPU_step3.gz -- cmsRun step3_igprof.py >& step3_igprof_cpu.log
 rename_igprof igprofCPU_step3 gz
 
 
 echo step4  w/igprof -pp
-igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun step4_igprof.py >& step4_igprof_cpu.log
+igprof -pp -d -z -o ./igprofCPU_step4.gz -- cmsRun step4_igprof.py >& step4_igprof_cpu.log
 rename_igprof igprofCPU_step4 gz
 
 if [ -f step5_igprof.py ]; then
     echo step5  w/igprof -pp
-    igprof -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_igprof.py >& step5_igprof_cpu.log
+    igprof -d -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_igprof.py >& step5_igprof_cpu.log
     rename_igprof igprofCPU_step5 gz
 else
     echo no step5
