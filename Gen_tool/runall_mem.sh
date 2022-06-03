@@ -40,6 +40,7 @@ fi
 
 if [ "X$WORKSPACE" != "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
+  export RUNALLSTEPS=true
 else
   export WRAPPER=$HOME/profiling/ascii-out-wrapper.py
   export RUNALLSTEPS=true
@@ -47,7 +48,7 @@ fi
 LC_ALL=C
 
 if [ "X$TIMEOUT" == "X" ];then
-    export TIMEOUT=43200
+    export TIMEOUT=360
 fi
 
 function rename_igprof {
@@ -63,30 +64,30 @@ if [ "X$RUNALLSTEPS" == "Xtrue" ]; then
 
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -mp
-    igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGlibC  step1_igprof.py  >& step1_igprof_mem.log
+    timeout $TIMEOUT  igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGlibC  step1_igprof.py  >& step1_igprof_mem.log
     rename_igprof igprofMEM_step1 mp
   echo
     echo no step1
   fi
 
   echo step2 w/igprof -mp
-  igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC step2_igprof.py >& step2_igprof_mem.log
+  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC step2_igprof.py >& step2_igprof_mem.log
   rename_igprof igprofMEM_step1 mp
 
 fi
 
 echo step3 w/igprof -mp
-igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC step3_igprof.py  >& step3_igprof_mem.log
+timeout $TIMEOUT igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC step3_igprof.py  >& step3_igprof_mem.log
 rename_igprof igprofMEM_step3 mp
 
 
 echo step4 w/igprof -mp
-igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  step4_igprof.py  >& step4_igprof_mem.log
+timeout $TIMEOUT igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  step4_igprof.py  >& step4_igprof_mem.log
 rename_igprof igprofMEM_step4 mp
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
     echo step5 w/igprof -mp
-    igprof -mp -o ./igprofMEM_step5.mp -- cmsRunGlibC  step5_igprof.py  >& step5_igprof_mem.log
+    timeout $TIMEOUTigprof -mp -o ./igprofMEM_step5.mp -- cmsRunGlibC  step5_igprof.py  >& step5_igprof_mem.log
     rename_igprof igprofMEM_step5 mp
 else
     echo no step5

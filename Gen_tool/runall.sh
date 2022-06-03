@@ -50,44 +50,44 @@ else
 fi
 
 if [ "X$TIMEOUT" == "X" ];then
-    export TIMEOUT=43200
+    export TIMEOUT=360
 fi
 
 if [ -f step1_timememoryinfo.py ]; then
   echo step1 TimeMemory
-  cmsRun$VDT step1_timememoryinfo.py >& step1_timememoryinfo$VDT.txt
+  timeout $TIMEOUT cmsRun$VDT step1_timememoryinfo.py >& step1_timememoryinfo$VDT.txt
 fi
 
 echo step2 TimeMemory
-cmsRun$VDT step2_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
+ timeout $TIMEOUT cmsRun$VDT step2_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
 
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
   echo step3 TimeMemory
-  cmsRun$VDT step3_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
+  timeout $TIMEOUT cmsRun$VDT step3_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
 
   echo step4 TimeMemory
-  cmsRun$VDT step4_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
+  timeout $TIMEOUT cmsRun$VDT step4_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
 
   if [ -f step5_timememoryinfo.py ]; then
       echo step5 TimeMemory
-      cmsRun$VDT step5_timememoryinfo.py  >& step5_timememoryinfo$VDT.txt
+      timeout $TIMEOUT cmsRun$VDT step5_timememoryinfo.py  >& step5_timememoryinfo$VDT.txt
   fi
 fi
 
 if [ -f step2_fasttimer.py ];then
     echo step2 circles-wrapper optional
-    cmsRun$VDT step2_fasttimer.py  >& step2_fasttimer$VDT.txt
+    timeout $TIMEOUT cmsRun$VDT step2_fasttimer.py  >& step2_fasttimer$VDT.txt
 fi
 
 echo step3 circles-wrapper optional
-cmsRun$VDT step3_fasttimer.py  >& step3_fasttimer$VDT.txt
+ timeout $TIMEOUT cmsRun$VDT step3_fasttimer.py  >& step3_fasttimer$VDT.txt
 
 echo step4 circles-wrapper optional
-cmsRun$VDT step4_fasttimer.py  >& step4_fasttimer$VDT.txt
+ timeout $TIMEOUT cmsRun$VDT step4_fasttimer.py  >& step4_fasttimer$VDT.txt
 
 if [ -f step5_fasttimer.py ]; then
     echo step5 circles-wrapper optional
-    cmsRun$VDT step5_fasttimer.py  >& step5_fasttimer$VDT.txt
+    timeout $TIMEOUT cmsRun$VDT step5_fasttimer.py  >& step5_fasttimer$VDT.txt
 fi
 
 echo generating products sizes files

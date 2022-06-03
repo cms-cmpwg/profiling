@@ -50,7 +50,7 @@ LC_ALL=C
 
 
 if [ "X$TIMEOUT" == "X" ];then
-    export TIMEOUT=14400
+    export TIMEOUT=360
 fi
 
 
@@ -72,30 +72,30 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -pp
 
-    igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
+    timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
     rename_igprof igprofCPU_step1 gz
   else
     echo no step1
   fi
 
   echo step2  w/igprof -pp
-  igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py >& step2_igprof_cpu.log
+  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py >& step2_igprof_cpu.log
   rename_igprof igprofCPU_step2 gz
 
 fi
 
 echo step3  w/igprof -pp
-igprof -pp -z -d -o ./igprofCPU_step3.gz -- cmsRun step3_igprof.py >& step3_igprof_cpu.log
+ timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step3.gz -- cmsRun step3_igprof.py >& step3_igprof_cpu.log
 rename_igprof igprofCPU_step3 gz
 
 
 echo step4  w/igprof -pp
-igprof -pp -d -z -o ./igprofCPU_step4.gz -- cmsRun step4_igprof.py >& step4_igprof_cpu.log
+ timeout $TIMEOUT igprof -pp -d -z -o ./igprofCPU_step4.gz -- cmsRun step4_igprof.py >& step4_igprof_cpu.log
 rename_igprof igprofCPU_step4 gz
 
 if [ -f step5_igprof.py ]; then
     echo step5  w/igprof -pp
-    igprof -d -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_igprof.py >& step5_igprof_cpu.log
+    timeout $TIMEOUT igprof -d -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_igprof.py >& step5_igprof_cpu.log
     rename_igprof igprofCPU_step5 gz
 else
     echo no step5
