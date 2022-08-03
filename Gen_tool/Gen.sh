@@ -37,7 +37,7 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="35234.21"
+  export PROFILING_WORKFLOW="39634.21"
 fi
 if [ "X$EVENTS" == "X" ];then
   export EVENTS=20
@@ -92,7 +92,7 @@ else
 fi
 
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep 'reHLT') ; then
+if ( echo $outname | grep -q 'reHLT') ; then
   echo "${steps[0]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_L1REPACK_HLT.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step2_fasttimer.py --suffix \"-j step2_fasttimer_JobReport.xml\"" >>cmd_ft.sh
   echo "${steps[1]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_SKIM_PAT_ALCA_DQM.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
   echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_HARVESTING.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py --suffix \"-j step4_fasttimer_JobReport.xml\"" >>cmd_ft.sh
@@ -100,7 +100,10 @@ if ( echo $outname | grep 'reHLT') ; then
 else
   echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_RAW2DIGI_L1Reco_RECO_RECOSIM_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py --suffix \"-j step3_fasttimer_JobReport.xml\"" >>cmd_ft.sh
   echo "${steps[3]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_PAT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py --suffix \"-j step4_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+# check for 5th step
+if ( echo ${!steps[@]} | grep -q 4 );then
   echo "${steps[4]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_NANO_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step5_fasttimer.py --suffix \"-j step5_fasttimer_JobReport.xml\"" >>cmd_ft.sh
+  fi
 fi
 . cmd_ft.sh
 . cmd_ig.sh
