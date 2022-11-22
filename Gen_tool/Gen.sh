@@ -13,7 +13,7 @@ echo $CMSSW_v
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 else
-  export SCRAM_ARCH=slc7_amd64_gcc10
+  export SCRAM_ARCH=el8_amd64_gcc10
 fi
 echo $SCRAM_ARCH
 
