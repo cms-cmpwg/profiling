@@ -55,39 +55,62 @@ fi
 
 if [ -f step1_gpu_timememoryinfo.py ]; then
   echo step1 TimeMemory
-  timeout $TIMEOUT cmsRun$VDT step1_gpu_timememoryinfo.py >& step1_gpu_timememoryinfo$VDT.txt
+  timeout $TIMEOUT cmsRun step1_gpu_timememoryinfo.py >& step1_gpu_timememoryinfo.txt
+else
+  echo missing step1_gpu_timememoryinfo.py
+  exit 0
 fi
 
-echo step2 TimeMemory
- timeout $TIMEOUT cmsRun$VDT step2_gpu_timememoryinfo.py >& step2_gpu_timememoryinfo$VDT.txt
+if [ -f step2_gpu_timememoryinfo.py ]; then
+ echo step2 TimeMemory
+ timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py >& step2_gpu_timememoryinfo.txt
+ echo missing step2_gpu_timememoryinfo.py
+ exit 0
+fi 
 
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
-  echo step3 TimeMemory
-  timeout $TIMEOUT cmsRun$VDT step3_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo$VDT.txt
+  if [ -f step3_gpu_timememoryinfo.py ]; then
+    echo step3 TimeMemory
+    timeout $TIMEOUT cmsRun step3_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo.txt
+  else
+    echo missing step3_gpu_timememoryinfo.py
+    exit 0
+  fi
+  
+  if [ -f step3_gpu_timememoryinfo.py ]; then
+    echo step4 TimeMemory
+    timeout $TIMEOUT cmsRun step4_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo.txt
+  fi
 
-  echo step4 TimeMemory
-  timeout $TIMEOUT cmsRun$VDT step4_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo$VDT.txt
-
-  if [ -f step5_timememoryinfo.py ]; then
+  if [ -f step5_gpu_timememoryinfo.py ]; then
       echo step5 TimeMemory
-      timeout $TIMEOUT cmsRun$VDT step5_gpu_timememoryinfo.py  >& step5_gpu_timememoryinfo$VDT.txt
+      timeout $TIMEOUT cmsRun step5_gpu_timememoryinfo.py  >& step5_gpu_timememoryinfo.txt
   fi
 fi
 
-if [ -f step2_fasttimer.py ];then
-    echo step2 circles-wrapper optional
-    timeout $TIMEOUT cmsRun$VDT step2_gpu_fasttimer.py  >& step2_gpu_fasttimer$VDT.txt
+if [ -f step1_gpu_fasttimer.py ];then
+    echo step1 circles-wrapper optional
+    timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
 fi
 
-echo step3 circles-wrapper optional
- timeout $TIMEOUT cmsRun$VDT step3_gpu_fasttimer.py  >& step3_gpu_fasttimer$VDT.txt
+if [ -f step2_gpu_fasttimer.py ];then
+    echo step2 circles-wrapper optional
+    timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
+fi
 
-echo step4 circles-wrapper optional
- timeout $TIMEOUT cmsRun$VDT step4_gpu_fasttimer.py  >& step4_gpu_fasttimer$VDT.txt
+if [ -f step2_gpu_fasttimer.py ];then
+ echo step3 circles-wrapper optional
+ timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  >& step3_gpu_fasttimer.txt
+fi
 
-if [ -f step5_fasttimer.py ]; then
+if [ -f step2_gpu_fasttimer.py ];then
+ echo step4 circles-wrapper optional
+ timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py  >& step4_gpu_fasttimer.txt
+fi
+
+if [ -f step5_gpu_fasttimer.py ]; then
     echo step5 circles-wrapper optional
-    timeout $TIMEOUT cmsRun$VDT step5_gpu_fasttimer.py  >& step5_gpu_fasttimer$VDT.txt
+    timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py  >& step5_gpu_fasttimer.txt
 fi
 
 echo generating products sizes files
