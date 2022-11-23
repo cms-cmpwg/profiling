@@ -40,7 +40,7 @@ if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="21034.508"
 fi
 if [ "X$EVENTS" == "X" ];then
-  export EVENTS=200
+  export EVENTS=20
 fi
 
 if [ "X$NTHREADS" == "X" ]; then
