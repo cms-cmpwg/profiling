@@ -64,9 +64,10 @@ fi
 if [ -f step2_gpu_timememoryinfo.py ]; then
  echo step2 TimeMemory
  timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py >& step2_gpu_timememoryinfo.txt
+else
  echo missing step2_gpu_timememoryinfo.py
  exit 0
-fi 
+fi
 
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
   if [ -f step3_gpu_timememoryinfo.py ]; then
@@ -76,7 +77,7 @@ if [ "X$RUNTIMEMEMORY" != "X" ]; then
     echo missing step3_gpu_timememoryinfo.py
     exit 0
   fi
-  
+
   if [ -f step3_gpu_timememoryinfo.py ]; then
     echo step4 TimeMemory
     timeout $TIMEOUT cmsRun step4_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo.txt
@@ -98,12 +99,12 @@ if [ -f step2_gpu_fasttimer.py ];then
     timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
 fi
 
-if [ -f step2_gpu_fasttimer.py ];then
+if [ -f step3_gpu_fasttimer.py ];then
  echo step3 circles-wrapper optional
  timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  >& step3_gpu_fasttimer.txt
 fi
 
-if [ -f step2_gpu_fasttimer.py ];then
+if [ -f step4_gpu_fasttimer.py ];then
  echo step4 circles-wrapper optional
  timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py  >& step4_gpu_fasttimer.txt
 fi
