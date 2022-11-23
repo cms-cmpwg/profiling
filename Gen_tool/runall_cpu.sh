@@ -9,11 +9,11 @@ echo $CMSSW_v
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 else
-  export SCRAM_ARCH=slc7_amd64_gcc900
+  export SCRAM_ARCH=el8_amd64_gcc11
 fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="35234.21"
+  export PROFILING_WORKFLOW="21034.21"
 fi
 
 if [ "X$WORKSPACE" != "X" ]; then
@@ -38,14 +38,6 @@ else
   fi
 fi
 
-
-if [ "X$WORKSPACE" != "X" ];then
-  export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
-  export RUNALLSTEPS=1
-else
-  export WRAPPER=$HOME/profiling/ascii-out-wrapper.py
-  export RUNALLSTEPS=1
-fi
 LC_ALL=C
 
 
@@ -63,41 +55,47 @@ done
 }
 
 
-# ensure that compiler include paths are added to ROOT_INCLUDE_PATH 
+# ensure that compiler include paths are added to ROOT_INCLUDE_PATH
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
 
 
-if [ "X$RUNALLSTEPS" != "X" ]; then
-
-  if [ -f step1_igprof.py ]; then
-    echo step1 w/igprof -pp
-
-    timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py >& step1_igprof_cpu.log
-    rename_igprof igprofCPU_step1 gz
-  else
-    echo no step1
-  fi
-
-  echo step2  w/igprof -pp
-  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py >& step2_igprof_cpu.log
-  rename_igprof igprofCPU_step2 gz
-
+if [ -f step1_igprof.py ]; then
+  echo step1 w/igprof -pp
+  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py -j step1_igprof_cpu_JobReport.xml >& step1_igprof_cpu.log
+  rename_igprof igprofCPU_step1 gz
+else
+  echo missing step1_igprof.py
 fi
 
-echo step3  w/igprof -pp
- timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step3.gz -- cmsRun step3_igprof.py >& step3_igprof_cpu.log
-rename_igprof igprofCPU_step3 gz
+if [ -f step1_igprof.py ]; then
+  echo step2  w/igprof -pp
+  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py -j step2_igprof_cpu_JobReport.xml >& step2_igprof_cpu.log
+  rename_igprof igprofCPU_step2 gz
+else
+  echo missing step2_igprof.py
+fi
+
+if [ -f step3_igprof.py ]; then
+  echo step3  w/igprof -pp
+  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step3.gz -- cmsRun step3_igprof.py -j step3_igprof_cpu_JobReport.xml >& step3_igprof_cpu.log
+  rename_igprof igprofCPU_step3 gz
+else
+    echo missing step3_igprof.py
 
 
-echo step4  w/igprof -pp
- timeout $TIMEOUT igprof -pp -d -z -o ./igprofCPU_step4.gz -- cmsRun step4_igprof.py >& step4_igprof_cpu.log
-rename_igprof igprofCPU_step4 gz
+if [ -f step4_igprof.py ]; then
+  echo step4  w/igprof -pp
+  timeout $TIMEOUT igprof -pp -d -z -o ./igprofCPU_step4.gz -- cmsRun step4_igprof.py -j step4_igprof_cpu_JobReport.xml >& step4_igprof_cpu.log
+  rename_igprof igprofCPU_step4 gz
+else
+    echo missing step4_igprof.py
+fi
 
 if [ -f step5_igprof.py ]; then
-    echo step5  w/igprof -pp
-    timeout $TIMEOUT igprof -d -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_igprof.py >& step5_igprof_cpu.log
-    rename_igprof igprofCPU_step5 gz
+  echo step5  w/igprof -pp
+  timeout $TIMEOUT igprof -d -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_igprof.py -j step5_igprof_cpu_JobReport.xml >& step5_igprof_cpu.log
+  rename_igprof igprofCPU_step5 gz
 else
-    echo no step5
+    echo no step5 in workflow $PROFILING_WORKFLOW
 fi
 

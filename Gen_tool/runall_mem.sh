@@ -9,11 +9,11 @@ echo $CMSSW_v
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 else
-  export SCRAM_ARCH=slc7_amd64_gcc900
+  export SCRAM_ARCH=el8_amd64_gcc11
 fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="35234.21"
+  export PROFILING_WORKFLOW="21034.21"
 fi
 
 if [ "X$WORKSPACE" != "X" ]; then
@@ -38,13 +38,6 @@ else
   fi
 fi
 
-if [ "X$WORKSPACE" != "X" ]; then
-  export WRAPPER=$WORKSPACE/profiling/ascii-out-wrapper.py
-  export RUNALLSTEPS=true
-else
-  export WRAPPER=$HOME/profiling/ascii-out-wrapper.py
-  export RUNALLSTEPS=true
-fi
 LC_ALL=C
 
 if [ "X$TIMEOUT" == "X" ];then
@@ -57,38 +50,46 @@ for f in $(ls -1 IgProf*.gz);do
     s=${p/gz/$2}
     mv $f $s
 done
-}
 
-
-if [ "X$RUNALLSTEPS" == "Xtrue" ]; then
-
+if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -mp
-    timeout $TIMEOUT  igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGlibC  step1_igprof.py  >& step1_igprof_mem.log
+    timeout $TIMEOUT igprof -mp -o ./igprofMEM_step1.mp -- cmsRunGlibC step1_igprof.py -j step1_igprof_mem_JobReport.xml >& step1_igprof_mem.log
     rename_igprof igprofMEM_step1 mp
-  echo
-    echo no step1
+  else
+    echo missing step1_igprof.py
   fi
 
-  echo step2 w/igprof -mp
-  timeout $TIMEOUT igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC step2_igprof.py >& step2_igprof_mem.log
-  rename_igprof igprofMEM_step1 mp
-
+  if [ -f step2_igprof.py ]; then
+    echo step2 w/igprof -mp
+    timeout $TIMEOUT igprof -mp -o ./igprofMEM_step2.mp -- cmsRunGlibC step2_igprof.py -j step2_igprof_mem_JobReport.xml >& step2_igprof_mem.log
+    rename_igprof igprofMEM_step1 mp
+  else
+    echo missing step2_igprof.py
+  fi
 fi
 
-echo step3 w/igprof -mp
-timeout $TIMEOUT igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC step3_igprof.py  >& step3_igprof_mem.log
-rename_igprof igprofMEM_step3 mp
+if [ -f step3_igprof.py ]; then
+    echo step3 w/igprof -mp
+    timeout $TIMEOUT igprof -mp -o ./igprofMEM_step3.mp -- cmsRunGlibC step3_igprof.py -j step3_igprof_mem_JobReport.xml >& step3_igprof_mem.log
+    rename_igprof igprofMEM_step3 mp
+else
+    echo missing step3_igprof.py
+fi
 
 
-echo step4 w/igprof -mp
-timeout $TIMEOUT igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC  step4_igprof.py  >& step4_igprof_mem.log
-rename_igprof igprofMEM_step4 mp
+if [ -f step4_igprof.py ]; then
+    echo step4 w/igprof -mp
+    timeout $TIMEOUT igprof -mp -o ./igprofMEM_step4.mp -- cmsRunGlibC step4_igprof.py -j step4_igprof_mem_JobReport.xml >& step4_igprof_mem.log
+    rename_igprof igprofMEM_step4 mp
+else
+    echo missing step4_igprof.py
+fi
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
     echo step5 w/igprof -mp
-    timeout $TIMEOUTigprof -mp -o ./igprofMEM_step5.mp -- cmsRunGlibC  step5_igprof.py  >& step5_igprof_mem.log
+    timeout $TIMEOUT igprof -mp -o ./igprofMEM_step5.mp -- cmsRunGlibC step5_igprof.py -j step5_igprof_mem_JobReport.xml >& step5_igprof_mem.log
     rename_igprof igprofMEM_step5 mp
 else
-    echo no step5
+    echo no step5 in workflow $PROFILING_WORKFLOW
 fi

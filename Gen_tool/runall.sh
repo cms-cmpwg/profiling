@@ -5,16 +5,14 @@ else
   CMSSW_v=$CMSSW_VERSION
 fi
 
-VDT=""
-
 if [ "X$ARCHITECTURE" != "X" ]; then
   export SCRAM_ARCH=$ARCHITECTURE
 else
-  export SCRAM_ARCH=slc7_amd64_gcc100
+  export SCRAM_ARCH=el8_amd64_gcc11
 fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="35234.21"
+  export PROFILING_WORKFLOW="21034.21"
 fi
 
 if [ "X$WORKSPACE" != "X" ]; then
@@ -42,52 +40,82 @@ else
   fi
 fi
 
-if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" == "X" ]; then
-  export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
-else
-  export WRAPPER=$HOME/profiling/circles-wrapper.py
-  RUNTIMEMEMORY=true
-fi
-
 if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ -f step1_timememoryinfo.py ]; then
-  echo step1 TimeMemory
-  timeout $TIMEOUT cmsRun$VDT step1_timememoryinfo.py >& step1_timememoryinfo$VDT.txt
-fi
-
-echo step2 TimeMemory
- timeout $TIMEOUT cmsRun$VDT step2_timememoryinfo.py >& step2_timememoryinfo$VDT.txt
-
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
-  echo step3 TimeMemory
-  timeout $TIMEOUT cmsRun$VDT step3_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
+  echo Run with TimeMemoryService
+  if [ -f step1_timememoryinfo.py ]; then
+    echo step1 TimeMemory
+    timeout $TIMEOUT cmsRun step1_timememoryinfo.py >& step1_timememoryinfo.txt
+  else
+    echo missing step1_timememoryinfo.py
+  fi
 
-  echo step4 TimeMemory
-  timeout $TIMEOUT cmsRun$VDT step4_timememoryinfo.py >& step3_timememoryinfo$VDT.txt
+  if [ -f step2_timememoryinfo.py ]; then
+    echo step2 TimeMemory
+    timeout $TIMEOUT cmsRun step2_timememoryinfo.py >& step2_timememoryinfo.txt
+  else
+    echo missing step2_timememoryinfo.py
+  fi
+
+  if [ -f step3_timememoryinfo.py ]; then
+    echo step3 TimeMemory
+    timeout $TIMEOUT cmsRun step3_timememoryinfo.py >& step3_timememoryinfo.txt
+  else
+    echo missing step3_timememoryinfo.py
+  fi
+
+  if [ -f step4_timememoryinfo.py ]; then
+    echo step4 TimeMemory
+    timeout $TIMEOUT cmsRun step4_timememoryinfo.py >& step3_timememoryinfo.txt
+  else
+    echo missing step4_timememoryinfo.py
+  fi
 
   if [ -f step5_timememoryinfo.py ]; then
       echo step5 TimeMemory
-      timeout $TIMEOUT cmsRun$VDT step5_timememoryinfo.py  >& step5_timememoryinfo$VDT.txt
+      timeout $TIMEOUT cmsRun step5_timememoryinfo.py  >& step5_timememoryinfo.txt
+  else
+    echo no step5 in workflow $PROFILING_WORKFLOW
   fi
-fi
+else
+  echo Run with FastTimerService
+  if [ -f step1_fasttimer.py ];then
+      echo step1 FastTimer
+      timeout $TIMEOUT cmsRun step1_fasttimer.py  >& step1_fasttimer.txt
+  else
+    echo missing step1_fasttimer.py
+  fi
 
-if [ -f step2_fasttimer.py ];then
-    echo step2 circles-wrapper optional
-    timeout $TIMEOUT cmsRun$VDT step2_fasttimer.py  >& step2_fasttimer$VDT.txt
-fi
+  if [ -f step2_fasttimer.py ];then
+      echo step2 FastTimer
+      timeout $TIMEOUT cmsRun step2_fasttimer.py  >& step2_fasttimer.txt
+  else
+    echo missing step2_fasttimer.py
+  fi
 
-echo step3 circles-wrapper optional
- timeout $TIMEOUT cmsRun$VDT step3_fasttimer.py  >& step3_fasttimer$VDT.txt
+  if [ -f step3_fasttimer.py ]; then
+    echo step3 FastTimer
+    timeout $TIMEOUT cmsRun step3_fasttimer.py  >& step3_fasttimer.txt
+  else
+    echo missing step3_fasttimer.py
+  fi
 
-echo step4 circles-wrapper optional
- timeout $TIMEOUT cmsRun$VDT step4_fasttimer.py  >& step4_fasttimer$VDT.txt
+  if [ -f step4_fasttimer.py ]; then
+   echo step4 FastTimer
+   timeout $TIMEOUT cmsRun step4_fasttimer.py  >& step4_fasttimer.txt
+  else
+    echo missing step4_fasttimer.py
+  fi
 
-if [ -f step5_fasttimer.py ]; then
-    echo step5 circles-wrapper optional
-    timeout $TIMEOUT cmsRun$VDT step5_fasttimer.py  >& step5_fasttimer$VDT.txt
+  if [ -f step5_fasttimer.py ]; then
+      echo step5 FastTimer
+      timeout $TIMEOUT cmsRun step5_fasttimer.py  >& step5_fasttimer.txt
+  else
+    echo no step5 in workflow $PROFILING_WORKFLOW
+  fi
 fi
 
 echo generating products sizes files

@@ -1,11 +1,10 @@
-#!/bin/bash -x
+#!/bin/bash
 if [ "X$CMSSW_VERSION" == "X" ];then
   CMSSW_v=$1
 else
   CMSSW_v=$CMSSW_VERSION
 fi
 
-VDT=""
 
 if [ "X$ARCHITECTURE" != "X" ]; then
   export SCRAM_ARCH=$ARCHITECTURE
@@ -42,76 +41,81 @@ else
   fi
 fi
 
-if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" == "X" ]; then
-  export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
-else
-  export WRAPPER=$HOME/profiling/circles-wrapper.py
-fi
-
 if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-# Run with TimeMemoryService
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
+  echo Run with TimeMemoryService
   if [ -f step1_gpu_timememoryinfo.py ]; then
     echo step1 TimeMemory
-    timeout $TIMEOUT cmsRun step1_gpu_timememoryinfo.py >& step1_gpu_timememoryinfo.txt
+    timeout $TIMEOUT cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.txt
   else
     echo missing step1_gpu_timememoryinfo.py
-    exit 0
   fi
-  
+
   if [ -f step2_gpu_timememoryinfo.py ]; then
    echo step2 TimeMemory
-   timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py >& step2_gpu_timememoryinfo.txt
+   timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.txt
   else
    echo missing step2_gpu_timememoryinfo.py
-   exit 0
   fi
 
   if [ -f step3_gpu_timememoryinfo.py ]; then
     echo step3 TimeMemory
-    timeout $TIMEOUT cmsRun step3_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo.txt
+    timeout $TIMEOUT cmsRun step3_gpu_timememoryinfo.py -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.txt
   else
     echo missing step3_gpu_timememoryinfo.py
-    exit 0
   fi
 
-  if [ -f step3_gpu_timememoryinfo.py ]; then
+  if [ -f step4_gpu_timememoryinfo.py ]; then
     echo step4 TimeMemory
-    timeout $TIMEOUT cmsRun step4_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo.txt
+    timeout $TIMEOUT cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.txt
+  else
+    echo missing step4_timememoryinfo.py
   fi
 
   if [ -f step5_gpu_timememoryinfo.py ]; then
       echo step5 TimeMemory
-      timeout $TIMEOUT cmsRun step5_gpu_timememoryinfo.py  >& step5_gpu_timememoryinfo.txt
+      timeout $TIMEOUT cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.txt
+  else
+    echo no step5 in workflow
   fi
-# Run with FastTimerService
 else
+  echo Run with FastTimerService
   if [ -f step1_gpu_fasttimer.py ];then
-      echo step1 circles-wrapper optional
-      timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py  >& step1_gpu_fasttimer.txt
+      echo step1 gpu FastTimer
+      timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
+  else
+      echo missing step1_gpu_fasttimer.py
   fi
-  
+
   if [ -f step2_gpu_fasttimer.py ];then
-      echo step2 circles-wrapper optional
-      timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
+      echo step2 gpu FastTimer
+      timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
+  else
+      echo missing step2_gpu_fasttimer.py
   fi
-  
+
   if [ -f step3_gpu_fasttimer.py ];then
-   echo step3 circles-wrapper optional
-   timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  >& step3_gpu_fasttimer.txt
+      echo step3 gpu FastTimer
+      timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
+  else
+      echo missing step3_gpu_fasttimer.py
   fi
-  
+
   if [ -f step4_gpu_fasttimer.py ];then
-   echo step4 circles-wrapper optional
-   timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py  >& step4_gpu_fasttimer.txt
+      echo step4 gpu FastTimer
+      timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
+  else
+      echo missing step4_gpu_fasttimer.py
   fi
-  
+
   if [ -f step5_gpu_fasttimer.py ]; then
-      echo step5 circles-wrapper optional
-      timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py  >& step5_gpu_fasttimer.txt
+      echo step5 gpu FastTimer
+      timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
+  else
+      echo no step5 in workflow
   fi
 fi
 
