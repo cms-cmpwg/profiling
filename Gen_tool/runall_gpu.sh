@@ -53,23 +53,24 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ -f step1_gpu_timememoryinfo.py ]; then
-  echo step1 TimeMemory
-  timeout $TIMEOUT cmsRun step1_gpu_timememoryinfo.py >& step1_gpu_timememoryinfo.txt
-else
-  echo missing step1_gpu_timememoryinfo.py
-  exit 0
-fi
-
-if [ -f step2_gpu_timememoryinfo.py ]; then
- echo step2 TimeMemory
- timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py >& step2_gpu_timememoryinfo.txt
-else
- echo missing step2_gpu_timememoryinfo.py
- exit 0
-fi
-
+# Run with TimeMemoryService
 if [ "X$RUNTIMEMEMORY" != "X" ]; then
+  if [ -f step1_gpu_timememoryinfo.py ]; then
+    echo step1 TimeMemory
+    timeout $TIMEOUT cmsRun step1_gpu_timememoryinfo.py >& step1_gpu_timememoryinfo.txt
+  else
+    echo missing step1_gpu_timememoryinfo.py
+    exit 0
+  fi
+  
+  if [ -f step2_gpu_timememoryinfo.py ]; then
+   echo step2 TimeMemory
+   timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py >& step2_gpu_timememoryinfo.txt
+  else
+   echo missing step2_gpu_timememoryinfo.py
+   exit 0
+  fi
+
   if [ -f step3_gpu_timememoryinfo.py ]; then
     echo step3 TimeMemory
     timeout $TIMEOUT cmsRun step3_gpu_timememoryinfo.py >& step3_gpu_timememoryinfo.txt
@@ -87,31 +88,32 @@ if [ "X$RUNTIMEMEMORY" != "X" ]; then
       echo step5 TimeMemory
       timeout $TIMEOUT cmsRun step5_gpu_timememoryinfo.py  >& step5_gpu_timememoryinfo.txt
   fi
-fi
-
-if [ -f step1_gpu_fasttimer.py ];then
-    echo step1 circles-wrapper optional
-    timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
-fi
-
-if [ -f step2_gpu_fasttimer.py ];then
-    echo step2 circles-wrapper optional
-    timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
-fi
-
-if [ -f step3_gpu_fasttimer.py ];then
- echo step3 circles-wrapper optional
- timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  >& step3_gpu_fasttimer.txt
-fi
-
-if [ -f step4_gpu_fasttimer.py ];then
- echo step4 circles-wrapper optional
- timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py  >& step4_gpu_fasttimer.txt
-fi
-
-if [ -f step5_gpu_fasttimer.py ]; then
-    echo step5 circles-wrapper optional
-    timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py  >& step5_gpu_fasttimer.txt
+# Run with FastTimerService
+else
+  if [ -f step1_gpu_fasttimer.py ];then
+      echo step1 circles-wrapper optional
+      timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
+  fi
+  
+  if [ -f step2_gpu_fasttimer.py ];then
+      echo step2 circles-wrapper optional
+      timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
+  fi
+  
+  if [ -f step3_gpu_fasttimer.py ];then
+   echo step3 circles-wrapper optional
+   timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  >& step3_gpu_fasttimer.txt
+  fi
+  
+  if [ -f step4_gpu_fasttimer.py ];then
+   echo step4 circles-wrapper optional
+   timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py  >& step4_gpu_fasttimer.txt
+  fi
+  
+  if [ -f step5_gpu_fasttimer.py ]; then
+      echo step5 circles-wrapper optional
+      timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py  >& step5_gpu_fasttimer.txt
+  fi
 fi
 
 echo generating products sizes files
