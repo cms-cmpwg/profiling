@@ -80,12 +80,16 @@ declare -i step
 if ( echo $outname | grep "reHLT" ); then
   for ((step=0;step<${#steps[@]}; ++step));do
       echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_gpu_timememoryinfo.py" >>cmd_ts.sh
-      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLToutput);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 2\" --python_filename=step"$((step+2))"_gpu_igprof.py" >>cmd_ig.sh
+      if ( step == 1 );then
+        echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLToutput);process.options.numberOfThreads = 2\" --python_filename=step"$((step+2))"_gpu_igprof.py" >>cmd_ig.sh
+      else
+        echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 2\" --python_filename=step"$((step+2))"_gpu_igprof.py" >>cmd_ig.sh
+      fi
   done
 else
   for ((step=0;step<${#steps[@]}; ++step));do
       echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_gpu_timememoryinfo.py" >>cmd_ts.sh
-      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLToutput);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 2\" --python_filename=step"$((step+1))"_gpu_igprof.py" >>cmd_ig.sh
+      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 2\" --python_filename=step"$((step+1))"_gpu_igprof.py" >>cmd_ig.sh
   done
 fi
 
