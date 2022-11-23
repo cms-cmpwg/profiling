@@ -46,7 +46,6 @@ if [ "X$WORKSPACE" != "X" -a "X$NOWRAPPER" == "X" ]; then
   export WRAPPER=$WORKSPACE/profiling/circles-wrapper.py
 else
   export WRAPPER=$HOME/profiling/circles-wrapper.py
-  RUNTIMEMEMORY=true
 fi
 
 if [ "X$TIMEOUT" == "X" ];then
@@ -92,7 +91,7 @@ if [ "X$RUNTIMEMEMORY" != "X" ]; then
 else
   if [ -f step1_gpu_fasttimer.py ];then
       echo step1 circles-wrapper optional
-      timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py  >& step2_gpu_fasttimer.txt
+      timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py  >& step1_gpu_fasttimer.txt
   fi
   
   if [ -f step2_gpu_fasttimer.py ];then
