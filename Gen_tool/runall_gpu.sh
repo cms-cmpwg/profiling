@@ -53,7 +53,7 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ -f step1_timememoryinfo.py ]; then
+if [ -f step1_gpu_timememoryinfo.py ]; then
   echo step1 TimeMemory
   timeout $TIMEOUT cmsRun$VDT step1_gpu_timememoryinfo.py >& step1_gpu_timememoryinfo$VDT.txt
 fi
