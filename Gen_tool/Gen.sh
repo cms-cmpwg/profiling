@@ -39,12 +39,13 @@ fi
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="21034.21"
 fi
-if [ "X$EVENTS" == "X" ];then
-  export EVENTS=20
-fi
 
 if [ "X$NTHREADS" == "X" ]; then
-  export NTHREADS=1
+  export NTHREADS=4
+fi
+
+if [ "X$EVENTS" == "X" ];then
+  export EVENTS=$(($NTHREADS*20))
 fi
 
 (runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
@@ -81,15 +82,15 @@ if ( echo $outname | grep "reHLT" ); then
   for ((step=0;step<${#steps[@]}; ++step));do
       echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_timememoryinfo.py" >>cmd_ts.sh
       if [ "$step" == "0" ]; then
-        echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_igprof.py" >>cmd_ig.sh
+        echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.options.numberOfThreads = 1;process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(20),output = cms.optional.untracked.allowed(cms.int32,cms.PSet)\" --python_filename=step"$((step+2))"_igprof.py" >>cmd_ig.sh
       else 
-        echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_igprof.py" >>cmd_ig.sh
+        echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 1;process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(20),output = cms.optional.untracked.allowed(cms.int32,cms.PSet)\" --python_filename=step"$((step+2))"_igprof.py" >>cmd_ig.sh
       fi
   done
 else
   for ((step=0;step<${#steps[@]}; ++step));do
       echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py" >>cmd_ts.sh
-      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+1))"_igprof.py"  >>cmd_ig.sh
+      echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.options.numberOfThreads = 1;process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(20),output = cms.optional.untracked.allowed(cms.int32,cms.PSet)\" --python_filename=step"$((step+1))"_igprof.py"  >>cmd_ig.sh
   done
 fi
 
