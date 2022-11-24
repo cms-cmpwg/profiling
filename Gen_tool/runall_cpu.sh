@@ -81,7 +81,7 @@ if [ -f step3_igprof.py ]; then
   rename_igprof igprofCPU_step3 gz
 else
     echo missing step3_igprof.py
-
+fi
 
 if [ -f step4_igprof.py ]; then
   echo step4  w/igprof -pp
