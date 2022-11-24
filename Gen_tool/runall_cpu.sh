@@ -59,20 +59,22 @@ done
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
 
 
-if [ -f step1_igprof.py ]; then
-  echo step1 w/igprof -pp
-  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py -j step1_igprof_cpu_JobReport.xml >& step1_igprof_cpu.log
-  rename_igprof igprofCPU_step1 gz
-else
-  echo missing step1_igprof.py
-fi
+if [ "X$RUNALLSTEPS" != "X" ]; then
+  if [ -f step1_igprof.py ]; then
+    echo step1 w/igprof -pp
+    timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py -j step1_igprof_cpu_JobReport.xml >& step1_igprof_cpu.log
+    rename_igprof igprofCPU_step1 gz
+  else
+    echo missing step1_igprof.py
+  fi
 
-if [ -f step1_igprof.py ]; then
-  echo step2  w/igprof -pp
-  timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py -j step2_igprof_cpu_JobReport.xml >& step2_igprof_cpu.log
-  rename_igprof igprofCPU_step2 gz
-else
-  echo missing step2_igprof.py
+  if [ -f step2_igprof.py ]; then
+    echo step2  w/igprof -pp
+    timeout $TIMEOUT igprof -pp -z -d -o ./igprofCPU_step2.gz -- cmsRun step2_igprof.py -j step2_igprof_cpu_JobReport.xml >& step2_igprof_cpu.log
+    rename_igprof igprofCPU_step2 gz
+  else
+    echo missing step2_igprof.py
+  fi
 fi
 
 if [ -f step3_igprof.py ]; then

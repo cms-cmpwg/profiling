@@ -50,6 +50,7 @@ for f in $(ls -1 IgProf*.gz);do
     s=${p/gz/$2}
     mv $f $s
 done
+}
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_gpu_igprof.py ]; then
