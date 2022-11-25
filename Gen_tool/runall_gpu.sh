@@ -16,6 +16,14 @@ if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="21034.508"
 fi
 
+if [ -f /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys ];then
+  NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
+  NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
+else
+  NSYS=""
+  NSYSARGS=""
+fi
+
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
 else
