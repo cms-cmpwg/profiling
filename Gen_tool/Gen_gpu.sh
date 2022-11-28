@@ -78,6 +78,7 @@ echo "#!/bin/bash " > cmd_ig.sh
 echo "#!/bin/bash " > cmd_ts.sh
 echo "#!/bin/bash " > cmd_np.sh
 declare -i step
+for step in ${!steps[@]};do t1=${steps[$step]/:@phase2Validation+@miniAODValidation,DQM:@phase2+@miniAODDQM/};t2=${t1/,VALIDATION/};t3=${t2/,DQMIO/};t4=${t3/,DQM/};steps[$step]=$t4;echo $steps[$step];done;
 # For reHLT workflows the steps are shifted
 if ( echo $outname | grep "reHLT" ); then
   for ((step=0;step<${#steps[@]}; ++step));do
