@@ -56,43 +56,43 @@ done
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
-    echo step1 w/igprof -mp cmsRun
-    timeout $TIMEOUT igprof -mp -z -d -o ./igprofMEM_step1.gz -- cmsRun step1_igprof.py -j step1_igprof_mem_JobReport.xml >& step1_igprof_mem.log
-    rename_igprof igprofMEM_step1 gz
+    echo step1 w/jeprof
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJE step1_igprof.py -j step1_jeprof_mem_JobReport.xml >& step1_jeprof_mem.log
+    rename_jeprof step1
   else
     echo missing step1_igprof.py
   fi
 
   if [ -f step2_igprof.py ]; then
-    echo step2 w/igprof -mp cmsRun
-    timeout $TIMEOUT igprof -mp -z -d -o ./igprofMEM_step2.gz -- cmsRun step2_igprof.py -j step2_igprof_mem_JobReport.xml >& step2_igprof_mem.log
-    rename_igprof igprofMEM_step1
+    echo step2 w/jeprof
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJE step2_igprof.py -j step2_jeprof_mem_JobReport.xml >& step2_jeprof_mem.log
+    rename_jeprof step2
   else
     echo missing step2_igprof.py
   fi
 fi
 
 if [ -f step3_igprof.py ]; then
-    echo step3 w/igprof -mp cmsRun
-    timeout $TIMEOUT igprof -mp -z -d -o ./igprofMEM_step3.gz -- cmsRun step3_igprof.py -j step3_igprof_mem_JobReport.xml >& step3_igprof_mem.log
-    rename_igprof igprofMEM_step3
+    echo step3 w/jeprof
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJE step3_igprof.py -j step3_jeprof_mem_JobReport.xml >& step3_jeprof_mem.log
+    rename_jeprof step3
 else
     echo missing step3_igprof.py
 fi
 
 
 if [ -f step4_igprof.py ]; then
-    echo step4 w/igprof -mp cmsRun
-    timeout $TIMEOUT igprof -mp -z -d -o ./igprofMEM_step4.gz -- cmsRun step4_igprof.py -j step4_igprof_mem_JobReport.xml >& step4_igprof_mem.log
-    rename_igprof igprofMEM_step4
+    echo step4 w/jeprof
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJE step4_igprof.py -j step4_jeprof_mem_JobReport.xml >& step4_jeprof_mem.log
+    rename_jeprof step5
 else
     echo missing step4_igprof.py
 fi
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
-    echo step5 w/igprof -mp cmsRun
-    timeout $TIMEOUT igprof -mp -z -d -o ./igprofMEM_step5.gz -- cmsRun step5_igprof.py -j step5_igprof_mem_JobReport.xml >& step5_igprof_mem.log
-    rename_igprof igprofMEM_step5
+    echo step5 w/jeprof
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJE step5_igprof.py -j step1_jeprof_mem_JobReport.xml >& step5_jeprof_mem.log
+    rename_jeprof step5
 else
     echo no step5 in workflow $PROFILING_WORKFLOW
 fi

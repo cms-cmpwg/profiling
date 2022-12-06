@@ -12,24 +12,19 @@ echo $CMSSW_v
 
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
-else
-  export SCRAM_ARCH=el8_amd64_gcc11
 fi
 echo $SCRAM_ARCH
 
 if [ "X$RELEASE_FORMAT" == "X" -a  "X$CMSSW_IB" == "X" ]; then
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
-  source /cvmfs/grid.cern.ch/etc/profile.d/setup-cvmfs-ui.sh
-  grid-proxy-init
-  unset PYTHONPATH
-  export LC_ALL=C
+  voms-proxy-init
   echo "Start install ${CMSSW_v} ..."
-  scramv1 project ${CMSSW_v}
+  scram project ${CMSSW_v}
   echo "Install success"
   echo "Set CMSSW environment ...'"
   cd ${CMSSW_v}
-  eval `scramv1 runtime -sh`
+  eval `scram runtime -sh`
 else
   cd $WORKSPACE/${CMSSW_v}
 fi

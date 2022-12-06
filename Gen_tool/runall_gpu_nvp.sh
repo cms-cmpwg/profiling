@@ -8,8 +8,6 @@ fi
 
 if [ "X$ARCHITECTURE" != "X" ]; then
   export SCRAM_ARCH=$ARCHITECTURE
-else
-  export SCRAM_ARCH=el8_amd64_gcc11
 fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
@@ -24,9 +22,8 @@ else
   echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
   source $VO_CMS_SW_DIR/cmsset_default.sh
   cd $CMSSW_v/$PROFILING_WORKFLOW
-  unset PYTHONPATH
   export LC_ALL=C
-  eval `scramv1 runtime -sh`
+  eval `scram runtime -sh`
   if [ ! -f $LOCALRT/ibeos_cache.txt ];then
       curl -L -s $LOCALRT/ibeos_cache.txt https://raw.githubusercontent.com/cms-sw/cms-sw.github.io/master/das_queries/ibeos.txt
   fi

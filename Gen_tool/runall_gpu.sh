@@ -33,7 +33,7 @@ else
   cd $CMSSW_v/$PROFILING_WORKFLOW
   unset PYTHONPATH
   export LC_ALL=C
-  eval `scramv1 runtime -sh`
+  eval `scram runtime -sh`
   if [ ! -f $LOCALRT/ibeos_cache.txt ];then
       curl -L -s $LOCALRT/ibeos_cache.txt https://raw.githubusercontent.com/cms-sw/cms-sw.github.io/master/das_queries/ibeos.txt
   fi
