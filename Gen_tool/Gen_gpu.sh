@@ -47,7 +47,7 @@ fi
 declare -a outname
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
-  runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec\ --dirin=$WORKSPACE\ --dirout=$WORKSPACE 
+  runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec
   outname=$(ls -d ${PROFILING_WORKFLOW}*)
   mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
