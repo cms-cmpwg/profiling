@@ -135,7 +135,6 @@ if [ -f RES_CPU_step3.txt ]; then
 fi
 EOF
 chmod +x profile_igpp.sh
-ln -s profile_igpp.sh profile.sh
 
 cat << EOF >> profile_igmp.sh
 #!/bin/bash
@@ -154,7 +153,6 @@ for f in \$(ls igprofMEM_*[0-9].gz 2>/dev/null);do
 done
 EOF
 chmod +x profile_igmp.sh
-ln -s profile_igmp.sh profile_mem.sh
 
 cat << EOF >>profile_mem_jemalloc.sh
 #!/bin/bash
