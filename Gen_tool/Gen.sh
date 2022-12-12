@@ -140,7 +140,7 @@ ln -s profile_igpp.sh profile.sh
 cat << EOF >> profile_igmp.sh
 #!/bin/bash
 
-for f in \$(ls igprofMEM_step*.gz 2>/dev/null);do
+for f in \$(ls igprofMEM_*[0-9].gz 2>/dev/null);do
 ## --For web-based report
     sqlf=\${f/gz/sql3}
     sf=\${f/igprofMEM/MEMsql}
