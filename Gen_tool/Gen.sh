@@ -96,7 +96,7 @@ else
 # Constructing module: class=FastTimerServiceClient label='fastTimerServiceClient'
 # Don't add FastTimerService to step2
   if ( echo $outname | grep -q '11834');then
-    echo "${steps[1]} --python_filename=step2_fasttimer.py" >> cmd_ft.sh
+    echo "${steps[1]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_DIGI_L1TrackTrigger_L1_DIGI2RAW_HLT_PU.resources.json');process.FastTimerService.enableDQMbyLumiSection   = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step2_fasttimer.py" >>cmd_ft.sh
   else
     echo "${steps[1]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_DIGI_L1TrackTrigger_L1_DIGI2RAW_HLT_PU.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step2_fasttimer.py" >>cmd_ft.sh
   fi
