@@ -1,0 +1,50 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.971148      -0.14%        10.60 ms/ev ->         0.08 ms/ev ak4PFPuppiResidualCorrector
+   -1.792878      -0.07%         5.51 ms/ev ->         0.30 ms/ev shiftedPatJetResUpNoHF
+   +1.406061      +0.01%         0.10 ms/ev ->         0.56 ms/ev ak4PFCHSResidualCorrectorNoHF
+   -1.323772      -0.02%         1.91 ms/ev ->         0.39 ms/ev pfDeepBoostedJetTagsSlimmedAK8DeepTags
+   -1.019520      -0.02%         2.01 ms/ev ->         0.65 ms/ev pfMassDecorrelatedDeepBoostedJetTagsSlimmedAK8DeepTags
+   +1.000000      +0.00%         0.00 ms/ev ->         0.00 ms/ev Flag_BadChargedCandidateFilter
+   -0.699956      -0.07%         9.25 ms/ev ->         4.45 ms/ev patMETsPuppi
+   -0.318919      -0.00%         0.86 ms/ev ->         0.62 ms/ev hpsPFTauDiscriminationByLooseMuonRejection3Boosted
+   -0.239579      -0.72%       247.34 ms/ev ->       194.42 ms/ev pfImpactParameterTagInfosAK8PFPuppiSoftDropSubjets
+   -0.188510      -0.03%        11.74 ms/ev ->         9.72 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   -0.145154      -0.02%         8.77 ms/ev ->         7.58 ms/ev pfCombinedCvsBJetTagsPuppi
+   +0.113141      +0.02%        12.29 ms/ev ->        13.76 ms/ev pfCombinedCvsLJetTagsPuppi
+   +0.108124      +0.07%        43.16 ms/ev ->        48.09 ms/ev ca8PFJetsCHSprunedForBoostedTaus
+   +0.105161      +0.01%         7.82 ms/ev ->         8.69 ms/ev patTaus
+   +0.100043      +0.24%       163.95 ms/ev ->       181.22 ms/ev pfDeepFlavourJetTagsSlimmedDeepFlavour
+   +0.087182      +0.10%        82.33 ms/ev ->        89.84 ms/ev deepTau2017v2
+   +0.077185      +0.17%       154.56 ms/ev ->       166.97 ms/ev pfCandidateToVertexAssociation
+   -0.066753      -0.01%        14.04 ms/ev ->        13.13 ms/ev puppiForMET
+   -0.064984      -0.02%        28.06 ms/ev ->        26.29 ms/ev pfImpactParameterTagInfosPuppi
+   -0.056241      -0.16%       208.95 ms/ev ->       197.52 ms/ev pfNoPileUpJMENoHF
+   -0.054804      -0.02%        25.63 ms/ev ->        24.26 ms/ev muPFIsoDepositPUPAT
+   -0.051422      -0.01%         7.54 ms/ev ->         7.16 ms/ev noHFCands
+   +0.050323      +0.01%        16.21 ms/ev ->        17.05 ms/ev hpsPFTauPrimaryVertexProducerBoosted
+  ---------- ------------     --------                  ----       ------------
+Job total:  7.31408 s/ev ==> 7.22211 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   +1.457874      +0.00%         0.02 ms/ev ->         0.15 ms/ev pfElectrons
+   -1.324487      -0.02%         1.93 ms/ev ->         0.39 ms/ev pfDeepBoostedJetTagsSlimmedAK8DeepTags
+   -1.023255      -0.02%         2.03 ms/ev ->         0.65 ms/ev pfMassDecorrelatedDeepBoostedJetTagsSlimmedAK8DeepTags
+   -0.280957      -0.00%         0.69 ms/ev ->         0.52 ms/ev hpsPFTauDiscriminationByLooseMuonRejection3Boosted
+   -0.222841      -0.00%         1.56 ms/ev ->         1.25 ms/ev slimmedMuons
+   -0.206179      -0.04%        13.91 ms/ev ->        11.31 ms/ev puppiForMET
+   -0.189531      -0.03%        11.63 ms/ev ->         9.62 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   +0.124007      +0.01%         7.48 ms/ev ->         8.47 ms/ev patTaus
+   +0.101141      +0.25%       159.84 ms/ev ->       176.86 ms/ev pfDeepFlavourJetTagsSlimmedDeepFlavour
+   +0.097729      +0.12%        81.35 ms/ev ->        89.71 ms/ev deepTau2017v2
+   +0.075603      +0.17%       153.45 ms/ev ->       165.51 ms/ev pfCandidateToVertexAssociation
+   +0.065307      +0.01%         9.29 ms/ev ->         9.91 ms/ev pfImpactParameterTagInfosAK8Puppi
+   +0.061784      +0.01%        16.07 ms/ev ->        17.09 ms/ev hpsPFTauPrimaryVertexProducerBoosted
+   -0.061548      -0.02%        27.52 ms/ev ->        25.87 ms/ev pfImpactParameterTagInfosPuppi
+   -0.057231      -0.17%       206.55 ms/ev ->       195.06 ms/ev pfNoPileUpJMENoHF
+   -0.051052      -0.02%        25.35 ms/ev ->        24.09 ms/ev muPFIsoDepositPUPAT
+  ---------- ------------     --------                  ----       ------------
+Job total:  6.9167 s/ev ==> 6.90073 s/ev

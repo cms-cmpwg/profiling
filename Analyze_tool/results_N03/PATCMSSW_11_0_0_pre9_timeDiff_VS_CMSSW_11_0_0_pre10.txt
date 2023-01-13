@@ -1,0 +1,47 @@
+Couldn't parse time report using CPU and wall-clock format: trying Wall-clock only
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   -1.346405      -0.02%         1.54 ms/ev ->         0.30 ms/ev ak4PFCHSResidualCorrectorNoHF
+   +1.226069      +0.00%         0.10 ms/ev ->         0.40 ms/ev pfDeepBoostedJetTagInfosSlimmedAK8DeepTags
+   +0.724928      +0.01%         0.89 ms/ev ->         1.90 ms/ev hpsPFTauDiscriminationByIsolationMVArun2v1DBdR03oldDMwLTrawBoosted
+   -0.221293      -0.02%         8.24 ms/ev ->         6.59 ms/ev pfCombinedCvsBJetTagsPuppi
+   +0.217458      +0.00%         1.16 ms/ev ->         1.45 ms/ev slimmedMuons
+   +0.211886      +0.01%         2.60 ms/ev ->         3.21 ms/ev egmElectronPUPPIIsolation
+   +0.209564      +0.01%         2.55 ms/ev ->         3.14 ms/ev egmElectronPUPPINoLeptonsIsolation
+   +0.201635      +0.01%         1.81 ms/ev ->         2.22 ms/ev pfCombinedInclusiveSecondaryVertexV2BJetTagsAK8Puppi
+   -0.112343      -0.02%        14.48 ms/ev ->        12.94 ms/ev pfCombinedCvsLJetTagsPuppi
+   -0.100717      -0.04%        30.40 ms/ev ->        27.48 ms/ev pfImpactParameterTagInfosPuppi
+   -0.099018      -0.06%        51.07 ms/ev ->        46.25 ms/ev pileupJetId
+   -0.078319      -0.01%        10.34 ms/ev ->         9.56 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   +0.069966      +0.12%       122.71 ms/ev ->       131.61 ms/ev MINIAODSIMoutput
+   -0.065969      -0.53%       622.34 ms/ev ->       582.60 ms/ev patMuons
+   -0.064076      -0.02%        27.54 ms/ev ->        25.83 ms/ev muPFIsoDepositPUPAT
+   +0.060780      +0.67%       808.47 ms/ev ->       859.15 ms/ev pfNoPileUpIsoPFBRECO
+   -0.058350      -0.13%       175.36 ms/ev ->       165.41 ms/ev hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.057071      -0.00%         5.75 ms/ev ->         5.43 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   -0.052573      -0.13%       186.97 ms/ev ->       177.40 ms/ev packedPFCandidates
+   +0.050985      +0.00%         5.22 ms/ev ->         5.49 ms/ev boostedTauSeeds
+   -0.050390      -0.00%         5.19 ms/ev ->         4.93 ms/ev muPFIsoDepositGammaPAT
+  ---------- ------------     --------                  ----       ------------
+Job total:  7.5544 s/ev ==> 7.55357 s/ev
+
+The same excluding the first 1 events
+  delta/mean delta/orJob     original                   new       module name
+  ---------- ------------     --------                  ----       ------------
+   +1.641871      +0.00%         0.02 ms/ev ->         0.23 ms/ev pfElectrons
+   +1.227473      +0.00%         0.09 ms/ev ->         0.39 ms/ev pfDeepBoostedJetTagInfosSlimmedAK8DeepTags
+   +0.221494      +0.00%         1.16 ms/ev ->         1.45 ms/ev slimmedMuons
+   +0.219794      +0.01%         2.58 ms/ev ->         3.22 ms/ev egmElectronPUPPIIsolation
+   +0.217669      +0.01%         2.53 ms/ev ->         3.15 ms/ev egmElectronPUPPINoLeptonsIsolation
+   -0.098557      -0.04%        30.28 ms/ev ->        27.44 ms/ev pfImpactParameterTagInfosPuppi
+   -0.087582      -0.06%        50.08 ms/ev ->        45.88 ms/ev pileupJetId
+   -0.070692      -0.01%        10.22 ms/ev ->         9.53 ms/ev cleanedEcalDrivenGsfElectronsFromMultiCl
+   -0.063106      -0.52%       616.76 ms/ev ->       579.03 ms/ev patMuons
+   +0.061818      +0.71%       802.61 ms/ev ->       853.81 ms/ev pfNoPileUpIsoPFBRECO
+   -0.058905      -0.02%        27.26 ms/ev ->        25.70 ms/ev muPFIsoDepositPUPAT
+   -0.056981      -0.13%       173.82 ms/ev ->       164.19 ms/ev hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr3HitsBoosted
+   -0.055752      -0.00%         5.75 ms/ev ->         5.44 ms/ev pfImpactParameterAK8TagInfosAK8Puppi
+   +0.055498      +0.00%         5.13 ms/ev ->         5.43 ms/ev boostedTauSeeds
+   -0.052750      -0.13%       184.67 ms/ev ->       175.18 ms/ev packedPFCandidates
+  ---------- ------------     --------                  ----       ------------
+Job total:  7.23025 s/ev ==> 7.22916 s/ev
