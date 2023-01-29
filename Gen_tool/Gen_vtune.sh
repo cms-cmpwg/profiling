@@ -54,7 +54,7 @@ if [ "X$WORKSPACE" != "X" ];then
 else
   NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
   NTHREADS=$((NCPU/2))
-  EVENTS=$((NTHREADS*20))
+  EVENTS=$((NTHREADS*10))
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec #200PU for 11_2_X
   outname=$(ls -d ${PROFILING_WORKFLOW}_*)
   mv $outname $PROFILING_WORKFLOW
