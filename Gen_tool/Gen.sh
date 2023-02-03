@@ -73,7 +73,7 @@ echo "#!/bin/bash " > cmd_ig.sh
 echo "#!/bin/bash " > cmd_ts.sh
 declare -i step
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep "reHLT" ); then
+if ( echo $outname | grep '136' ); then
   for ((step=0;step<${#steps[@]}; ++step));do
       echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_timememoryinfo.py" >>cmd_ts.sh
       echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1;process.maxEvents.input = 10\" --python_filename=step"$((step+2))"_igprof.py" >>cmd_ig.sh

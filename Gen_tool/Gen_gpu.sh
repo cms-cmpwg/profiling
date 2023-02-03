@@ -74,7 +74,7 @@ echo "#!/bin/bash " > cmd_np.sh
 declare -i step
 for step in ${!steps[@]};do t1=${steps[$step]/:@phase2Validation+@miniAODValidation,DQM:@phase2+@miniAODDQM/};t2=${t1/,VALIDATION/};t3=${t2/,DQMIO/};t4=${t3/,DQM/};steps[$step]=$t4;echo $steps[$step];done;
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep "reHLT" ); then
+if ( echo $outname | grep -q '136' ); then
   for ((step=0;step<${#steps[@]}; ++step));do
       echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_gpu_timememoryinfo.py" >>cmd_ts.sh
       echo "${steps[$step]} --number=10 --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_gpu_igprof.py" >>cmd_ig.sh
@@ -89,7 +89,7 @@ else
 fi
 
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep -q 'reHLT') ; then
+if ( echo $outname | grep -q '136') ; then
   echo "${steps[0]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_gpu_L1REPACK_HLT.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1;\" --python_filename=step2_gpu_fasttimer.py" >>cmd_ft.sh
   echo "${steps[1]}--accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_gpu_RAW2DIGI_L1Reco_RECO_SKIM_PAT_ALCA_DQM.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1;\" --python_filename=step3_gpu_fasttimer.py" >>cmd_ft.sh
   echo "${steps[2]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_gpu_HARVESTING.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1;\" --python_filename=step4_gpu_fasttimer.py" >>cmd_ft.sh
