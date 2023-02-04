@@ -66,7 +66,7 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step2_igprof.py ]; then
     echo step2 w/igprof -mp cmsRunGlibC
     timeout $TIMEOUT igprof -mp -z -t cmsRunGlibC -o ./igprofMEM_GC_step2.gz -- cmsRunGlibC step2_igprof.py -j step2_igprof_mem_GC_JobReport.xml >& step2_igprof_mem_GC.log
-    rename_igprof igprofMEM_GC_step1
+    rename_igprof igprofMEM_GC_step2
   else
     echo missing step2_igprof.py
   fi
