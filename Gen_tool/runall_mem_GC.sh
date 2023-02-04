@@ -57,7 +57,7 @@ done
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -mp cmsRunGlibC
-    timeout $TIMEOUT igprof -mp -z -d -t cmsRunGlibC -o ./igprofMEM_GC_step1.gz -- cmsRunGlibC step1_igprof.py -j step1_igprof_mem_GC_JobReport.xml >& step1_igprof_mem_GC.log
+    timeout $TIMEOUT igprof -mp -z -t cmsRunGlibC -o ./igprofMEM_GC_step1.gz -- cmsRunGlibC step1_igprof.py -j step1_igprof_mem_GC_JobReport.xml >& step1_igprof_mem_GC.log
     rename_igprof igprofMEM_GC_step1
   else
     echo missing step1_igprof.py
@@ -65,7 +65,7 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
 
   if [ -f step2_igprof.py ]; then
     echo step2 w/igprof -mp cmsRunGlibC
-    timeout $TIMEOUT igprof -mp -z -d -t cmsRunGlibC -o ./igprofMEM_GC_step2.gz -- cmsRunGlibC step2_igprof.py -j step2_igprof_mem_GC_JobReport.xml >& step2_igprof_mem_GC.log
+    timeout $TIMEOUT igprof -mp -z -t cmsRunGlibC -o ./igprofMEM_GC_step2.gz -- cmsRunGlibC step2_igprof.py -j step2_igprof_mem_GC_JobReport.xml >& step2_igprof_mem_GC.log
     rename_igprof igprofMEM_GC_step1
   else
     echo missing step2_igprof.py
@@ -74,7 +74,7 @@ fi
 
 if [ -f step3_igprof.py ]; then
     echo step3 w/igprof -mp cmsRunGlibC
-    timeout $TIMEOUT igprof -mp -z -d -t cmsRunGlibC -o ./igprofMEM_GC_step3.gz -- cmsRunGlibC step3_igprof.py -j step3_igprof_mem_GC_JobReport.xml >& step3_igprof_mem_GC.log
+    timeout $TIMEOUT igprof -mp -z -t cmsRunGlibC -o ./igprofMEM_GC_step3.gz -- cmsRunGlibC step3_igprof.py -j step3_igprof_mem_GC_JobReport.xml >& step3_igprof_mem_GC.log
     rename_igprof igprofMEM_GC_step3
 else
     echo missing step3_igprof.py
@@ -83,7 +83,7 @@ fi
 
 if [ -f step4_igprof.py ]; then
     echo step4 w/igprof -mp cmsRunGlibC
-    timeout $TIMEOUT igprof -mp -z -d -t cmsRunGlibC -o ./igprofMEM_GC_step4.gz -- cmsRunGlibC step4_igprof.py -j step4_igprof_mem_GC_JobReport.xml >& step4_igprof_mem_GC.log
+    timeout $TIMEOUT igprof -mp -z -t cmsRunGlibC -o ./igprofMEM_GC_step4.gz -- cmsRunGlibC step4_igprof.py -j step4_igprof_mem_GC_JobReport.xml >& step4_igprof_mem_GC.log
     rename_igprof igprofMEM_GC_step4
 else
     echo missing step4_igprof.py
@@ -91,7 +91,7 @@ fi
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
     echo step5 w/igprof -mp cmsRunGlibC
-    timeout $TIMEOUT igprof -mp -z -d -t cmsRunGlibC -o ./igprofMEM_GC_step5.gz -- cmsRunGlibC step5_igprof.py -j step5_igprof_mem_GC_JobReport.xml >& step5_igprof_mem_GC.log
+    timeout $TIMEOUT igprof -mp -z -t cmsRunGlibC -o ./igprofMEM_GC_step5.gz -- cmsRunGlibC step5_igprof.py -j step5_igprof_mem_GC_JobReport.xml >& step5_igprof_mem_GC.log
     rename_igprof igprofMEM_GC_step5
 else
     echo no step5 in workflow $PROFILING_WORKFLOW
