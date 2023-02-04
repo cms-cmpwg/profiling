@@ -58,7 +58,7 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -mp cmsRun
     timeout $TIMEOUT igprof -mp -z -t cmsRun -o ./igprofMEM_step1.gz -- cmsRun step1_igprof.py -j step1_igprof_mem_JobReport.xml >& step1_igprof_mem.log
-    rename_igprof igprofMEM_step1 gz
+    rename_igprof igprofMEM_step1
   else
     echo missing step1_igprof.py
   fi
