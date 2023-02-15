@@ -44,45 +44,42 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ -f /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys ];then
-  NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
-  NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
+#NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
+#NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
+
   echo Run with NVProflierService
   if [ "X$RUNALLSTEPS" != "X" ]; then
     if [ -f step1_nvprof.py ];then
         echo step1 gpu NVProfiler
-        timeout $TIMEOUT cmsRun step1_nvprof.py -j step1_nvprof_JobReport.xml >& step1_nvprof.txt
+        timeout $TIMEOUT nvprof -o step1.%p.nvprof -s cmsRun step1_nvprof.py -j step1_nvprof_JobReport.xml >& step1_nvprof.txt
     else
         echo missing step1_nvprof.py
     fi
 
     if [ -f step2_nvprof.py ];then
         echo step2 gpu NVProfiler
-        timeout $TIMEOUT cmsRun step2_nvprof.py -j step2_nvprof_JobReport.xml >& step2_nvprof.txt
+        timeout $TIMEOUT nvprof -o step2.%p.nvprof -s cmsRun step2_nvprof.py -j step2_nvprof_JobReport.xml >& step2_nvprof.txt
     else
         echo missing step2_nvprof.py
     fi
   fi
   if [ -f step3_nvprof.py ];then
       echo step3 gpu NVProfiler
-      timeout $TIMEOUT cmsRun step3_nvprof.py  -j step3_nvprof_JobReport.xml >& step3_nvprof.txt
+      timeout $TIMEOUT nvprof -o step3.%p.nvprof -s cmsRun step3_nvprof.py  -j step3_nvprof_JobReport.xml >& step3_nvprof.txt
   else
       echo missing step3_nvprof.py
   fi
 
   if [ -f step4_nvprof.py ];then
       echo step4 gpu NVProfiler
-      timeout $TIMEOUT cmsRun step4_nvprof.py -j step4_nvprof_JobReport.xml >& step4_nvprof.txt
+      timeout $TIMEOUT nvprof -o step4.%p.nvprof -s cmsRun step4_nvprof.py -j step4_nvprof_JobReport.xml >& step4_nvprof.txt
   else
       echo missing step4_nvprof.py
   fi
 
   if [ -f step5_nvprof.py ]; then
       echo step5 gpu NVProfiler
-      timeout $TIMEOUT cmsRun step5_nvprof.py -j step5_nvprof_JobReport.xml >& step5_nvprof.txt
+      timeout $TIMEOUT nvprof -o step5.%p.nvprof -s cmsRun step5_nvprof.py -j step5_nvprof_JobReport.xml >& step5_nvprof.txt
   else
       echo no step5 in workflow
   fi
-else
-  echo /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys unavailable for profiling gpu
-fi

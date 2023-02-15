@@ -43,83 +43,42 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ -f /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys ];then
-  NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
-  NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
+#NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
+#NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
+
   echo Run with NVProflierService
   if [ "X$RUNALLSTEPS" != "X" ]; then
     if [ -f step1_gpu_nvprof.py ];then
         echo step1 gpu NVProfiler
-        timeout $TIMEOUT $NSYS $NSYSARGS cmsRun step1_gpu_nvprof.py -j step1_gpu_nvprof_JobReport.xml >& step1_gpu_nvprof.txt
+        timeout $TIMEOUT nvprof -o step1_gpu.%p.nvprof -s cmsRun step1_gpu_nvprof.py -j step1_gpu_nvprof_JobReport.xml >& step1_gpu_nvprof.txt
     else
         echo missing step1_gpu_nvprof.py
     fi
 
     if [ -f step2_gpu_nvprof.py ];then
         echo step2 gpu NVProfiler
-        timeout $TIMEOUT $NSYS $NSYSARGS cmsRun step2_gpu_nvprof.py -j step2_gpu_nvprof_JobReport.xml >& step2_gpu_nvprof.txt
+        timeout $TIMEOUT nvprof -o step2_gpu.%p.nvprof -s cmsRun step2_gpu_nvprof.py -j step2_gpu_nvprof_JobReport.xml >& step2_gpu_nvprof.txt
     else
         echo missing step2_gpu_nvprof.py
     fi
   fi
   if [ -f step3_gpu_nvprof.py ];then
       echo step3 gpu NVProfiler
-      timeout $TIMEOUT $NSYS $NSYSARGS cmsRun step3_gpu_nvprof.py  -j step3_gpu_nvprof_JobReport.xml >& step3_gpu_nvprof.txt
+      timeout $TIMEOUT nvprof -o step3_gpu.%p.nvprof cmsRun -s step3_gpu_nvprof.py  -j step3_gpu_nvprof_JobReport.xml >& step3_gpu_nvprof.txt
   else
       echo missing step3_gpu_nvprof.py
   fi
 
   if [ -f step4_gpu_nvprof.py ];then
       echo step4 gpu NVProfiler
-      timeout $TIMEOUT $NSYS $NSYSARGS cmsRun step4_gpu_nvprof.py -j step4_gpu_nvprof_JobReport.xml >& step4_gpu_nvprof.txt
+      timeout $TIMEOUT nvprof -o step4_gpu.%p.nvprof cmsRun -s step4_gpu_nvprof.py -j step4_gpu_nvprof_JobReport.xml >& step4_gpu_nvprof.txt
   else
       echo missing step4_gpu_nvprof.py
   fi
 
   if [ -f step5_gpu_nvprof.py ]; then
       echo step5 gpu NVProfiler
-      timeout $TIMEOUT $NSYS $NSYSARGS cmsRun step5_gpu_nvprof.py -j step5_gpu_nvprof_JobReport.xml >& step5_gpu_nvprof.txt
+      timeout $TIMEOUT nvprof -o step5_gpu.%p.nvprof cmsRun -s step5_gpu_nvprof.py -j step5_gpu_nvprof_JobReport.xml >& step5_gpu_nvprof.txt
   else
       echo no step5 in workflow
   fi
-else
-  NSYS=""
-  NSYSARGS=""
-  echo Missing /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
-  echo Run with FastTimerService
-  if [ "X$RUNALLSTEPS" != "X" ]; then
-    if [ -f step1_gpu_fasttimer.py ];then
-        echo step1 gpu FastTimer
-        timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
-    else
-        echo missing step1_gpu_fasttimer.py
-    fi
-
-    if [ -f step2_gpu_fasttimer.py ];then
-        echo step2 gpu FastTimer
-        timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
-    else
-        echo missing step2_gpu_fasttimer.py
-    fi
-  fi
-  if [ -f step3_gpu_fasttimer.py ];then
-      echo step3 gpu FastTimer
-      timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
-  else
-      echo missing step3_gpu_fasttimer.py
-  fi
-
-  if [ -f step4_gpu_fasttimer.py ];then
-      echo step4 gpu FastTimer
-      timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
-  else
-      echo missing step4_gpu_fasttimer.py
-  fi
-
-  if [ -f step5_gpu_fasttimer.py ]; then
-      echo step5 gpu FastTimer
-      timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
-  else
-      echo no step5 in workflow
-  fi
-fi
