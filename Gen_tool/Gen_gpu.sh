@@ -157,7 +157,7 @@ ln -s profile_igmp.sh profile_mem.sh
 cat << EOF >>profile_mem_jemalloc.sh
 #!/bin/bash
 for f in \$(ls *.heap 2>/dev/null);do
-  jeprof --text --cum --show_bytes --exclude="(jeprof_*|prof_*)" `which cmsRunJE` $f >$f.txt
+  jeprof --text --cum --show_bytes --exclude="(jeprof_*|prof_*)" `which cmsRunJEProf` $f >$f.txt
 done
 EOF
 chmod +x profile_mem_jemalloc.sh

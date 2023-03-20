@@ -108,7 +108,7 @@ fi
 cat << EOF >> profile_igpp.sh
 #!/bin/bash
 wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
-for f in \$(ls igprofCPU_step*.gz 2>/dev/null);do
+for f in \$(ls *.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=\${f/gz/sql3}
     sf=\${f/igprof/}
@@ -132,7 +132,7 @@ chmod +x profile_igpp.sh
 cat << EOF >> profile_igmp.sh
 #!/bin/bash
 
-for f in \$(ls igprofMEM_*[0-9].gz 2>/dev/null);do
+for f in \$(ls *.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=\${f/gz/sql3}
     sf=\${f/igprofMEM/MEMsql}
@@ -150,7 +150,7 @@ chmod +x profile_igmp.sh
 cat << EOF >>profile_mem_jemalloc.sh
 #!/bin/bash
 for f in \$(ls *.heap 2>/dev/null);do
-  jeprof --text --cum --show_bytes --exclude="(jeprof_*|prof_*|fallback*)" `which cmsRunJE` \$f >\$f.txt
+  jeprof --text --cum --show_bytes --exclude="(jeprof_*|prof_*|fallback*)" `which cmsRunJEProf` \$f >\$f.txt
 done
 EOF
 chmod +x profile_mem_jemalloc.sh
