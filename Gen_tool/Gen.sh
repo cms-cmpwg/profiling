@@ -108,13 +108,15 @@ fi
 cat << EOF >> profile_igpp.sh
 #!/bin/bash
 wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
+chmod +x fix-igprof-sql.py
 for f in \$(ls *.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=\${f/gz/sql3}
     sf=\${f/igprof/}
     logf=\${sf/gz/log}
     igprof-analyse --sqlite -v -d -g \$f >\$f.tmp
-    python fix-igprof-sql.py \$f.tmp |  sqlite3 \$sqlf >& \$logf
+    ./fix-igprof-sql.py \$f.tmp |  sqlite3 \$sqlf > \$logf 2>&1 3>&1
+    cat \$f.tmp |  sqlite3 \$sqlf >> \$logf 2>&1 3>&1
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/gz/txt}
@@ -138,7 +140,8 @@ for f in \$(ls *.gz 2>/dev/null);do
     sf=\${f/igprofMEM/MEMsql}
     logf=\${sf/gz/log}
     igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f >\$f.tmp
-    python fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf >& \$logf
+    ./fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf > \$logf 2>&1 3>&1
+    cat \$f.tmp | sqlite3 \$sqlf >> \$logf 2>&1 3>&1
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/gz/txt}
