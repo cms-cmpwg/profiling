@@ -114,13 +114,12 @@ for f in \$(ls *.gz 2>/dev/null);do
     sqlf=\${f/gz/sql3}
     sf=\${f/igprof/}
     logf=\${sf/gz/log}
-    igprof-analyse --sqlite -v -d -g \$f >\$f.tmp
-    ./fix-igprof-sql.py \$f.tmp |  sqlite3 \$sqlf > \$logf 2>&1 3>&1
-    cat \$f.tmp |  sqlite3 \$sqlf >> \$logf 2>&1 3>&1
+    igprof-analyse --sqlite -v -d -g \$f >\$f.tmp 2> \$logf 3>&2
+    ./fix-igprof-sql.py \$f.tmp |  sqlite3 \$sqlf >> \$logf 2>&1 3>&1
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/gz/txt}
-    igprof-analyse  -v -d -g \$f >& \$txtf
+    igprof-analyse  -v -d -g \$f > \$txtf >> \$logf 2>&1 3>&1
 done
 
 if [ -f RES_CPU_step3.txt ]; then
@@ -139,13 +138,12 @@ for f in \$(ls *.gz 2>/dev/null);do
     sqlf=\${f/gz/sql3}
     sf=\${f/igprofMEM/MEMsql}
     logf=\${sf/gz/log}
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f >\$f.tmp
-    ./fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf > \$logf 2>&1 3>&1
-    cat \$f.tmp | sqlite3 \$sqlf >> \$logf 2>&1 3>&1
+    igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f >\$f.tmp 2> \$logf 3>&2
+    ./fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf >> \$logf 2>&1 3>&1
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/gz/txt}
-    igprof-analyse  -v -d -g -r MEM_LIVE \$f >& \$txtf
+    igprof-analyse  -v -d -g -r MEM_LIVE \$f > \$txtf >> \$logf 2>&1 3>&1
 done
 EOF
 chmod +x profile_igmp.sh
