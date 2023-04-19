@@ -139,11 +139,11 @@ for f in \$(ls *.gz 2>/dev/null);do
     sf=\${f/igprofMEM/MEMsql}
     logf=\${sf/gz/log}
     igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f >\$f.tmp 2> \$logf 3>&2
-    ./fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf >> \$logf 2>&1 3>&1
+    ./fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf 2 >> \$logf 3>&2
 ## --For ascii-based report
     rf=\${f/igprof/RES_}
     txtf=\${rf/gz/txt}
-    igprof-analyse  -v -d -g -r MEM_LIVE \$f > \$txtf >> \$logf 2>&1 3>&1
+    igprof-analyse  -v -d -g -r MEM_LIVE \$f > \$txtf 2 >> \$logf 3>&2
 done
 EOF
 chmod +x profile_igmp.sh
