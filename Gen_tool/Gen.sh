@@ -32,7 +32,7 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="21034.21"
+  export PROFILING_WORKFLOW="23834.21"
 fi
 
 if [ "X$NTHREADS" == "X" ]; then
@@ -75,12 +75,12 @@ declare -i step
 # For reHLT workflows the steps are shifted
 if ( echo $outname | grep '136' ); then
   for ((step=0;step<${#steps[@]}; ++step));do
-      echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_timememoryinfo.py" >>cmd_ts.sh
+      echo "${steps[$step]} --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step$((step+2))_timememoryinfo.py" >>cmd_ts.sh
       echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_igprof.py" >>cmd_ig.sh
   done
 else
   for ((step=0;step<${#steps[@]}; ++step));do
-      echo "${steps[$step]} --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_timememoryinfo.py" >>cmd_ts.sh
+      echo "${steps[$step]} --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step$((step+1))_timememoryinfo.py" >>cmd_ts.sh
       echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+1))"_igprof.py"  >>cmd_ig.sh
   done
 fi
