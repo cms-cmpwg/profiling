@@ -16,9 +16,9 @@ if [ "X$PROFILING_WORKFLOW" == "X" ];then
   export PROFILING_WORKFLOW="21034.508"
 fi
 
-if [ -f /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys ];then
-  NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
-  NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
+if [ -f $(which nsys) ];then
+  NSYS=nsys
+  NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi "
 else
   NSYS=""
   NSYSARGS=""
@@ -57,35 +57,35 @@ if [ "X$RUNTIMEMEMORY" != "X" ]; then
   echo Run with TimeMemoryService
   if [ -f step1_gpu_timememoryinfo.py ]; then
     echo step1 TimeMemory
-    timeout $TIMEOUT cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.txt
+    $NSYS $NSYSARGS cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.txt
   else
     echo missing step1_gpu_timememoryinfo.py
   fi
 
   if [ -f step2_gpu_timememoryinfo.py ]; then
-   echo step2 TimeMemory
-   timeout $TIMEOUT cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.txt
+    echo step2 TimeMemory
+    $NSYS $NSYSARGS cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.txt
   else
    echo missing step2_gpu_timememoryinfo.py
   fi
 
   if [ -f step3_gpu_timememoryinfo.py ]; then
     echo step3 TimeMemory
-    timeout $TIMEOUT cmsRun step3_gpu_timememoryinfo.py -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.txt
+    $NSYS $NSYSARGS cmsRun step3_gpu_timememoryinfo.py -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.txt
   else
     echo missing step3_gpu_timememoryinfo.py
   fi
 
   if [ -f step4_gpu_timememoryinfo.py ]; then
     echo step4 TimeMemory
-    timeout $TIMEOUT cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.txt
+    $NSYS $NSYSARGS cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.txt
   else
     echo missing step4_timememoryinfo.py
   fi
 
   if [ -f step5_gpu_timememoryinfo.py ]; then
-      echo step5 TimeMemory
-      timeout $TIMEOUT cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.txt
+    echo step5 TimeMemory
+    $NSYS $NSYSARGS cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.txt
   else
     echo no step5 in workflow
   fi
@@ -93,35 +93,35 @@ else
   echo Run with FastTimerService
   if [ -f step1_gpu_fasttimer.py ];then
       echo step1 gpu FastTimer
-      timeout $TIMEOUT cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
+      $NSYS $NSYSARGS cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
   else
       echo missing step1_gpu_fasttimer.py
   fi
 
   if [ -f step2_gpu_fasttimer.py ];then
       echo step2 gpu FastTimer
-      timeout $TIMEOUT cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
+      $NSYS $NSYSARGS cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
   else
       echo missing step2_gpu_fasttimer.py
   fi
 
   if [ -f step3_gpu_fasttimer.py ];then
       echo step3 gpu FastTimer
-      timeout $TIMEOUT cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
+      $NSYS $NSYSARGS cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
   else
       echo missing step3_gpu_fasttimer.py
   fi
 
   if [ -f step4_gpu_fasttimer.py ];then
       echo step4 gpu FastTimer
-      timeout $TIMEOUT cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
+      $NSYS $NSYSARGS cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
   else
       echo missing step4_gpu_fasttimer.py
   fi
 
   if [ -f step5_gpu_fasttimer.py ]; then
       echo step5 gpu FastTimer
-      timeout $TIMEOUT cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
+      $NSYS $NSYSARGS cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
   else
       echo no step5 in workflow
   fi
