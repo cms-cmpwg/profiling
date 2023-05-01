@@ -53,7 +53,7 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ "X$RUNTIMEMEMORY" != "X" ]; then
+if [ "X$RUNALLSTEPS" != "X" ]; then
   echo Run with TimeMemoryService
   if [ -f step1_gpu_timememoryinfo.py ]; then
     echo step1 TimeMemory
