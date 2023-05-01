@@ -57,35 +57,35 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
   echo Run with TimeMemoryService
   if [ -f step1_gpu_timememoryinfo.py ]; then
     echo step1 TimeMemory
-    $NSYS $NSYSARGS cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.txt
+    cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.txt
   else
     echo missing step1_gpu_timememoryinfo.py
   fi
 
   if [ -f step2_gpu_timememoryinfo.py ]; then
     echo step2 TimeMemory
-    $NSYS $NSYSARGS cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.txt
+    cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.txt
   else
    echo missing step2_gpu_timememoryinfo.py
   fi
 
   if [ -f step3_gpu_timememoryinfo.py ]; then
     echo step3 TimeMemory
-    $NSYS $NSYSARGS cmsRun step3_gpu_timememoryinfo.py -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.txt
+    cmsRun step3_gpu_timememoryinfo.py -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.txt
   else
     echo missing step3_gpu_timememoryinfo.py
   fi
 
   if [ -f step4_gpu_timememoryinfo.py ]; then
     echo step4 TimeMemory
-    $NSYS $NSYSARGS cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.txt
+    cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.txt
   else
     echo missing step4_timememoryinfo.py
   fi
 
   if [ -f step5_gpu_timememoryinfo.py ]; then
     echo step5 TimeMemory
-    $NSYS $NSYSARGS cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.txt
+    cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.txt
   else
     echo no step5 in workflow
   fi
@@ -93,35 +93,35 @@ else
   echo Run with FastTimerService
   if [ -f step1_gpu_fasttimer.py ];then
       echo step1 gpu FastTimer
-      $NSYS $NSYSARGS cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
+      cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
   else
       echo missing step1_gpu_fasttimer.py
   fi
 
   if [ -f step2_gpu_fasttimer.py ];then
       echo step2 gpu FastTimer
-      $NSYS $NSYSARGS cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
+      cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
   else
       echo missing step2_gpu_fasttimer.py
   fi
 
   if [ -f step3_gpu_fasttimer.py ];then
       echo step3 gpu FastTimer
-      $NSYS $NSYSARGS cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
+      cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
   else
       echo missing step3_gpu_fasttimer.py
   fi
 
   if [ -f step4_gpu_fasttimer.py ];then
       echo step4 gpu FastTimer
-      $NSYS $NSYSARGS cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
+      cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
   else
       echo missing step4_gpu_fasttimer.py
   fi
 
   if [ -f step5_gpu_fasttimer.py ]; then
       echo step5 gpu FastTimer
-      $NSYS $NSYSARGS cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
+      cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
   else
       echo no step5 in workflow
   fi
