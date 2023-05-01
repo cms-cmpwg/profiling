@@ -76,15 +76,15 @@ for step in ${!steps[@]};do t1=${steps[$step]/:@phase2Validation+@miniAODValidat
 # For reHLT workflows the steps are shifted
 if ( echo $outname | grep -q '136' ); then
   for ((step=0;step<${#steps[@]}; ++step));do
-      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+2))_gpu_timememoryinfo.py" >>cmd_ts.sh
-      echo "${steps[$step]} --number=10 --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_gpu_igprof.py" >>cmd_ig.sh
-      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.add_(cms.Service('NVProfilerService', highlightModules = cms.untracked.vstring('siPixelClustersPreSplittingCUDA')))\" --python_filename=step"$((step+2))"_gpu_nvprof.py" >>cmd_np.sh
+      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step$((step+2))_gpu_timememoryinfo.py" >>cmd_ts.sh
+      echo "${steps[$step]} --number=10 --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfSummary.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+2))"_gpu_igprof.py" >>cmd_ig.sh
+      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfSummary.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.add_(cms.Service('NVProfilerService', highlightModules = cms.untracked.vstring('siPixelClustersPreSplittingCUDA')))\" --python_filename=step"$((step+2))"_gpu_nvprof.py" >>cmd_np.sh
   done
 else
   for ((step=0;step<${#steps[@]}; ++step));do
-      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=Validation/Performance/TimeMemoryInfo.py --python_filename=step$((step+1))_gpu_timememoryinfo.py" >>cmd_ts.sh
-      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+1))"_gpu_igprof.py" >>cmd_ig.sh
-      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.add_(cms.Service('NVProfilerService', highlightModules = cms.untracked.vstring('siPixelClustersPreSplittingCUDA')))\" --python_filename=step"$((step+1))"_gpu_nvprof.py" >>cmd_np.sh
+      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step$((step+1))_gpu_timememoryinfo.py" >>cmd_ts.sh
+      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfSummary.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step"$((step+1))"_gpu_igprof.py" >>cmd_ig.sh
+      echo "${steps[$step]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise Validation/Performance/IgProfSummary.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.add_(cms.Service('NVProfilerService', highlightModules = cms.untracked.vstring('siPixelClustersPreSplittingCUDA')))\" --python_filename=step"$((step+1))"_gpu_nvprof.py" >>cmd_np.sh
   done
 fi
 
@@ -107,57 +107,3 @@ fi
 . cmd_ig.sh
 . cmd_ts.sh
 . cmd_np.sh
-
-## --4. Make profiler
-
-cat << EOF >> profile_igpp.sh
-#!/bin/bash
-wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
-for f in \$(ls igprofCPU_step*.gz 2>/dev/null);do
-## --For web-based report
-    sqlf=\${f/gz/sql3}
-    sf=\${f/igprof/}
-    logf=\${sf/gz/log}
-    igprof-analyse --sqlite -v -d -g \$f >\$f.tmp
-    python fix-igprof-sql.py \$f.tmp |  sqlite3 \$sqlf >& \$logf
-## --For ascii-based report
-    rf=\${f/igprof/RES_}
-    txtf=\${rf/gz/txt}
-    igprof-analyse  -v -d -g \$f >& \$txtf
-done
-
-if [ -f RES_CPU_step3.txt ]; then
-  export IGREP=RES_CPU_step3.txt
-  export IGSORT=sorted_RES_CPU_step3.txt
-  awk -v module=doEvent 'BEGIN { total = 0; } { if(substr(\$0,0,1)=="-"){good = 0;}; if(good&&length(\$0)>0){print \$0; total += \$3;}; if(substr(\$0,0,1)=="["&&index(\$0,module)!=0) {good = 1;} } END { print "Total: "total } ' \${IGREP} | sort -n -r -k1 | awk '{ if(index(\$0,"Total: ")!=0){total=\$0;} else{print \$0;} } END { print total; }' > \${IGSORT} 2>&1
-fi
-EOF
-chmod +x profile_igpp.sh
-ln -s profile_igpp.sh profile.sh
-
-cat << EOF >> profile_igmp.sh
-#!/bin/bash
-
-for f in \$(ls igprofMEM_step*.mp 2>/dev/null);do
-## --For web-based report
-    sqlf=\${f/mp/sql3}
-    sf=\${f/igprofMEM/MEMsql}
-    logf=\${sf/mp/log}
-    igprof-analyse --sqlite -v -d -g -r MEM_LIVE \$f >\$f.tmp
-    python fix-igprof-sql.py \$f.tmp | sqlite3 \$sqlf >& \$logf
-## --For ascii-based report
-    rf=\${f/igprof/RES_}
-    txtf=\${rf/mp/txt}
-    igprof-analyse  -v -d -g -r MEM_LIVE \$f >& \$txtf
-done
-EOF
-chmod +x profile_igmp.sh
-ln -s profile_igmp.sh profile_mem.sh
-
-cat << EOF >>profile_mem_jemalloc.sh
-#!/bin/bash
-for f in \$(ls *.heap 2>/dev/null);do
-  jeprof --text --cum --show_bytes --exclude="(jeprof_*|prof_*)" `which cmsRunJEProf` $f >$f.txt
-done
-EOF
-chmod +x profile_mem_jemalloc.sh
