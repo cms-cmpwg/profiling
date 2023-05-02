@@ -1,6 +1,0 @@
-Checking process _RECO ../CMSSW_11_0_0_pre7/src/TimeMemory/step4.root and ../CMSSW_11_0_0_pre8/src/TimeMemory/step4.root (if above 100 or 20%):
--------------------------------------------------------------
- or, B       new, B      delta, B   delta, %   deltaJ, %    branch 
--------------------------------------------------------------
--------------------------------------------------------------
-     3004 ->        2955        -49            -1.6     ALL BRANCHES

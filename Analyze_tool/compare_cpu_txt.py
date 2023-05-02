@@ -1,1 +1,0 @@
-../Gen_tool/compare_cpu_txt.py
