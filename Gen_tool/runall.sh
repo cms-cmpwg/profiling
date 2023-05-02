@@ -42,7 +42,7 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ "X$NOWRAPPER" != "X" ]; then
+if [ "X$RUNTIMEMEMORY" != "X" ]; then
   echo Run with TimeMemoryService
   if [ -f step1_timememoryinfo.py ]; then
     echo step1 TimeMemory
