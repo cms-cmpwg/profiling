@@ -67,7 +67,7 @@ if [ "X$RUNTIMEMEMORY" != "X" ]; then
 
   if [ -f step4_timememoryinfo.py ]; then
     echo step4 TimeMemory
-    timeout $TIMEOUT cmsRun step4_timememoryinfo.py >& step3_timememoryinfo.txt
+    timeout $TIMEOUT cmsRun step4_timememoryinfo.py >& step4_timememoryinfo.txt
   else
     echo missing step4_timememoryinfo.py
   fi
