@@ -48,7 +48,7 @@ fi
 
 function rename_jeprof {
 for f in $(ls jeprof*.heap);do
-   mv $f $1_jeprof.heap
+   mv $f $1_$f
 done
 }
 
