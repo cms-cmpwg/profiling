@@ -98,7 +98,10 @@ if ( echo ${!steps[@]} | grep -q 4 );then
   echo "${steps[4]} --accelerators gpu-nvidia --procModifiers pixelNtupletFit,gpu --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_gpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1;\" --python_filename=step5_gpu_fasttimer.py" >>cmd_ft.sh
   fi
 fi
-. cmd_ft.sh
+if [ "X$USETIMEMEMORY" != "X" ]; then
+  . cmd_ts.sh
+else
+  . cmd_ft.sh
+fi
 . cmd_ig.sh
-. cmd_ts.sh
 . cmd_np.sh

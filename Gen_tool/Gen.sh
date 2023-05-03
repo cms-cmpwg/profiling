@@ -71,6 +71,7 @@ echo ${!steps[@]}
 echo "#!/bin/bash " > cmd_ft.sh
 echo "#!/bin/bash " > cmd_ig.sh
 echo "#!/bin/bash " > cmd_ts.sh
+echo "#!/bin/bash " > cmd_je.sh
 declare -i step
 # For reHLT workflows the steps are shifted
 if ( echo $outname | grep '136' ); then
@@ -102,8 +103,13 @@ if ( echo ${!steps[@]} | grep -q 4 );then
   echo "${steps[4]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step5_fasttimer.py" >>cmd_ft.sh
   fi
 fi
-. cmd_ft.sh
-. cmd_ig.sh
-. cmd_je.sh
-. cmd_ts.sh
-
+if [ "X$USETIMEMEMORY" != "X" ]; then
+  . cmd_ts.sh
+else
+  . cmd_ft.sh
+fi
+if [ "$JOB_BASE_NAME" == "ib-run-profiling-mem" ];then
+  . cmd_je.sh
+else
+  . cmd_ig.sh
+fi
