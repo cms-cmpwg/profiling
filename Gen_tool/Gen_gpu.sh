@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # ARCHITECTURE, RELEASE_FORMAT and PROFILING_WORKFLOW are defined in Jenkins job
 # voms-proxy-init is run in Jenkins Singularity wrapper script.
 
