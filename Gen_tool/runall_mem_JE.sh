@@ -44,12 +44,6 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-function rename_igprof {
-for f in $(ls -1 IgProf*.gz);do
-    mv $f ${f/IgProf/$1}
-done
-}
-
 function rename_jeprof {
 for f in $(ls jeprof*.heap);do
    mv $f $1_jeprof.heap
@@ -57,43 +51,43 @@ done
 }
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
-  if [ -f step1_igprof.py ]; then
+  if [ -f step1_jeprof.py ]; then
     echo step1 w/jeprof
-    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step1_igprof.py -j step1_jeprof_mem_JobReport.xml >& step1_jeprof_mem.log
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step1_jeprof.py -j step1_jeprof_mem_JobReport.xml >& step1_jeprof_mem.log
     rename_jeprof step1
   else
-    echo missing step1_igprof.py
+    echo missing step1_jeprof.py
   fi
 
-  if [ -f step2_igprof.py ]; then
+  if [ -f step2_jeprof.py ]; then
     echo step2 w/jeprof
-    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step2_igprof.py -j step2_jeprof_mem_JobReport.xml >& step2_jeprof_mem.log
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step2_jeprof.py -j step2_jeprof_mem_JobReport.xml >& step2_jeprof_mem.log
     rename_jeprof step2
   else
-    echo missing step2_igprof.py
+    echo missing step2_jeprof.py
   fi
 fi
 
-if [ -f step3_igprof.py ]; then
+if [ -f step3_jeprof.py ]; then
     echo step3 w/jeprof
-    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step3_igprof.py -j step3_jeprof_mem_JobReport.xml >& step3_jeprof_mem.log
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step3_jeprof.py -j step3_jeprof_mem_JobReport.xml >& step3_jeprof_mem.log
     rename_jeprof step3
 else
-    echo missing step3_igprof.py
+    echo missing step3_jeprof.py
 fi
 
 
-if [ -f step4_igprof.py ]; then
+if [ -f step4_jeprof.py ]; then
     echo step4 w/jeprof
-    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step4_igprof.py -j step4_jeprof_mem_JobReport.xml >& step4_jeprof_mem.log
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step4_jeprof.py -j step4_jeprof_mem_JobReport.xml >& step4_jeprof_mem.log
     rename_jeprof step5
 else
-    echo missing step4_igprof.py
+    echo missing step4_jeprof.py
 fi
 
 if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
     echo step5 w/jeprof
-    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step5_igprof.py -j step1_jeprof_mem_JobReport.xml >& step5_jeprof_mem.log
+    MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step5_jeprof.py -j step1_jeprof_mem_JobReport.xml >& step5_jeprof_mem.log
     rename_jeprof step5
 else
     echo no step5 in workflow $PROFILING_WORKFLOW
