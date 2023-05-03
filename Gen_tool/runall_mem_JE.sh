@@ -16,6 +16,8 @@ fi
 
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
+  scram setup jemalloc-prof
+  scram b ToolUpdated
 else
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
