@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 # ARCHITECTURE, RELEASE_FORMAT and PROFILING_WORKFLOW are defined in Jenkins job
 # voms-proxy-init is run in Jenkins Singularity wrapper script.
 
@@ -44,7 +44,7 @@ if [ "X$EVENTS" == "X" ];then
 fi
 
 (runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
-[ $(runTheMatrix.py -n $WHAT | grep "^$PROFILING_WORKFLOW" | wc -l) -gt 0  || exit 0 ]
+[ $(runTheMatrix.py -n $WHAT | grep "^$PROFILING_WORKFLOW" | wc -l) -gt 0 ] || exit 0
 declare -a outname
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
