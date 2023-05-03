@@ -43,6 +43,7 @@ if [ "X$EVENTS" == "X" ];then
 fi
 
 (runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
+[ $(runTheMatrix.py -n $WHAT | grep ^$PROFILING_WORKFLOW | wc -l) -gt 0  || exit 0 ]
 
 declare -a outname
 if [ "X$WORKSPACE" != "X" ];then
