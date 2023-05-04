@@ -1,4 +1,6 @@
 #!/bin/bash
+scram setup jemalloc-prof
+scram b ToolUpdated
 PATH=$PATH:$JEMALLOC_PROF_BASE/bin
 which jeprof
 for f in $(ls *.heap 2>/dev/null);do

@@ -51,7 +51,7 @@ for f in $(ls jeprof*.heap);do
    mv $f $1_$f
 done
 }
-
+export MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_jeprof.py ]; then
     echo step1 w/jeprof
@@ -94,3 +94,4 @@ if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
 else
     echo no step5 in workflow $PROFILING_WORKFLOW
 fi
+unset MALLOC_CONF
