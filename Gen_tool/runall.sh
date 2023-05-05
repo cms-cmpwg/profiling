@@ -78,7 +78,3 @@ fi
     echo no step5 in workflow $PROFILING_WORKFLOW
   fi
 
-  echo generating products sizes files
-  if [ -f step3.root ]; then edmEventSize -v step3.root > step3_sizes_${PROFILING_WORKFLOW}.txt; else echo no step3.root; fi
-  if [ -f step4.root ]; then edmEventSize -v step4.root > step4_sizes_${PROFILING_WORKFLOW}.txt; else echo no step4.root; fi
-  if [ -f step5.root ]; then edmEventSize -v step5.root > step5_sizes_${PROFILING_WORKFLOW}.txt; else echo no step5.root; fi
