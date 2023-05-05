@@ -45,43 +45,6 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-if [ "X$RUNTIMEMORY" != "X" ]; then
-  echo Run with TimeMemoryService
-  if [ -f step1_gpu_timememoryinfo.py ]; then
-    echo step1 TimeMemory
-    cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.txt
-  else
-    echo missing step1_gpu_timememoryinfo.py
-  fi
-
-  if [ -f step2_gpu_timememoryinfo.py ]; then
-    echo step2 TimeMemory
-    cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.txt
-  else
-   echo missing step2_gpu_timememoryinfo.py
-  fi
-
-  if [ -f step3_gpu_timememoryinfo.py ]; then
-    echo step3 TimeMemory
-    cmsRun step3_gpu_timememoryinfo.py -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.txt
-  else
-    echo missing step3_gpu_timememoryinfo.py
-  fi
-
-  if [ -f step4_gpu_timememoryinfo.py ]; then
-    echo step4 TimeMemory
-    cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.txt
-  else
-    echo missing step4_timememoryinfo.py
-  fi
-
-  if [ -f step5_gpu_timememoryinfo.py ]; then
-    echo step5 TimeMemory
-    cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.txt
-  else
-    echo no step5 in workflow
-  fi
-else
   echo Run with FastTimerService
   if [ -f step1_gpu_fasttimer.py ];then
       echo step1 gpu FastTimer
@@ -117,9 +80,3 @@ else
   else
       echo no step5 in workflow
   fi
-fi
-
-echo generating products sizes files
-  if [ -f step3.root ]; then edmEventSize -v step3.root > step3_gpu_sizes_${PROFILING_WORKFLOW}.txt; else echo no step3.root; fi
-  if [ -f step4.root ]; then edmEventSize -v step4.root > step4_gpu_sizes_${PROFILING_WORKFLOW}.txt; else echo no step4.root; fi
-  if [ -f step5.root ]; then edmEventSize -v step5.root > step5_gpu_sizes_${PROFILING_WORKFLOW}.txt; else echo no step5.root; fi
