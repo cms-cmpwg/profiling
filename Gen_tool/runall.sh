@@ -45,35 +45,35 @@ fi
   echo Run with FastTimerService
   if [ -f step1_fasttimer.py ];then
       echo step1 FastTimer
-      timeout $TIMEOUT cmsRun step1_fasttimer.py  >& step1_fasttimer.txt
+      cmsRun step1_fasttimer.py  >& step1_fasttimer.txt
   else
     echo missing step1_fasttimer.py
   fi
 
   if [ -f step2_fasttimer.py ];then
       echo step2 FastTimer
-      timeout $TIMEOUT cmsRun step2_fasttimer.py  >& step2_fasttimer.txt
+      cmsRun step2_fasttimer.py  >& step2_fasttimer.txt
   else
     echo missing step2_fasttimer.py
   fi
 
   if [ -f step3_fasttimer.py ]; then
     echo step3 FastTimer
-    timeout $TIMEOUT cmsRun step3_fasttimer.py  >& step3_fasttimer.txt
+    cmsRun step3_fasttimer.py  >& step3_fasttimer.txt
   else
     echo missing step3_fasttimer.py
   fi
 
   if [ -f step4_fasttimer.py ]; then
    echo step4 FastTimer
-   timeout $TIMEOUT cmsRun step4_fasttimer.py  >& step4_fasttimer.txt
+   cmsRun step4_fasttimer.py  >& step4_fasttimer.txt
   else
     echo missing step4_fasttimer.py
   fi
 
   if [ -f step5_fasttimer.py ]; then
       echo step5 FastTimer
-      timeout $TIMEOUT cmsRun step5_fasttimer.py  >& step5_fasttimer.txt
+      cmsRun step5_fasttimer.py  >& step5_fasttimer.txt
   else
     echo no step5 in workflow $PROFILING_WORKFLOW
   fi
