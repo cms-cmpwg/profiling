@@ -50,7 +50,7 @@ fi
   if [ "X$RUNALLSTEPS" != "X" ]; then
     if [ -f step1_gpu_nvprof.py ];then
         echo step1 gpu NVProfiler
-        #nvprof -o step1_gpu.%p.nvprof -s cmsRun step1_gpu_nvprof.py -j step1_gpu_nvprof_JobReport.xml >& step1_gpu_nvprof.txt
+        #nvprof -o step1_gpu.nvprof -s cmsRun step1_gpu_nvprof.py -j step1_gpu_nvprof_JobReport.xml >& step1_gpu_nvprof.txt
         /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step1_gpu_nvprof.py -j step1_gpu_nvprof_JobReport.xml >& step1_gpu_nvprof.txt
     else
         echo missing step1_gpu_nvprof.py
@@ -58,7 +58,7 @@ fi
 
     if [ -f step2_gpu_nvprof.py ];then
         echo step2 gpu NVProfiler
-        #nvprof -o step2_gpu.%p.nvprof -s cmsRun step2_gpu_nvprof.py -j step2_gpu_nvprof_JobReport.xml >& step2_gpu_nvprof.txt
+        #nvprof -o step2_gpu.nvprof -s cmsRun step2_gpu_nvprof.py -j step2_gpu_nvprof_JobReport.xml >& step2_gpu_nvprof.txt
         /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step2_gpu_nvprof.py -j step2_gpu_nvprof_JobReport.xml >& step2_gpu_nvprof.txt
     else
         echo missing step2_gpu_nvprof.py
@@ -66,7 +66,7 @@ fi
   fi
   if [ -f step3_gpu_nvprof.py ];then
       echo step3 gpu NVProfiler
-      #nvprof -o step3_gpu.%p.nvprof -s cmsRun step3_gpu_nvprof.py  -j step3_gpu_nvprof_JobReport.xml >& step3_gpu_nvprof.txt
+      #nvprof -o step3_gpu.nvprof -s cmsRun step3_gpu_nvprof.py  -j step3_gpu_nvprof_JobReport.xml >& step3_gpu_nvprof.txt
       /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step3_gpu_nvprof.py  -j step3_gpu_nvprof_JobReport.xml >& step3_gpu_nvprof.txt
   else
       echo missing step3_gpu_nvprof.py
@@ -74,7 +74,7 @@ fi
 
   if [ -f step4_gpu_nvprof.py ];then
       echo step4 gpu NVProfiler
-      #nvprof -o step4_gpu.%p.nvprof -s cmsRun step4_gpu_nvprof.py -j step4_gpu_nvprof_JobReport.xml >& step4_gpu_nvprof.txt
+      #nvprof -o step4_gpu.nvprof -s cmsRun step4_gpu_nvprof.py -j step4_gpu_nvprof_JobReport.xml >& step4_gpu_nvprof.txt
       /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step4_gpu_nvprof.py -j step4_gpu_nvprof_JobReport.xml >& step4_gpu_nvprof.txt 
   else
       echo missing step4_gpu_nvprof.py
@@ -82,7 +82,7 @@ fi
 
   if [ -f step5_gpu_nvprof.py ]; then
       echo step5 gpu NVProfiler
-      #nvprof -o step5_gpu.%p.nvprof -s cmsRun step5_gpu_nvprof.py -j step5_gpu_nvprof_JobReport.xml >& step5_gpu_nvprof.txt
+      #nvprof -o step5_gpu.nvprof -s cmsRun step5_gpu_nvprof.py -j step5_gpu_nvprof_JobReport.xml >& step5_gpu_nvprof.txt
       /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step5_gpu_nvprof.py -j step5_gpu_nvprof_JobReport.xml >& step5_gpu_nvprof.txt
   else
       echo no step5 in workflow
