@@ -59,7 +59,7 @@ for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_gpu_igprof.py ]; then
     echo step1 w/igprof -pp
-    igprof -pp -z -t cmsRun -o ./igprofCPU_step1.gz -- cmsRun step1_gpu_igprof.py -j step1_gpu_igprof_pp_JobReport.xml >& step1_gpu_igprof_pp.log
+    igprof -pp -z -o ./igprofCPU_step1.gz -- cmsRun step1_gpu_igprof.py -j step1_gpu_igprof_pp_JobReport.xml >& step1_gpu_igprof_pp.log
     rename_igprof igprofCPU_step1
   else
     echo missing step1_gpu_igprof.py
@@ -67,7 +67,7 @@ if [ "X$RUNALLSTEPS" != "X" ]; then
 
   if [ -f step1_gpu_igprof.py ]; then
     echo step2  w/igprof -pp
-    igprof -pp -z -t cmsRun -o ./igprofCPU_step2.gz -- cmsRun step2_gpu_igprof.py -j step2_gpu_igprof_pp_JobReport.xml >& step2_gpu_igprof_pp.log
+    igprof -pp -z -o ./igprofCPU_step2.gz -- cmsRun step2_gpu_igprof.py -j step2_gpu_igprof_pp_JobReport.xml >& step2_gpu_igprof_pp.log
     rename_igprof igprofCPU_step2
   else
     echo missing step2_gpu_igprof.py
@@ -76,7 +76,7 @@ fi
 
 if [ -f step3_gpu_igprof.py ]; then
   echo step3  w/igprof -pp
-  igprof -pp -z -t cmsRun -o ./igprofCPU_step3.gz -- cmsRun step3_gpu_igprof.py -j step3_igprof_pp_JobReport.xml >& step3_gpu_igprof_pp.log
+  igprof -pp -z -o ./igprofCPU_step3.gz -- cmsRun step3_gpu_igprof.py -j step3_igprof_pp_JobReport.xml >& step3_gpu_igprof_pp.log
   rename_igprof igprofCPU_step3
 else
     echo missing step3_gpu_igprof.py
@@ -84,7 +84,7 @@ fi
 
 if [ -f step4_gpu_igprof.py ]; then
   echo step4  w/igprof -pp
-  igprof -pp -z -t cmsRun -o ./igprofCPU_step4.gz -- cmsRun step4_gpu_igprof.py -j step4_igprof_pp_JobReport.xml >& step4_gpu_igprof_pp.log
+  igprof -pp -z -o ./igprofCPU_step4.gz -- cmsRun step4_gpu_igprof.py -j step4_igprof_pp_JobReport.xml >& step4_gpu_igprof_pp.log
   rename_igprof igprofCPU_step4
 else
     echo missing step4_gpu_igprof.py
@@ -92,7 +92,7 @@ fi
 
 if [ -f step5_gpu_igprof.py ]; then
   echo step5  w/igprof -pp
-  igprof -pp -z -t cmsRun -o ./igprofCPU_step5.gz -- cmsRun step5_gpu_igprof.py -j step5_igprof_pp_JobReport.xml >& step5_gpu_igprof_pp.log
+  igprof -pp -z -o ./igprofCPU_step5.gz -- cmsRun step5_gpu_igprof.py -j step5_igprof_pp_JobReport.xml >& step5_gpu_igprof_pp.log
   rename_igprof igprofCPU_step5
 else
     echo no step5 in workflow $PROFILING_WORKFLOW
