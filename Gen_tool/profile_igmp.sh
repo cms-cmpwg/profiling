@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for f in $(ls *.gz 2>/dev/null);do
+for f in $(ls *MEM*.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=${f/gz/sql3}
     sf=${f/igprofMEM/MEMsql}

@@ -1,7 +1,7 @@
 #!/bin/bash
 wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
 chmod +x fix-igprof-sql.py
-for f in $(ls *.gz 2>/dev/null);do
+for f in $(ls *CPU*.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=${f/gz/sql3}
     sf=${f/igprof/}
