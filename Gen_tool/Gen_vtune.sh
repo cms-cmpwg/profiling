@@ -65,11 +65,13 @@ source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2022/vtune/latest/vtu
 #source /opt/intel/oneapi/vtune/latest/vtune-vars.sh
 CMSRUN=`which cmsRun`
 VTUNE=`which vtune`
-$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -collect memory-consumption -- $CMSRUN $(ls TTbar*.py) >step1.log 2>&1
-$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -collect memory-consumption -- $CMSRUN $(ls step2*.py) >step2.log 2>&1
-$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -collect memory-consumption -- $CMSRUN $(ls step3*.py) >step3.log 2>&1
-$VTUNE -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -collect memory-consumption -- $CMSRUN $(ls step4*.py) >step4.log 2>&1
+$VTUNE -collect hotspots -collect-with runss -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -- $CMSRUN $(ls TTbar*.py) >step1.log 2>&1
+$VTUNE -collect hotspots -collect-with runss -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -- $CMSRUN $(ls step2*.py) >step2.log 2>&1
+$VTUNE -collect hotspots -collect-with runss -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -- $CMSRUN $(ls step3*.py) >step3.log 2>&1
+$VTUNE -collect hotspots -collect-with runss -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw -- $CMSRUN $(ls step4*.py) >step4.log 2>&1
 $VTUNE -report gprof-cc -r r000hs -format=csv -csv-delimiter=semicolon >r000hs.gprof_cc.csv
 $VTUNE -report gprof-cc -r r001hs -format=csv -csv-delimiter=semicolon >r001hs.gprof_cc.csv
 $VTUNE -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon >r002hs.gprof_cc.csv
 $VTUNE -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon >r003hs.gprof_cc.csv
+$VTUNE -collect memory-consumption -- $CMSRUN $(ls step3*.py) >step3-mem.log 2>&1
+$VTUNE -collect memory-consumption -- $CMSRUN $(ls step4*.py) >step4-mem.log 2>&1
