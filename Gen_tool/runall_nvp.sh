@@ -44,9 +44,6 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-#NSYS=/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin/nsys
-#NSYSARGS="profile --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi"
-
   echo Run with NVProflierService
   if [ "X$RUNALLSTEPS" != "X" ]; then
     if [ -f step1_nvprof.py ];then
