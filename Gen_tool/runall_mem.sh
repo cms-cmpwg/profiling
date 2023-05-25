@@ -11,7 +11,7 @@ if [ "X$ARCHITECTURE" != "X" ];then
 fi
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="21034.21"
+  export PROFILING_WORKFLOW="23834.21"
 fi
 
 if [ "X$WORKSPACE" != "X" ]; then
