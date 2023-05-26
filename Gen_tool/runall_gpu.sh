@@ -48,35 +48,35 @@ fi
   echo Run with FastTimerService
   if [ -f step1_gpu_fasttimer.py ];then
       echo step1 gpu FastTimer
-      cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.txt
+      cmsRun step1_gpu_fasttimer.py -j step1_gpu_fasttimer_JobReport.xml >& step1_gpu_fasttimer.log
   else
       echo missing step1_gpu_fasttimer.py
   fi
 
   if [ -f step2_gpu_fasttimer.py ];then
       echo step2 gpu FastTimer
-      cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.txt
+      cmsRun step2_gpu_fasttimer.py -j step2_gpu_fasttimer_JobReport.xml >& step2_gpu_fasttimer.log
   else
       echo missing step2_gpu_fasttimer.py
   fi
 
   if [ -f step3_gpu_fasttimer.py ];then
       echo step3 gpu FastTimer
-      cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.txt
+      cmsRun step3_gpu_fasttimer.py  -j step3_gpu_fasttimer_JobReport.xml >& step3_gpu_fasttimer.log
   else
       echo missing step3_gpu_fasttimer.py
   fi
 
   if [ -f step4_gpu_fasttimer.py ];then
       echo step4 gpu FastTimer
-      cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.txt
+      cmsRun step4_gpu_fasttimer.py -j step4_gpu_fasttimer_JobReport.xml >& step4_gpu_fasttimer.log
   else
       echo missing step4_gpu_fasttimer.py
   fi
 
   if [ -f step5_gpu_fasttimer.py ]; then
       echo step5 gpu FastTimer
-      cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.txt
+      cmsRun step5_gpu_fasttimer.py -j step5_gpu_fasttimer_JobReport.xml >& step5_gpu_fasttimer.log
   else
       echo no step5 in workflow
   fi

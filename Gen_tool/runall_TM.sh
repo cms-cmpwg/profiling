@@ -45,35 +45,35 @@ fi
   echo Run with TimeMemoryService
   if [ -f step1_timememoryinfo.py ]; then
     echo step1 TimeMemory
-    cmsRun step1_timememoryinfo.py >& step1_timememoryinfo.txt
+    cmsRun step1_timememoryinfo.py >& step1_timememoryinfo.log
   else
     echo missing step1_timememoryinfo.py
   fi
 
   if [ -f step2_timememoryinfo.py ]; then
     echo step2 TimeMemory
-    cmsRun step2_timememoryinfo.py >& step2_timememoryinfo.txt
+    cmsRun step2_timememoryinfo.py >& step2_timememoryinfo.log
   else
     echo missing step2_timememoryinfo.py
   fi
 
   if [ -f step3_timememoryinfo.py ]; then
     echo step3 TimeMemory
-    cmsRun step3_timememoryinfo.py >& step3_timememoryinfo.txt
+    cmsRun step3_timememoryinfo.py >& step3_timememoryinfo.log
   else
     echo missing step3_timememoryinfo.py
   fi
 
   if [ -f step4_timememoryinfo.py ]; then
     echo step4 TimeMemory
-    cmsRun step4_timememoryinfo.py >& step4_timememoryinfo.txt
+    cmsRun step4_timememoryinfo.py >& step4_timememoryinfo.log
   else
     echo missing step4_timememoryinfo.py
   fi
 
   if [ -f step5_timememoryinfo.py ]; then
     echo step5 TimeMemory
-    cmsRun step5_timememoryinfo.py  >& step5_timememoryinfo.txt
+    cmsRun step5_timememoryinfo.py  >& step5_timememoryinfo.log
   else
     echo no step5 in workflow $PROFILING_WORKFLOW
   fi

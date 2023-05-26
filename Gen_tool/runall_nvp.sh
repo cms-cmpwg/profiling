@@ -48,35 +48,35 @@ fi
   if [ "X$RUNALLSTEPS" != "X" ]; then
     if [ -f step1_nvprof.py ];then
         echo step1 gpu NVProfiler
-        nvprof -o step1.nvprof -s cmsRun step1_nvprof.py -j step1_nvprof_JobReport.xml >& step1_nvprof.txt
+        nvprof -o step1.nvprof -s cmsRun step1_nvprof.py -j step1_nvprof_JobReport.xml >& step1_nvprof.log
     else
         echo missing step1_nvprof.py
     fi
 
     if [ -f step2_nvprof.py ];then
         echo step2 gpu NVProfiler
-        nvprof -o step2.nvprof -s cmsRun step2_nvprof.py -j step2_nvprof_JobReport.xml >& step2_nvprof.txt
+        nvprof -o step2.nvprof -s cmsRun step2_nvprof.py -j step2_nvprof_JobReport.xml >& step2_nvprof.log
     else
         echo missing step2_nvprof.py
     fi
   fi
   if [ -f step3_nvprof.py ];then
       echo step3 gpu NVProfiler
-      nvprof -o step3.nvprof -s cmsRun step3_nvprof.py  -j step3_nvprof_JobReport.xml >& step3_nvprof.txt
+      nvprof -o step3.nvprof -s cmsRun step3_nvprof.py  -j step3_nvprof_JobReport.xml >& step3_nvprof.log
   else
       echo missing step3_nvprof.py
   fi
 
   if [ -f step4_nvprof.py ];then
       echo step4 gpu NVProfiler
-      nvprof -o step4.nvprof -s cmsRun step4_nvprof.py -j step4_nvprof_JobReport.xml >& step4_nvprof.txt
+      nvprof -o step4.nvprof -s cmsRun step4_nvprof.py -j step4_nvprof_JobReport.xml >& step4_nvprof.log
   else
       echo missing step4_nvprof.py
   fi
 
   if [ -f step5_nvprof.py ]; then
       echo step5 gpu NVProfiler
-      nvprof -o step5.nvprof -s cmsRun step5_nvprof.py -j step5_nvprof_JobReport.xml >& step5_nvprof.txt
+      nvprof -o step5.nvprof -s cmsRun step5_nvprof.py -j step5_nvprof_JobReport.xml >& step5_nvprof.log
   else
       echo no step5 in workflow
   fi
