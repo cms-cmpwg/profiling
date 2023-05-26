@@ -53,42 +53,42 @@ fi
 
   echo Run with Nsight Systems Profiler
   if [ "X$RUNALLSTEPS" != "X" ]; then
-    if [ -f step1_gpu_timememoryinfo.py ];then
+    if [ -f step1_gpu_nvprof.py ];then
         echo step1 gpu Nsight Systems Profiler
-        nsys profile --output=step1_gpu_timememoryinfo --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step1_gpu_timememoryinfo.py -j step1_gpu_timememoryinfo_JobReport.xml >& step1_gpu_timememoryinfo.log
-        nsys stats  step1_gpu_timememoryinfo.nsys-rep > step1_gpu_timememoryinfo.txt
+        nsys profile --output=step1_gpu_nsys --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step1_gpu_nvprof.py -j step1_gpu_nsys_JobReport.xml >& step1_gpu_nsys.log
+        nsys stats  step1_gpu_nsys.nsys-rep > step1_gpu_nsys.txt
     else
-        echo missing step1_gpu_timememoryinfo.py
+        echo missing step1_gpu_nvprof.py
     fi
 
-    if [ -f step2_gpu_timememoryinfo.py ];then
+    if [ -f step2_gpu_nvprof.py ];then
         echo step2 gpu Nsight Systems Profiler
-        nsys profile --output=step2_gpu_timememoryinfo --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step2_gpu_timememoryinfo.py -j step2_gpu_timememoryinfo_JobReport.xml >& step2_gpu_timememoryinfo.log
-        nsys stats  step2_gpu_timememoryinfo.nsys-rep > step2_gpu_timememoryinfo.txt
+        nsys profile --output=step2_gpu_nsys --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step2_gpu_nvprof.py -j step2_gpu_nsys_JobReport.xml >& step2_gpu_nsys.log
+        nsys stats  step2_gpu_nsys.nsys-rep > step2_gpu_nsys.txt
     else
-        echo missing step2_gpu_timememoryinfo.py
+        echo missing step2_gpu_nvprof.py
     fi
   fi
-  if [ -f step3_gpu_timememoryinfo.py ];then
+  if [ -f step3_gpu_nvprof.py ];then
       echo step3 gpu Nsight Systems Profiler
-      nsys profile --output=step3_gpu_timememoryinfo --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step3_gpu_timememoryinfo.py  -j step3_gpu_timememoryinfo_JobReport.xml >& step3_gpu_timememoryinfo.log
-      nsys stats step3_gpu_timememoryinfo.nsys-rep > step3_gpu_timememoryinfo.txt
+      nsys profile --output=step3_gpu_nsys --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step3_gpu_nvprof.py  -j step3_gpu_nsys_JobReport.xml >& step3_gpu_nsys.log
+      nsys stats step3_gpu_nsys.nsys-rep > step3_gpu_nsys.txt
   else
-      echo missing step3_gpu_timememoryinfo.py
+      echo missing step3_gpu_nvprof.py
   fi
 
-  if [ -f step4_gpu_timememoryinfo.py ];then
+  if [ -f step4_gpu_nvprof.py ];then
       echo step4 gpu Nsight Systems Profiler
-      nsys profile --output=step4_gpu_timememoryinfo --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step4_gpu_timememoryinfo.py -j step4_gpu_timememoryinfo_JobReport.xml >& step4_gpu_timememoryinfo.log
-      nsys stats step4_gpu_timememoryinfo.nsys-rep > step4_gpu_timememoryinfo.txt
+      nsys profile --output=step4_gpu_nsys --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step4_gpu_nvprof.py -j step4_gpu_nsys_JobReport.xml >& step4_gpu_nsys.log
+      nsys stats step4_gpu_nsys.nsys-rep > step4_gpu_nsys.txt
   else
-      echo missing step4_gpu_timememoryinfo.py
+      echo missing step4_gpu_nvprof.py
   fi
 
-  if [ -f step5_gpu_timememoryinfo.py ]; then
+  if [ -f step5_gpu_nvprof.py ]; then
       echo step5 gpu Nsight Systems Profiler
-      nsys profile --output=step5_gpu_timememoryinfo --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step5_gpu_timememoryinfo.py -j step5_gpu_timememoryinfo_JobReport.xml >& step5_gpu_timememoryinfo.log
-      nsys stats step5_gpu_timememoryinfo.nsys-rep > step5_gpu_timememoryinfo.txt
+      nsys profile --output=step5_gpu_nsys --export=sqlite --stats=true --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true cmsRun step5_gpu_nvprof.py -j step5_gpu_nsys_JobReport.xml >& step5_gpu_nsys.log
+      nsys stats step5_gpu_nsys.nsys-rep > step5_gpu_nsys.txt
   else
       echo no step5 in workflow
   fi
