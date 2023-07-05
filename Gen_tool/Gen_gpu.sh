@@ -31,7 +31,7 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="23834.21"
+  export PROFILING_WORKFLOW="23834.59621"
 fi
 
 if [ "X$NTHREADS" == "X" ]; then
