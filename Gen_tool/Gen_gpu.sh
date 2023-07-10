@@ -50,7 +50,7 @@ if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec
   outname=$(ls -d ${PROFILING_WORKFLOW}*)
-  if [ -d $PROFILING_WORKFLOW];then
+  if [ -d $PROFILING_WORKFLOW ];then
 	  mv $outname $PROFILING_WORKFLOW.1
   else 
 	  mv $outname $PROFILING_WORKFLOW
@@ -62,7 +62,7 @@ else
   EVENTS=$((NTHREADS*10))
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec
   outname=$(ls -d ${PROFILING_WORKFLOW}_*)
-  if [ -d $PROFILING_WORKFLOW];then
+  if [ -d $PROFILING_WORKFLOW ];then
 	  mv $outname $PROFILING_WORKFLOW.1
   else 
 	  mv $outname $PROFILING_WORKFLOW
