@@ -32,7 +32,7 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="23834.59521"
+  export PROFILING_WORKFLOW="11834.59521"
 fi
 
 if [ "X$NTHREADS" == "X" ]; then
@@ -43,7 +43,7 @@ if [ "X$EVENTS" == "X" ];then
   export EVENTS=$(($NTHREADS*10))
 fi
 
-(runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w upgrade'
+(runTheMatrix.py -n | grep "^$PROFILING_WORKFLOW " 2>/dev/null) || WHAT='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
 [ $(runTheMatrix.py -n $WHAT | grep "^$PROFILING_WORKFLOW" | wc -l) -gt 0 ] || exit 0
 declare -a outname
 if [ "X$WORKSPACE" != "X" ];then
@@ -62,7 +62,7 @@ else
   EVENTS=$((NTHREADS*10))
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec
   outname=$(ls -d ${PROFILING_WORKFLOW}_*)
-  if [ -d $PROFILING_WORKFLOW];then
+  if [ -d $PROFILING_WORKFLOW ];then
 	  mv $outname $PROFILING_WORKFLOW.1
   else 
 	  mv $outname $PROFILING_WORKFLOW
