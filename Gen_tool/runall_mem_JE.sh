@@ -47,7 +47,7 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 function rename_jeprof {
-for f in $(ls jeprof*.heap);do
+for f in $(ls *jeprof*.heap 2>/dev/null);do
    mv $f $1_$f
 done
 }
@@ -87,7 +87,7 @@ else
     echo missing step4_jeprof.py
 fi
 
-if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
+if [ $(ls -d step5_jeprof.py | wc -l) -gt 0 ]; then
     echo step5 w/jeprof
     MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step5_jeprof.py -j step1_jeprof_mem_JobReport.xml >& step5_jeprof_mem.log
     rename_jeprof step5
