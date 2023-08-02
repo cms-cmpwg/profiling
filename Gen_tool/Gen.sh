@@ -113,8 +113,5 @@ if ( echo ${!steps[@]} | grep -q 4 );then
 fi
 . cmd_ts.sh
 . cmd_ft.sh
-if [ "$JOB_BASE_NAME" == "ib-run-profiling-mem" ];then
-  . cmd_je.sh
-else
-  . cmd_ig.sh
-fi
+. cmd_je.sh
+. cmd_ig.sh
