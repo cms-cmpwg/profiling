@@ -85,7 +85,7 @@ fi
 if [ -f step4_jeprof.py ]; then
     echo step4 w/jeprof
     MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true  cmsRunJEProf step4_jeprof.py -j step4_jeprof_mem_JobReport.xml >& step4_jeprof_mem.log
-    rename_jeprof step5
+    rename_jeprof step4
 else
     echo missing step4_jeprof.py
 fi

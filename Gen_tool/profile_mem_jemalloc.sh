@@ -1,6 +1,6 @@
 #!/bin/bash
-scram setup jemalloc-prof
-scram b ToolUpdated
+#scram setup jemalloc-prof
+#scram b ToolUpdated
 eval `scram run -sh`
 PATH=$PATH:$(scram tool info jemalloc | grep BINDIR | cut -d= -f2)
 which jeprof
