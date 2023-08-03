@@ -43,6 +43,8 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=7200
 fi
 
+pwd
+
 if [ -d /cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin ];then
     PATH=$PATH:/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin
 else

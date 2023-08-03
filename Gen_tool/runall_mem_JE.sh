@@ -51,6 +51,9 @@ for f in $(ls *jeprof*.heap 2>/dev/null);do
    mv $f $1_$f
 done
 }
+
+pwd
+
 export MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_jeprof.py ]; then

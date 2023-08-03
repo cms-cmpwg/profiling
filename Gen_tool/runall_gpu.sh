@@ -45,6 +45,8 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
+pwd
+
   echo Run with FastTimerService
   if [ -f step1_gpu_fasttimer.py ];then
       echo step1 gpu FastTimer

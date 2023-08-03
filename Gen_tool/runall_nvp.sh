@@ -44,6 +44,7 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
+pwd
   echo Run with NVProflierService
   if [ "X$RUNALLSTEPS" != "X" ]; then
     if [ -f step1_nvprof.py ];then

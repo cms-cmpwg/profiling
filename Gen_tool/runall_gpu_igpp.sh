@@ -55,6 +55,7 @@ done
 # ensure that compiler include paths are added to ROOT_INCLUDE_PATH
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
 
+pwd
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_gpu_igprof.py ]; then

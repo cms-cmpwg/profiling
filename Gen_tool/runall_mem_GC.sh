@@ -54,6 +54,8 @@ for f in $(ls jeprof*.heap);do
 done
 }
 
+pwd
+
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -mp cmsRunGlibC

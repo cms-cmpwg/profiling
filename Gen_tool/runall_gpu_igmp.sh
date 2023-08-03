@@ -49,6 +49,7 @@ for f in $(ls -1 IgProf*.gz);do
 done
 }
 
+pwd
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_gpu_igprof.py ]; then
     echo step1 w/igprof -mp
