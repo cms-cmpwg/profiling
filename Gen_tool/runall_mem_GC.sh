@@ -49,8 +49,8 @@ done
 }
 
 function rename_jeprof {
-for f in $(ls jeprof*.heap);do
-   mv $f $1_jeprof.heap
+for f in $(ls jeprof*.heap 2>/dev/null| grep -v step);do
+   mv $f $1_$f
 done
 }
 
