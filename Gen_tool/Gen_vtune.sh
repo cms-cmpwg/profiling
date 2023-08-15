@@ -18,7 +18,7 @@ echo $SCRAM_ARCH
 if [ "X$RELEASE_FORMAT" == "X" -a  "X$CMSSW_IB" == "X" ]; then
   export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
   source $VO_CMS_SW_DIR/cmsset_default.sh
-  voms-proxy-init
+  voms-proxy-init -voms cms
   echo "Start install ${CMSSW_v} ..."
   scram project ${CMSSW_v}
   echo "Install success"
@@ -32,7 +32,7 @@ fi
 ## --2. "RunThematrix" dry run
 
 if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="24834.99"
+  export PROFILING_WORKFLOW="24834.21"
 fi
 if [ "X$NTHREADS" == "X" ]; then
   export NTHREADS=1
