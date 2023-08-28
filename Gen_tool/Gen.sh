@@ -82,7 +82,7 @@ echo "#!/bin/bash " > cmd_ts.sh
 echo "#!/bin/bash " > cmd_je.sh
 declare -i step
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep '136' ); then
+if ( echo $outname | grep '136.' ) || ( echo $outname | grep '141.' ); then
   for ((step=0;step<${#steps[@]}; ++step));do
       stepnum=$((step+2))
       echo "${steps[$step]} --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step${stepnum}_timememoryinfo.py" >>cmd_ts.sh
@@ -99,7 +99,7 @@ else
 fi
 
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep -q '136') ; then
+if ( echo $outname | grep -q '136.') || ( echo $outname | grep -q '141.' ) ; then
   echo "${steps[0]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_cpu.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step2_fasttimer.py" >>cmd_ft.sh
   echo "${steps[1]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_cpu.resource.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py" >>cmd_ft.sh
   echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_cpu.resources.json');process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py" >>cmd_ft.sh

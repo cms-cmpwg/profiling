@@ -83,8 +83,8 @@ echo "#!/bin/bash " > cmd_np.sh
 declare -i step
 for step in ${!steps[@]};do t1=${steps[$step]/:@phase2Validation+@miniAODValidation,DQM:@phase2+@miniAODDQM/};t2=${t1/,VALIDATION/};t3=${t2/,DQMIO/};t4=${t3/,DQM/};steps[$step]=$t4;echo $steps[$step];done;
 # For reHLT workflows the steps are shifted
-if ( echo $outname | grep -q '136' ); then
-      echo "Workflow 136.XYZ has no gpu enabled modules"
+if ( echo $outname | grep -q '136' ) || ( echo $outname | grep '141.' ); then
+      echo "Workflow has no gpu enabled modules"
 else
   for ((step=0;step<${#steps[@]}; ++step));do
      echo "${steps[$step]} --fileout file:step$((step+1))_gpu.root --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step$((step+1))_gpu_timememoryinfo.py" >>cmd_ts.sh
