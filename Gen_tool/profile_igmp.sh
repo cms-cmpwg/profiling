@@ -1,5 +1,7 @@
 #!/bin/bash
 
+wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
+chmod +x fix-igprof-sql.py
 for f in $(ls *MEM*.gz 2>/dev/null);do
 ## --For web-based report
     sqlf=${f/gz/sql3}
