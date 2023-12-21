@@ -42,48 +42,47 @@ if [ "X$TIMEOUT" == "X" ];then
     export TIMEOUT=18000
 fi
 
-source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2024/vtune/latest/vtune-vars.sh
 pwd
   echo Run with Vtune
-  if [ -f step1_timememory.py ];then
+  if [ -f step1_timememoryinfo.py ];then
       echo step1 Vtune
-      vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step1_timememory.py >& step1-vtune.log
+      vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step1_timememoryinfo.py >& step1-vtune.log
       vtune -report gprof-cc -r r000hs -format=csv -csv-delimiter=semicolon  -report-output step1-$PROFILING_WORKFLOW.gprof-cc.csv
       gzip step1-$PROFILING_WORKFLOW.gprof-cc.csv
   else
-    echo missing step1_timememory.py
+    echo missing step1_timememoryinfo.py
   fi
 
-  if [ -f step2_timememory.py ];then
+  if [ -f step2_timememoryinfo.py ];then
       echo step2 FastTimer
-      vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step2_timememory.py >& step2-vtune.log
+      vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step2_timememoryinfo.py >& step2-vtune.log
       vtune -report gprof-cc -r r001hs -format=csv -csv-delimiter=semicolon  -report-output step2-$PROFILING_WORKFLOW.gprof-cc.csv
       gzip step2-$PROFILING_WORKFLOW.gprof-cc.csv
   else
-    echo missing step2_timememory.py
+    echo missing step2_timememoryinfo.py
   fi
 
-  if [ -f step3_timememory.py ]; then
+  if [ -f step3_timememoryinfo.py ]; then
     echo step3 Vtune
-    vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step3_timememory.py >& step3-vtune.log
+    vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step3_timememoryinfo.py >& step3-vtune.log
       vtune -report gprof-cc -r r002hs -format=csv -csv-delimiter=semicolon  -report-output step3-$PROFILING_WORKFLOW.gprof-cc.csv
       gzip step3-$PROFILING_WORKFLOW.gprof-cc.csv
   else
-    echo missing step3_timememory.py
+    echo missing step3_timememoryinfo.py
   fi
 
-  if [ -f step4_timememory.py ]; then
+  if [ -f step4_timememoryinfo.py ]; then
     echo step4 Vtune
-    vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step4_timememory.py >& step4-vtune.log
+    vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step4_timememoryinfo.py >& step4-vtune.log
       vtune -report gprof-cc -r r003hs -format=csv -csv-delimiter=semicolon  -report-output step4-$PROFILING_WORKFLOW.gprof-cc.csv
       gzip step4-$PROFILING_WORKFLOW.gprof-cc.csv
   else
-    echo missing step4_timememory.py
+    echo missing step4_timememoryinfo.py
   fi
 
-  if [ -f step5_timememory.py ]; then
+  if [ -f step5_timememoryinfo.py ]; then
       echo step5 FastTimer
-      vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step5_timememory.py >& step5-vtune.log
+      vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step5_timememoryinfo.py >& step5-vtune.log
       vtune -report gprof-cc -r r004hs -format=csv -csv-delimiter=semicolon  -report-output step5-$PROFILING_WORKFLOW.gprof-cc.csv
       gzip step5-$PROFILING_WORKFLOW.gprof-cc.csv
   else
