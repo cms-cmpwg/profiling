@@ -43,7 +43,17 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 pwd
-  echo Run with Vtune
+scram tool info tensorflow
+case $SCRAM_ARCH in
+	el8*)
+        scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
+        el9*)
+	scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
+esac
+scram b ToolUpdated
+scram tool info tensorflow
+
+echo Run with Vtune
   if [ -f step1_timememoryinfo.py ];then
       echo step1 Vtune
       vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step1_timememoryinfo.py >& step1-vtune.log
