@@ -55,10 +55,13 @@ pwd
 # ensure that compiler include paths are added to ROOT_INCLUDE_PATH
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
 
+scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml
+scram b ToolUpdated
+scram tool info tensorflow 
 
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
-    cho step1 w/igprof -pp cmsRun
+    echo step1 w/igprof -pp cmsRun
     igprof -pp -d -t cmsRun -z -o ./igprofCPU_step1.gz -- cmsRun step1_igprof.py -j step1_igprof_cpu_JobReport.xml >& step1_igprof_cpu.log
     rename_igprof igprofCPU_step1
   else
