@@ -43,14 +43,14 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 pwd
-scram tool info tensorflow
-case $SCRAM_ARCH in
-	el8*)
-        scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
-        el9*)
-	scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
-esac
-scram b ToolUpdated
+#scram tool info tensorflow
+#case $SCRAM_ARCH in
+#	el8*)
+#        scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
+#        el9*)
+#	scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
+#esac
+#scram b ToolUpdated
 scram tool info tensorflow
 
 echo Run with Vtune
