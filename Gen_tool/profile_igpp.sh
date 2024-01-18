@@ -1,4 +1,6 @@
 #!/bin/bash
+export TF_ENABLE_ONEDNN_OPTS=0
+export ONEDNN_MAX_CPU_ISA=SSE41
 wget https://raw.githubusercontent.com/cms-sw/cms-bot/master/fix-igprof-sql.py
 chmod +x fix-igprof-sql.py
 for f in $(ls *CPU*.gz 2>/dev/null);do
