@@ -12,7 +12,7 @@ for f in $(ls *CPU*.gz 2>/dev/null);do
     txtf=${rf/gz/txt.gz}
     igprof-analyse  -v -d -g $f | gzip -c > $txtf 2>> $logf 3>&2 &
 done
-
+wait
 if [ -f RES_CPU_step3.txt.gz ]; then
   export IGREP=RES_CPU_step3.txt
   export IGSORT=sorted_RES_CPU_step3.txt
