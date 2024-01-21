@@ -52,6 +52,7 @@ pwd
 #esac
 #scram b ToolUpdated
 scram tool info tensorflow
+export TF_ENABLE_ONEDNN_OPTS=1
 
 echo Run with Vtune
   if [ -f step1_timememoryinfo.py ];then
