@@ -83,18 +83,18 @@ else
 fi
 
 
-if [ -f step4_igprof.py ]; then
-    echo step4 w/igprof -mp cmsRun
-    igprof -mp -t cmsRun -z -o ./igprofMEM_step4.gz -- cmsRun step4_igprof.py -j step4_igprof_mem_JobReport.xml >& step4_igprof_mem.log
-    rename_igprof igprofMEM_step4
-else
-    echo missing step4_igprof.py
-fi
+#if [ -f step4_igprof.py ]; then
+#    echo step4 w/igprof -mp cmsRun
+#    igprof -mp -t cmsRun -z -o ./igprofMEM_step4.gz -- cmsRun step4_igprof.py -j step4_igprof_mem_JobReport.xml >& step4_igprof_mem.log
+#    rename_igprof igprofMEM_step4
+#else
+#    echo missing step4_igprof.py
+#fi
 
-if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
-    echo step5 w/igprof -mp cmsRun
-    igprof -mp -t cmsRun -z -o ./igprofMEM_step5.gz -- cmsRun step5_igprof.py -j step5_igprof_mem_JobReport.xml >& step5_igprof_mem.log
-    rename_igprof igprofMEM_step5
-else
-    echo no step5 in workflow $PROFILING_WORKFLOW
-fi
+#if [ $(ls -d step5*.py | wc -l) -gt 0 ]; then
+#    echo step5 w/igprof -mp cmsRun
+#    igprof -mp -t cmsRun -z -o ./igprofMEM_step5.gz -- cmsRun step5_igprof.py -j step5_igprof_mem_JobReport.xml >& step5_igprof_mem.log
+#    rename_igprof igprofMEM_step5
+#else
+#    echo no step5 in workflow $PROFILING_WORKFLOW
+#fi
