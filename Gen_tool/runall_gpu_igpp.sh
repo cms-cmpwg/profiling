@@ -83,19 +83,19 @@ else
     echo missing step3_gpu_igprof.py
 fi
 
-if [ -f step4_gpu_igprof.py ]; then
-  echo step4  w/igprof -pp
-  igprof -pp -d -t cmsRun -z -o ./igprofCPU_step4.gz -- cmsRun step4_gpu_igprof.py -j step4_igprof_pp_JobReport.xml >& step4_gpu_igprof_pp.log
-  rename_igprof igprofCPU_step4
-else
-    echo missing step4_gpu_igprof.py
-fi
+#if [ -f step4_gpu_igprof.py ]; then
+#  echo step4  w/igprof -pp
+#  igprof -pp -d -t cmsRun -z -o ./igprofCPU_step4.gz -- cmsRun step4_gpu_igprof.py -j step4_igprof_pp_JobReport.xml >& step4_gpu_igprof_pp.log
+#  rename_igprof igprofCPU_step4
+#else
+#    echo missing step4_gpu_igprof.py
+#fi
 
-if [ -f step5_gpu_igprof.py ]; then
-  echo step5  w/igprof -pp
-  igprof -pp -d -t cmsRun -z -o ./igprofCPU_step5.gz -- cmsRun step5_gpu_igprof.py -j step5_igprof_pp_JobReport.xml >& step5_gpu_igprof_pp.log
-  rename_igprof igprofCPU_step5
-else
-    echo no step5 in workflow $PROFILING_WORKFLOW
-fi
+#if [ -f step5_gpu_igprof.py ]; then
+#  echo step5  w/igprof -pp
+#  igprof -pp -d -t cmsRun -z -o ./igprofCPU_step5.gz -- cmsRun step5_gpu_igprof.py -j step5_igprof_pp_JobReport.xml >& step5_gpu_igprof_pp.log
+#  rename_igprof igprofCPU_step5
+#else
+#    echo no step5 in workflow $PROFILING_WORKFLOW
+#fi
 
