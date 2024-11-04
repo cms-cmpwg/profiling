@@ -44,6 +44,7 @@ fi
 
 pwd
   echo Run with FastTimerService
+if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_fasttimer.py ];then
       echo step1 FastTimer
       cmsRun step1_fasttimer.py -j step1_cpu_fasttimer_JobReport.xml >& step1_fasttimer.log
@@ -57,7 +58,7 @@ pwd
   else
     echo missing step2_fasttimer.py
   fi
-
+fi
   if [ -f step3_fasttimer.py ]; then
     echo step3 FastTimer
     cmsRun step3_fasttimer.py -j step3_cpu_fasttimer_JobReport.xml  >& step3_fasttimer.log
