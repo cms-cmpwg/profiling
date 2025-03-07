@@ -51,6 +51,7 @@ for f in $(ls -1 IgProf*.gz);do
 done
 }
 
+export MALLOC_CONF=zero:true
 export TF_ENABLE_ONEDNN_OPTS=1
 export ONEDNN_MAX_CPU_ISA=AVX2
 export ONEDNN_CPU_ISA_HINTS=PREFER_YMM
