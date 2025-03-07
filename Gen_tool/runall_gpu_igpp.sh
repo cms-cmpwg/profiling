@@ -51,6 +51,11 @@ for f in $(ls -1 IgProf*.gz);do
 done
 }
 
+export TF_ENABLE_ONEDNN_OPTS=1
+export ONEDNN_MAX_CPU_ISA=AVX2
+export ONEDNN_CPU_ISA_HINTS=PREFER_YMM
+export ONEDNN_JIT_PROFILE=14
+export JITDUMPDIR=.
 
 # ensure that compiler include paths are added to ROOT_INCLUDE_PATH
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
