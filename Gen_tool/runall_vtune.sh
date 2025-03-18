@@ -55,9 +55,8 @@ scram tool info tensorflow
 
 export MALLOC_CONF=zero:true
 export TF_ENABLE_ONEDNN_OPTS=1
-export ONEDNN_MAX_CPU_ISA=AVX2
-export ONEDNN_CPU_ISA_HINTS=PREFER_YMM
-export ONEDNN_JIT_PROFILE=14
+export ONEDNN_MAX_CPU_ISA=avx2
+export ONEDNN_JIT_PROFILE=1
 export JITDUMPDIR=.
 
 echo Run with Vtune
