@@ -55,13 +55,13 @@ pwd
 # ensure that compiler include paths are added to ROOT_INCLUDE_PATH
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
 
-#scram tool info tensorflow
-#case $SCRAM_ARCH in
-#	el8*)
-#        scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
-#        el9*)
-#	scram setup /cvmfs/cms.cern.ch/el9_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
-#esac
+scram tool info tensorflow
+case $SCRAM_ARCH in
+	el8*)
+	scram setup $(grep 2.17 /cvmfs/cms-ib.cern.ch/sw/x86_64/latest/el8_amd64_gcc12/cms/cmssw-tool-conf/*/tools/selected/tensorflow.xml | cut -d: -f1 | tail -1);;
+        el9*)
+	scram setup $(grep 2.17 /cvmfs/cms-ib.cern.ch/sw/x86_64/latest/el9_amd64_gcc12/cms/cmssw-tool-conf/*/tools/selected/tensorflow.xml | cut -d: -f1 | tail -1);;
+esac
 #scram b ToolUpdated
 scram tool info tensorflow
 
