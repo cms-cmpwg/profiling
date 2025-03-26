@@ -66,7 +66,7 @@ for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/
 scram tool info tensorflow
 
 export MALLOC_CONF=zero:true
-export TF_ENABLE_ONEDNN_OPTS=1
+export TF_ENABLE_ONEDNN_OPTS=0
 export ONEDNN_MAX_CPU_ISA=avx2
 export ONEDNN_JIT_PROFILE=6
 export JITDUMPDIR=.
