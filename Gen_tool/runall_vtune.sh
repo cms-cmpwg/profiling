@@ -53,6 +53,7 @@ pwd
 #scram b ToolUpdated
 scram tool info tensorflow
 
+export OMP_NUM_THREADS=1
 export MALLOC_CONF=zero:true
 export TF_ENABLE_ONEDNN_OPTS=0
 export ONEDNN_MAX_CPU_ISA=avx2
@@ -60,6 +61,7 @@ export ONEDNN_JIT_PROFILE=1
 export JITDUMPDIR=.
 
 echo Run with Vtune
+if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_timememoryinfo.py ];then
       echo step1 Vtune
       vtune -collect hotspots -r r-step1-$PROFILING_WORKFLOW-hs -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step1_timememoryinfo.py >& step1-vtune.log
@@ -77,7 +79,7 @@ echo Run with Vtune
   else
     echo missing step2_timememoryinfo.py
   fi
-
+fi
   if [ -f step3_timememoryinfo.py ]; then
     echo step3 Vtune
     vtune -collect hotspots -r r-step3-$PROFILING_WORKFLOW-hs -data-limit=0 -knob enable-stack-collection=true -knob  stack-size=4096 -knob sampling-mode=sw -- cmsRun step3_timememoryinfo.py >& step3-vtune.log
