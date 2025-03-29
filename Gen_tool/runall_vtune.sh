@@ -53,6 +53,7 @@ pwd
 #scram b ToolUpdated
 scram tool info tensorflow
 
+export TF_ENABLE_ZENDNN_OPTS=1
 export OMP_NUM_THREADS=1
 export MALLOC_CONF=zero:true
 export TF_ENABLE_ONEDNN_OPTS=0

@@ -65,6 +65,8 @@ for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/
 #scram b ToolUpdated
 scram tool info tensorflow
 
+export TF_ENABLE_ZENDNN_OPTS=1
+export OMP_NUM_THREADS=1
 export MALLOC_CONF=zero:true
 export TF_ENABLE_ONEDNN_OPTS=0
 export ONEDNN_MAX_CPU_ISA=avx2
