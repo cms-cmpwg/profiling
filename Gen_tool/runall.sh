@@ -43,6 +43,7 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 pwd
+. cmd_ft.sh
   echo Run with FastTimerService
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_fasttimer.py ];then

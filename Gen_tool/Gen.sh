@@ -113,7 +113,7 @@ if ( echo ${!steps[@]} | grep -q 4 );then
   echo "${steps[4]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step5_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step5_fasttimer.py" >>cmd_ft.sh
   fi
 fi
-. cmd_ts.sh
-. cmd_ft.sh
-. cmd_je.sh
-. cmd_ig.sh
+chmod +x cmd_ts.sh
+chmod +x cmd_ft.sh
+chmod +x cmd_je.sh
+chmod +x cmd_ig.sh

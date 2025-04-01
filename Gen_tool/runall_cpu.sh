@@ -73,6 +73,8 @@ export ONEDNN_MAX_CPU_ISA=avx2
 export ONEDNN_JIT_PROFILE=6
 export JITDUMPDIR=.
 
+. cmd_ig.sh
+
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_igprof.py ]; then
     echo step1 w/igprof -pp cmsRun

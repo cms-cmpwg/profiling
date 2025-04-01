@@ -53,7 +53,7 @@ done
 }
 
 pwd
-
+. cmd_je.sh
 export MALLOC_CONF=prof_leak:true,lg_prof_sample:10,prof_final:true
 if [ "X$RUNALLSTEPS" != "X" ]; then
   if [ -f step1_jeprof.py ]; then
