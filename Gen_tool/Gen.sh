@@ -49,12 +49,11 @@ declare -a outname
 if [ "X$WORKSPACE" != "X" ];then
 #running on Jenkins WORKSPACE is defined and we want to generate and run the config files
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec
-  outname=$(ls -d ${PROFILING_WORKFLOW}*)
+  outname=$(ls -d ${PROFILING_WORKFLOW}_*)
   if [ -d $PROFILING_WORKFLOW ];then
-	  mv $outname $PROFILING_WORKFLOW.1
-  else 
-	  mv $outname $PROFILING_WORKFLOW
+	  mv $PROFILING_WORKFLOW ${PROFILING_WORKFLOW}.old
   fi 
+  mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
 else
   NCPU=$(cat /proc/cpuinfo | grep processor| wc -l)
@@ -63,10 +62,9 @@ else
   runTheMatrix.py $WHAT -l $PROFILING_WORKFLOW --ibeos --command=--number=$EVENTS\ --nThreads=$NTHREADS\ --no_exec
   outname=$(ls -d ${PROFILING_WORKFLOW}_*)
   if [ -d $PROFILING_WORKFLOW ];then
-	  mv $outname $PROFILING_WORKFLOW.1
-  else 
-	  mv $outname $PROFILING_WORKFLOW
-  fi 
+	  mv $PROFILING_WORKFLOW ${PROFILING_WORKFLOW}.old
+  fi
+  mv $outname $PROFILING_WORKFLOW
   cd $PROFILING_WORKFLOW
 fi
 
@@ -96,6 +94,9 @@ else
       echo "${steps[$step]} --customise Validation/Performance/IgProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1;process.add_(cms.Service('ZombieKillerService', secondsBetweenChecks = cms.untracked.uint32(10), numberOfAllowedFailedChecksInARow = cms.untracked.uint32(6)))\" --python_filename=step${stepnum}_igprof.py"  >>cmd_ig.sh
       echo "${steps[$step]} --customise Validation/Performance/JeProfInfo.customise  --customise_commands \"process.FEVTDEBUGoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGEventContent.outputCommands);process.FEVTDEBUGHLToutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.FEVTDEBUGHLTEventContent.outputCommands);process.RECOSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.RECOSIMEventContent.outputCommands);process.AODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.AODSIMEventContent.outputCommands);process.MINIAODSIMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.MINIAODSIMEventContent.outputCommands);process.DQMoutput = cms.OutputModule('AsciiOutputModule',outputCommands = process.DQMEventContent.outputCommands);process.options.numberOfThreads = 1\" --python_filename=step${stepnum}_jeprof.py"  >>cmd_je.sh
   done
+  echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_timememoryinfo.py" >>cmd_ts.sh
+  echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_igprof.py" >>cmd_ig.sh
+  echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_jeprof.py" >>cmd_je.sh
 fi
 
 # For reHLT workflows the steps are shifted
@@ -106,6 +107,7 @@ if ( echo $outname | grep -q '136.') || ( echo $outname | grep -q '141.' ) ; the
 else
   echo "${steps[0]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step1_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step1_fasttimer.py " >>cmd_ft.sh
   echo "${steps[1]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step2_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step2_fasttimer.py" >>cmd_ft.sh
+  echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_fasttimer.py" >>cmd_ft.sh
   echo "${steps[2]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step3_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step3_fasttimer.py" >>cmd_ft.sh
   echo "${steps[3]} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step4_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step4_fasttimer.py" >>cmd_ft.sh
 # check for 5th step
