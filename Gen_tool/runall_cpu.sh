@@ -67,9 +67,9 @@ export TF_ENABLE_ZENDNN_OPTS=1
 export OMP_NUM_THREADS=1
 export MALLOC_CONF=zero:true
 export TF_ENABLE_ONEDNN_OPTS=0
-export ONEDNN_MAX_CPU_ISA=avx2
-export ONEDNN_JIT_PROFILE=6
-export JITDUMPDIR=.
+#export ONEDNN_MAX_CPU_ISA=avx2
+#export ONEDNN_JIT_PROFILE=6
+#export JITDUMPDIR=.
 
 . cmd_ig.sh
 
