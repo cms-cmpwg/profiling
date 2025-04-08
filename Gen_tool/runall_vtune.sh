@@ -43,14 +43,12 @@ if [ "X$TIMEOUT" == "X" ];then
 fi
 
 pwd
-#scram tool info tensorflow
-#case $SCRAM_ARCH in
-#	el8*)
-#        scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
-#        el9*)
-#	scram setup /cvmfs/cms.cern.ch/el8_amd64_gcc12/cms/cmssw-tool-conf/60.0/tools/selected/tensorflow.xml;;
-#esac
-#scram b ToolUpdated
+scram tool info tensorflow
+case $SCRAM_ARCH in
+	el8*)
+        scram setup /cvmfs/cms-ib.cern.ch/sw/x86_64/latest/$SCRAM_ARCH/cms/cmssw/CMSSW_15_1_MKLDNN0_*/config/toolbox/$SCRAM_ARCH/tools/selected/tensorflow.xml;;
+esac
+scram b ToolUpdated
 scram tool info tensorflow
 
 export TF_ENABLE_ZENDNN_OPTS=1
