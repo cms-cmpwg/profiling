@@ -56,12 +56,6 @@ pwd
 for path in $(LC_ALL=C g++   -xc++ -E -v /dev/null 2>&1 | sed -n -e '/^.include/,${' -e '/^ \/.*++/p' -e '}');do ROOT_INCLUDE_PATH=$path:$ROOT_INCLUDE_PATH; done
 
 scram tool info tensorflow
-case $CMSSW_VERSION in
-	CMSSW_15_1_*)
-	  scram setup $( ls -1 /cvmfs/cms-ib.cern.ch/sw/x86_64/latest/$SCRAM_ARCH/cms/cmssw/CMSSW_15_1_MKLDNN0_*/config/toolbox/$SCRAM_ARCH/tools/selected/tensorflow.xml | tail -1) | /bin/true ;;
-esac
-scram b ToolUpdated
-scram tool info tensorflow
 
 export TF_ENABLE_ZENDNN_OPTS=1
 export OMP_NUM_THREADS=1
