@@ -46,7 +46,7 @@ pwd
 scram tool info tensorflow
 case $CMSSW_VERSION in
 	CMSSW_15_1_*)
-	  scram setup $( ls -1 /cvmfs/cms-ib.cern.ch/sw/x86_64/latest/$SCRAM_ARCH/cms/cmssw/CMSSW_15_1_MKLDNN0_*/config/toolbox/$SCRAM_ARCH/tools/selected/tensorflow.xml | tail -1 ) | /bin/true;;
+	  scram setup $( ls -1 /cvmfs/cms-ib.cern.ch/sw/x86_64/nweek-*/$SCRAM_ARCH/cms/cmssw/CMSSW_15_1_MKLDNN0_*/config/toolbox/$SCRAM_ARCH/tools/selected/tensorflow.xml | tail -1 ) | /bin/true;;
 esac
 scram b ToolUpdated
 scram tool info tensorflow
