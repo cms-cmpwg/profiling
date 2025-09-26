@@ -192,7 +192,7 @@ run_step() {
     local profiling_type=$1
     local step_name=$2
     
-    local config_file="${step_name}_${get_config_suffix "${profiling_type}"}.py"
+    local config_file="${step_name}_$(get_config_suffix "${profiling_type}").py"
     local log_file="${step_name}_${profiling_type}.log"
     local job_report="${step_name}_${profiling_type}_JobReport.xml"
     
