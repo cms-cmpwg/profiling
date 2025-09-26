@@ -282,8 +282,8 @@ rename_profiling_files() {
     local pattern=$1
     local prefix=$2
     local files_found=0
-    
-    for file in ${pattern} 2>/dev/null; do
+
+    for file in $( ls ${pattern} 2>/dev/null ); do
         if [[ -f "${file}" ]]; then
             local new_name="${file/${pattern%\*}/${prefix}_}"
             mv "${file}" "${new_name}"
