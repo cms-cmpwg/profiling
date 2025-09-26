@@ -1,20 +1,16 @@
 #!/bin/bash
-if [ "X$CMSSW_VERSION" == "X" ];then
-  CMSSW_v=$1
-else
-  CMSSW_v=$CMSSW_VERSION
-fi
+#
+# GPU Profiling Runner - Refactored
+# Uses the unified profiling runner for better maintainability
+#
 
+# Source the unified profiling runner
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=unified_profiling_runner.sh
+source "${SCRIPT_DIR}/unified_profiling_runner.sh"
 
-if [ "X$ARCHITECTURE" != "X" ]; then
-  export SCRAM_ARCH=$ARCHITECTURE
-else
-  export SCRAM_ARCH=el8_amd64_gcc11
-fi
-
-if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="23834.21"
-fi
+# Run GPU profiling using the unified runner
+main "gpu" "$@"
 
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW

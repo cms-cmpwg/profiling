@@ -1,18 +1,16 @@
 #!/bin/bash
-if [ "X$CMSSW_VERSION" == "X" ];then
-  CMSSW_v=$1
-else
-  CMSSW_v=$CMSSW_VERSION
-fi
-echo $CMSSW_v
-## --1. Install CMSSW version and setup environment
-if [ "X$ARCHITECTURE" != "X" ];then
-  export SCRAM_ARCH=$ARCHITECTURE
-fi
+#
+# Jemalloc Memory Profiling Runner - Refactored
+# Uses the unified profiling runner for better maintainability
+#
 
-if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="23834.21"
-fi
+# Source the unified profiling runner
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=unified_profiling_runner.sh
+source "${SCRIPT_DIR}/unified_profiling_runner.sh"
+
+# Run jemalloc profiling using the unified runner
+main "jemal" "$@"
 
 if [ "X$WORKSPACE" != "X" ]; then
   cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
