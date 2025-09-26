@@ -1,32 +1,16 @@
-#!/bin/bash
+#!/bin/bash -x
 #
-# runall.sh - Execute CMS profiling workflow steps with FastTimerService
+# FastTimer Profiling Runner - Refactored
+# Uses the unified profiling runner for better maintainability
 #
-# This script sets up the CMSSW environment and runs profiling steps
-# using FastTimerService. It can run either in a Jenkins workspace
-# or in a local CVMFS environment.
-#
-# Environment variables:
-#   CMSSW_VERSION      - CMSSW version to use (can also be passed as $1)
-#   ARCHITECTURE       - SCRAM architecture to use
-#   PROFILING_WORKFLOW - Workflow ID (default: 23834.21)
-#   WORKSPACE          - Jenkins workspace path
-#   RUNALLSTEPS        - If set, run step1 and step2 in addition to step3-5
-#   TIMEOUT            - Timeout value (default: 18000)
-#
-if [ "X$CMSSW_VERSION" == "X" ];then
-  CMSSW_v=$1
-else
-  CMSSW_v=$CMSSW_VERSION
-fi
 
-if [ "X$ARCHITECTURE" != "X" ]; then
-  export SCRAM_ARCH=$ARCHITECTURE
-fi
+# Source the unified profiling runner
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=unified_profiling_runner.sh
+source "${SCRIPT_DIR}/unified_profiling_runner.sh"
 
-if [ "X$PROFILING_WORKFLOW" == "X" ];then
-  export PROFILING_WORKFLOW="23834.21"
-fi
+# Run FastTimer profiling using the unified runner
+main "fasttimer" "$@"
 
 if [ "X$WORKSPACE" != "X" ]; then
   cd "$WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW" || exit 1
