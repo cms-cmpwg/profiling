@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # CPU Profiling Runner - Refactored
 # Uses the unified profiling runner for better maintainability

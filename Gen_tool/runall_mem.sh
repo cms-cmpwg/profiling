@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # Memory Profiling Runner - Refactored  
 # Uses the unified profiling runner for better maintainability

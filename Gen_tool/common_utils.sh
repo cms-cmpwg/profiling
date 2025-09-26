@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # Common utility functions for CMS profiling scripts
 # This library provides shared functionality to avoid code duplication
 
