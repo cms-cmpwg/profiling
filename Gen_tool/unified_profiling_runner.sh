@@ -614,7 +614,7 @@ run_jemal_step() {
 
 run_vtune_step() {
     local step_name=$1
-    local config_file $2
+    local config_file=$2
     local log_file=$3
     
     if validate_file "${config_file}"; then
