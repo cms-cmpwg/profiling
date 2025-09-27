@@ -1,11 +1,25 @@
 #!/bin/bash
 #
-# Unified Profiling Runner
-# Replaces multiple runall_*.sh scripts with a single configurable runner
+# Unified Profiling Rundeclare -A default_workflows=(
+    ["cpu"]="23834.21"
+    ["mem"]="23834.21"
+    ["mem_gc"]="23834.21"
+    ["mem_tc"]="23834.21"
+    ["gpu"]="23834.21"
+    ["gpu_igmp"]="23834.21"
+    ["gpu_igpp"]="23834.21"
+    ["gpu_nsys"]="23834.21"
+    ["nvprof"]="23834.21"
+    ["timemem"]="23834.21"
+    ["allocmon"]="23834.21"
+    ["vtune"]="23834.21"
+    ["jemal"]="23834.21"
+    ["fasttimer"]="23834.21"
+)s multiple runall_*.sh scripts with a single configurable runner
 #
 # Usage: ./unified_profiling_runner.sh [PROFILING_TYPE] [CMSSW_VERSION]
 #
-# PROFILING_TYPE can be: cpu, mem, gpu, vtune, jemal, fasttimer
+# PROFILING_TYPE can be: cpu, mem, mem_gc, mem_tc, gpu, gpu_igmp, gpu_igpp, gpu_nsys, nvprof, timemem, allocmon, vtune, jemal, fasttimer
 #
 
 # Source common utilities
@@ -21,29 +35,52 @@ setup_error_handling
 #==============================================================================
 
 # Profiling type configuration
-declare -A PROFILING_CONFIGS=(
+declare -A profiling_commands=(
     ["cpu"]="igprof -pp -d -t cmsRun -z"
     ["mem"]="igprof -mp -t cmsRun -z"
+    ["mem_gc"]="igprof -mp -t cmsRunGlibC -z"
+    ["mem_tc"]="igprof -mp -t cmsRunTCMalloc -z"
     ["gpu"]="cmsRun"
-    ["vtune"]="vtune -collect hotspots -data-limit=0 -knob enable-stack-collection=true -knob stack-size=4096 -knob sampling-mode=sw --"
-    ["jemal"]="cmsRunJEProf"
+    ["gpu_igmp"]="igprof -mp -t cmsRunGlibC -z"
+    ["gpu_igpp"]="igprof -pp -d -t cmsRun -z"
+    ["gpu_nsys"]="nsys profile --kill=sigkill --export=sqlite --stats=true"
+    ["nvprof"]="nvprof -o"
+    ["timemem"]="cmsRun"
+    ["allocmon"]="cmsRun"
+    ["vtune"]="amplxe-cl -collect hotspots -r"
+    ["jemal"]="igprof -mp -t cmsRun -z"
     ["fasttimer"]="cmsRun"
 )
 
 declare -A DEFAULT_WORKFLOWS=(
     ["cpu"]="29834.21"
     ["mem"]="23834.21"
+    ["mem_gc"]="23834.21"
+    ["mem_tc"]="23834.21"
     ["gpu"]="23834.21"
+    ["nvprof"]="23834.21"
+    ["timemem"]="23834.21"
+    ["allocmon"]="23834.21"
     ["vtune"]="29834.21"
     ["jemal"]="23834.21"
     ["fasttimer"]="23834.21"
 )
 
-declare -A ENV_SETUPS=(
-    ["jemal"]="setup_jemalloc_env"
+declare -A setup_functions=(
     ["cpu"]="setup_igprof_env"
     ["mem"]="setup_igprof_env"
+    ["mem_gc"]="setup_igprof_env"
+    ["mem_tc"]="setup_igprof_env"
+    ["gpu"]="setup_fasttimer_env"
+    ["gpu_igmp"]="setup_gpu_igprof_env"
+    ["gpu_igpp"]="setup_gpu_igprof_env"
+    ["gpu_nsys"]="setup_gpu_nsys_env"
+    ["nvprof"]="setup_nvprof_env"
+    ["timemem"]="setup_timemem_env"
+    ["allocmon"]="setup_allocmon_env"
     ["vtune"]="setup_vtune_env"
+    ["jemal"]="setup_igprof_env"
+    ["fasttimer"]="setup_fasttimer_env"
 )
 
 #==============================================================================
@@ -84,6 +121,50 @@ setup_igprof_env() {
     export TF_ENABLE_ONEDNN_OPTS=0
     
     log "igprof environment configured"
+}
+
+# GPU IgProf Environment Setup
+setup_gpu_igprof_env() {
+    log "Setting up GPU IgProf environment"
+    
+    # Set up base IgProf environment first
+    setup_igprof_env
+    
+    # GPU-specific environment variables for performance optimization
+    # Override some base settings for GPU profiling
+    export TF_ENABLE_ONEDNN_OPTS=1  # Enable for GPU
+    export ONEDNN_MAX_CPU_ISA=AVX2
+    export ONEDNN_CPU_ISA_HINTS=PREFER_YMM
+    export ONEDNN_JIT_PROFILE=14
+    export JITDUMPDIR=.
+    
+    log "GPU IgProf environment configured with performance optimizations"
+}
+
+# GPU Nsight Systems Environment Setup
+setup_gpu_nsys_env() {
+    log "Setting up GPU Nsight Systems environment"
+    
+    # Add CUDA toolkit paths
+    if [[ -d "/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin" ]]; then
+        PATH="$PATH:/cvmfs/patatrack.cern.ch/externals/x86_64/rhel8/nvidia/cuda-11.8.0/bin"
+        log "Added CUDA toolkit from patatrack CVMFS to PATH"
+    elif [[ -d "/opt/nvidia/nsight-systems/bin" ]]; then
+        PATH="$PATH:/opt/nvidia/nsight-systems/bin"
+        log "Added local Nsight Systems to PATH"
+    fi
+    export PATH
+    
+    # Set GPU profiling timeout (shorter than default)
+    export TIMEOUT="${TIMEOUT:-7200}"
+    
+    # Validate nsys command availability
+    if ! command -v nsys >/dev/null 2>&1; then
+        log_error "nsys command not found. Ensure NVIDIA Nsight Systems is installed and in PATH."
+        return 1
+    fi
+    
+    log "GPU Nsight Systems environment configured"
 }
 
 setup_vtune_env() {
@@ -140,10 +221,13 @@ run_profiling_steps() {
     # Source the appropriate command file
     local cmd_file
     case "${profiling_type}" in
-        "cpu"|"mem") cmd_file="cmd_ig.sh" ;;
+        "cpu"|"mem"|"mem_gc"|"mem_tc"|"gpu_igmp"|"gpu_igpp") cmd_file="cmd_ig.sh" ;;
         "jemal") cmd_file="cmd_je.sh" ;;
-        "vtune") cmd_file="cmd_ts.sh" ;;
+        "vtune"|"timemem") cmd_file="cmd_ts.sh" ;;
         "gpu"|"fasttimer") cmd_file="cmd_ft.sh" ;;
+        "gpu_nsys") cmd_file="cmd_nsys.sh" ;;
+        "nvprof") cmd_file="cmd_np.sh" ;;
+        "allocmon") cmd_file="cmd_am.sh" ;;
         *) 
             log_error "No command file mapping for profiling type: ${profiling_type}"
             return 1
@@ -164,21 +248,36 @@ run_profiling_steps() {
     # Run profiling steps
     local steps_run=0
     
-    # Check if we should run all steps or limited steps
-    if [[ "X${RUNALLSTEPS:-}" != "X" ]]; then
-        run_step "${profiling_type}" "step1" && ((steps_run++))
-        run_step "${profiling_type}" "step2" && ((steps_run++))
-    fi
-    
-    # Always run step3 and step4
-    run_step "${profiling_type}" "step3" && ((steps_run++))
-    run_step "${profiling_type}" "step4" && ((steps_run++))
-    
-    # Check for step5
-    if ls step5_*.py &>/dev/null; then
-        run_step "${profiling_type}" "step5" && ((steps_run++))
+    # Special handling for mem_gc, mem_tc, and gpu_igprof profiling types
+    if [[ "${profiling_type}" == "mem_gc" || "${profiling_type}" == "mem_tc" || "${profiling_type}" == "gpu_igmp" || "${profiling_type}" == "gpu_igpp" ]]; then
+        # GlibC, tcmalloc memory profiling, and GPU IgProf have specific step requirements
+        if [[ "X${RUNALLSTEPS:-}" != "X" ]]; then
+            run_step "${profiling_type}" "step1" && ((steps_run++))
+            run_step "${profiling_type}" "step2" && ((steps_run++))
+        fi
+        
+        # Always run step3 for these profiling types
+        run_step "${profiling_type}" "step3" && ((steps_run++))
+        
+        # Step4 and Step5 are commented out in original mem_GC, mem_TC, and GPU IgProf scripts
+        log "Note: step4 and step5 are disabled for ${profiling_type} profiling type"
     else
-        log "No step5 in workflow ${PROFILING_WORKFLOW}"
+        # Standard step execution for other profiling types
+        if [[ "X${RUNALLSTEPS:-}" != "X" ]]; then
+            run_step "${profiling_type}" "step1" && ((steps_run++))
+            run_step "${profiling_type}" "step2" && ((steps_run++))
+        fi
+        
+        # Always run step3 and step4
+        run_step "${profiling_type}" "step3" && ((steps_run++))
+        run_step "${profiling_type}" "step4" && ((steps_run++))
+        
+        # Check for step5
+        if ls step5_*.py &>/dev/null; then
+            run_step "${profiling_type}" "step5" && ((steps_run++))
+        else
+            log "No step5 in workflow ${PROFILING_WORKFLOW}"
+        fi
     fi
     
     log "Completed ${steps_run} profiling steps"
@@ -203,6 +302,30 @@ run_step() {
         "mem")
             run_mem_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
             ;;
+        "mem_gc")
+            run_mem_gc_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "mem_tc")
+            run_mem_tc_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "gpu_igmp")
+            run_gpu_igmp_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "gpu_igpp")
+            run_gpu_igpp_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "gpu_nsys")
+            run_gpu_nsys_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "nvprof")
+            run_nvprof_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "timemem")
+            run_timemem_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
+        "allocmon")
+            run_allocmon_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
         "jemal")
             run_jemal_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
             ;;
@@ -223,12 +346,16 @@ run_step() {
 get_config_suffix() {
     local profiling_type=$1
     case "${profiling_type}" in
-        "cpu"|"mem") echo "igprof" ;;
+        "cpu"|"mem"|"mem_gc"|"mem_tc") echo "igprof" ;;
+        "gpu_igmp"|"gpu_igpp") echo "gpu_igprof" ;;
         "jemal") echo "jeprof" ;;
-        "vtune") echo "timememoryinfo" ;;
+        "vtune"|"timemem") echo "timememoryinfo" ;;
         "gpu") echo "gpu_fasttimer" ;;
+        "gpu_nsys") echo "gpu_nvprof" ;;
+        "nvprof") echo "nvprof" ;;
+        "allocmon") echo "allocmon" ;;
         "fasttimer") echo "fasttimer" ;;
-        *) echo "unknown" ;;
+        *) echo "igprof" ;;
     esac
 }
 
@@ -271,6 +398,210 @@ run_mem_step() {
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
+    fi
+}
+
+run_mem_gc_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if validate_file "${config_file}"; then
+        log "Running ${step_name} with igprof GlibC memory profiling"
+        local output_file="./igprofMEM_GC_${step_name}.gz"
+        
+        execute_with_timeout "${TIMEOUT}" "igprof MEM_GC ${step_name}" \
+            igprof -mp -t cmsRunGlibC -z -o "${output_file}" -- cmsRunGlibC "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        # Rename igprof files for GlibC profiling
+        rename_profiling_files "IgProf*.gz" "igprofMEM_GC_${step_name}"
+    else
+        log_warn "Missing ${config_file} for ${step_name}"
+        return 1
+    fi
+}
+
+# GPU IgProf Memory Profiling Step
+run_gpu_igmp_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if [[ -f "${config_file}" ]]; then
+        log "${step_name} GPU IgProf Memory Profiling"
+        local output_file="./igprofMEM_${step_name}.mp.gz"
+        
+        execute_with_timeout "${TIMEOUT}" "igprof GPU MEM ${step_name}" \
+            igprof -mp -t cmsRunGlibC -z -o "${output_file}" -- \
+            cmsRunGlibC "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        # Rename output files
+        rename_profiling_files "IgProf*.gz" "igprofMEM_${step_name}"
+    else
+        log "missing ${config_file}"
+    fi
+}
+
+# GPU IgProf Performance Profiling Step
+run_gpu_igpp_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if [[ -f "${config_file}" ]]; then
+        log "${step_name} GPU IgProf Performance Profiling"
+        local output_file="./igprofCPU_${step_name}.gz"
+        
+        execute_with_timeout "${TIMEOUT}" "igprof GPU CPU ${step_name}" \
+            igprof -pp -d -t cmsRun -z -o "${output_file}" -- \
+            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        # Rename output files
+        rename_profiling_files "IgProf*.gz" "igprofCPU_${step_name}"
+    else
+        log "missing ${config_file}"
+    fi
+}
+
+# GPU Nsight Systems Profiling Step
+run_gpu_nsys_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if [[ -f "${config_file}" ]]; then
+        log "${step_name} GPU Nsight Systems Profiler"
+        local output_file="${step_name}_gpu_nsys"
+        local stats_file="${step_name}_gpu_nsys.txt"
+        
+        # Run Nsight Systems profiling
+        execute_with_timeout "${TIMEOUT}" "nsys GPU ${step_name}" \
+            nsys profile --kill=sigkill --output="${output_file}" --export=sqlite --stats=true \
+            --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true \
+            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        # Generate statistics if profiling succeeded
+        if [[ -f "${output_file}.nsys-rep" ]]; then
+            log "Generating GPU statistics for ${step_name}"
+            nsys stats -f csv --report gpukernsum,gpumemtimesum,gpumemsizesum "${output_file}.nsys-rep" > "${stats_file}" 2>/dev/null || \
+                log "Warning: Failed to generate statistics for ${step_name}"
+        fi
+    else
+        log "missing ${config_file}"
+    fi
+}
+
+run_mem_tc_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if validate_file "${config_file}"; then
+        log "Running ${step_name} with igprof tcmalloc memory profiling"
+        local output_file="./igprofMEM_TC_${step_name}.gz"
+        
+        execute_with_timeout "${TIMEOUT}" "igprof MEM_TC ${step_name}" \
+            igprof -mp -t cmsRunTC -z -o "${output_file}" -- cmsRunTC "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        # Rename igprof files for tcmalloc profiling
+        rename_profiling_files "IgProf*.gz" "igprofMEM_TC_${step_name}"
+    else
+        log_warn "Missing ${config_file} for ${step_name}"
+        return 1
+    fi
+}
+
+run_nvprof_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if validate_file "${config_file}"; then
+        log "Running ${step_name} with NVIDIA Profiler (nvprof)"
+        local output_file="${step_name}.nvprof"
+        
+        execute_with_timeout "${TIMEOUT}" "nvprof ${step_name}" \
+            nvprof -o "${output_file}" -s cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        log "NVIDIA Profiler output saved to: ${output_file}"
+    else
+        log_warn "Missing ${config_file} for ${step_name}"
+        return 1
+    fi
+}
+
+run_timemem_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if validate_file "${config_file}"; then
+        log "Running ${step_name} with TimeMemoryService profiling"
+        
+        execute_with_timeout "${TIMEOUT}" "TimeMemory ${step_name}" \
+            cmsRun "${config_file}" >& "${log_file}"
+        
+        log "TimeMemoryService profiling completed for ${step_name}"
+        
+        # Generate event size information if ROOT files exist
+        generate_event_sizes "${step_name}"
+    else
+        log_warn "Missing ${config_file} for ${step_name}"
+        return 1
+    fi
+}
+
+run_allocmon_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if validate_file "${config_file}"; then
+        log "Running ${step_name} with AllocMonitor profiling"
+        
+        execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
+            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+        
+        log "AllocMonitor profiling completed for ${step_name}"
+        
+        # Check for AllocMonitor output files
+        if ls allocmonitor_*.json >/dev/null 2>&1; then
+            log "AllocMonitor output files generated:"
+            for file in allocmonitor_*.json; do
+                log "  - ${file}"
+            done
+        else
+            log_warn "No AllocMonitor output files found"
+        fi
+    else
+        log_warn "Missing ${config_file} for ${step_name}"
+        return 1
+    fi
+}
+
+generate_event_sizes() {
+    local step_name=$1
+    local root_file="${step_name}.root"
+    local sizes_file="${step_name}_sizes_${PROFILING_WORKFLOW}.txt"
+    
+    if [[ -f "${root_file}" ]]; then
+        log "Generating event sizes for ${root_file}"
+        execute_with_timeout 300 "edmEventSize ${step_name}" \
+            edmEventSize -v "${root_file}" > "${sizes_file}" || {
+            log_warn "Failed to generate event sizes for ${root_file}"
+            return 1
+        }
+        log "Event sizes saved to: ${sizes_file}"
+    else
+        log_debug "No ${root_file} found, skipping event size generation"
     fi
 }
 
@@ -349,6 +680,9 @@ run_post_processing() {
         "fasttimer"|"gpu")
             generate_event_sizes
             ;;
+        "timemem")
+            generate_timemem_event_sizes
+            ;;
         "jemal")
             unset MALLOC_CONF
             log "Unset MALLOC_CONF after jemalloc profiling"
@@ -371,6 +705,28 @@ generate_event_sizes() {
             log "Generated event sizes: ${size_file}"
         else
             log_debug "No ${root_file} found, skipping event size generation"
+        fi
+    done
+}
+
+# Generate event size files specifically for timemem profiling
+generate_timemem_event_sizes() {
+    log "Generating TimeMemory event size files"
+    
+    for step in step3 step4 step5; do
+        local root_file="${step}.root"
+        local size_file="${step}_sizes_${PROFILING_WORKFLOW}.txt"
+        
+        if [[ -f "${root_file}" ]]; then
+            log "Generating event sizes for ${root_file}"
+            execute_with_timeout 300 "edmEventSize ${step}" \
+                edmEventSize -v "${root_file}" > "${size_file}" || {
+                log_warn "Failed to generate event sizes for ${root_file}"
+                continue
+            }
+            log "Generated TimeMemory event sizes: ${size_file}"
+        else
+            log "No ${root_file} found for TimeMemory profiling"
         fi
     done
 }

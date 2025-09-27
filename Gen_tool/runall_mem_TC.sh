@@ -1,11 +1,34 @@
 #!/bin/bash
-if [ "X$CMSSW_VERSION" == "X" ];then
-  CMSSW_v=$1
+#
+# runall_mem_TC.sh - Wrapper for tcmalloc Memory Profiling with IgProf
+# This script has been refactored to use the unified profiling runner
+#
+# Executes tcmalloc memory profiling using IgProf across CMSSW workflow steps
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Source common utilities for logging
+# shellcheck source=common_utils.sh
+if [[ -f "${SCRIPT_DIR}/common_utils.sh" ]]; then
+    source "${SCRIPT_DIR}/common_utils.sh"
+    log "runall_mem_TC.sh: Using unified profiling runner for tcmalloc memory profiling"
+    
+    # Set profiling type and call unified runner
+    export PROFILING_TYPE="mem_tc"
+    exec "${SCRIPT_DIR}/unified_profiling_runner.sh" "mem_tc" "$@"
 else
-  CMSSW_v=$CMSSW_VERSION
-fi
-echo $CMSSW_v
-## --1. Install CMSSW version and setup environment
+    echo "Warning: common_utils.sh not found, falling back to original implementation"
+    echo "To use the refactored version, ensure all refactored files are present."
+    
+    # Fall back to original implementation
+    if [ "X$CMSSW_VERSION" == "X" ];then
+      CMSSW_v=$1
+    else
+      CMSSW_v=$CMSSW_VERSION
+    fi
+    echo $CMSSW_v
+    ## --1. Install CMSSW version and setup environment
 if [ "X$ARCHITECTURE" != "X" ];then
   export SCRAM_ARCH=$ARCHITECTURE
 fi
@@ -98,3 +121,4 @@ fi
 #else
 #    echo no step5 in workflow $PROFILING_WORKFLOW
 #fi
+fi

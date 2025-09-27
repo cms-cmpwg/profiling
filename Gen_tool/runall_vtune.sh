@@ -1,48 +1,21 @@
-#!/bin/bash -x
+#!/bin/bash
 #
-# VTune Profiling Runner - Refactored
-# Uses the unified profiling runner for better maintainability
+# runall_vtune.sh - Wrapper for VTune Profiling
+# This script has been refactored to use the unified profiling runner
 #
+# Executes Intel VTune profiling across CMSSW workflow steps
 
-# Source the unified profiling runner
+# Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=unified_profiling_runner.sh
-source "${SCRIPT_DIR}/unified_profiling_runner.sh"
 
-# Run VTune profiling using the unified runner
-main "vtune" "$@"
+# Source common utilities for logging
+# shellcheck source=common_utils.sh
+source "${SCRIPT_DIR}/common_utils.sh"
+log "runall_vtune.sh: Using unified profiling runner for VTune profiling"
 
-if [ "X$WORKSPACE" != "X" ]; then
-  cd $WORKSPACE/$CMSSW_v/$PROFILING_WORKFLOW
-else
-  export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
-  echo "$VO_CMS_SW_DIR $SCRAM_ARCH"
-  source $VO_CMS_SW_DIR/cmsset_default.sh
-  cd $CMSSW_v/$PROFILING_WORKFLOW
-  unset PYTHONPATH
-  export LC_ALL=C
-  eval `scram runtime -sh`
-  if [ ! -f $LOCALRT/ibeos_cache.txt ];then
-      curl -L -s $LOCALRT/ibeos_cache.txt https://raw.githubusercontent.com/cms-sw/cms-sw.github.io/master/das_queries/ibeos.txt
-  fi
-  if [ -d $CMSSW_RELEASE_BASE/src/Utilities/General/ibeos ];then
-    PATH=$CMSSW_RELEASE_BASE/src/Utilities/General/ibeos:$PATH
-    CMS_PATH=/cvmfs/cms-ib.cern.ch
-    CMSSW_USE_IBEOS=true
-  fi
-  if [ -d $CMSSW_BASE/src/Utilities/General/ibeos ];then
-    PATH=$CMSSW_BASE/src/Utilities/General/ibeos:$PATH
-    CMS_PATH=/cvmfs/cms-ib.cern.ch
-    CMSSW_USE_IBEOS=true
-  fi
-fi
-
-if [ "X$TIMEOUT" == "X" ];then
-    export TIMEOUT=18000
-fi
-
-pwd
-scram tool info tensorflow
+# Set profiling type and call unified runner
+export PROFILING_TYPE="vtune"
+exec "${SCRIPT_DIR}/unified_profiling_runner.sh" "vtune" "$@"
 case $CMSSW_VERSION in
 	CMSSW_15_1_*)
 	  file=$( ls -1 /cvmfs/cms-ib.cern.ch/sw/x86_64/nweek-*/$SCRAM_ARCH/cms/cmssw/CMSSW_15_1_MKLDNN0_*/config/toolbox/$SCRAM_ARCH/tools/selected/tensorflow.xml|tail -1)
