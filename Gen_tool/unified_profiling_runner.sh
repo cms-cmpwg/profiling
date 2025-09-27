@@ -1,21 +1,8 @@
 #!/bin/bash
 #
-# Unified Profiling Rundeclare -A default_workflows=(
-    ["cpu"]="23834.21"
-    ["mem"]="23834.21"
-    ["mem_gc"]="23834.21"
-    ["mem_tc"]="23834.21"
-    ["gpu"]="23834.21"
-    ["gpu_igmp"]="23834.21"
-    ["gpu_igpp"]="23834.21"
-    ["gpu_nsys"]="23834.21"
-    ["nvprof"]="23834.21"
-    ["timemem"]="23834.21"
-    ["allocmon"]="23834.21"
-    ["vtune"]="23834.21"
-    ["jemal"]="23834.21"
-    ["fasttimer"]="23834.21"
-)s multiple runall_*.sh scripts with a single configurable runner
+# Unified Profiling Runner
+# Replaces multiple runall_*.sh scripts with a single configurable runner
+
 #
 # Usage: ./unified_profiling_runner.sh [PROFILING_TYPE] [CMSSW_VERSION]
 #
