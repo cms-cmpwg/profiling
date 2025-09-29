@@ -130,12 +130,12 @@ validate_workflow() {
     log "Validating workflow: ${workflow}"
     
     # Check if workflow exists in matrix
-    if [ $(runTheMatrix.py -n | grep -qw "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+    if [ $(runTheMatrix.py -n | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
         log "Workflow found in default matrix"
         return 0
     
     # Check with extended flags
-    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -qw "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
         log "Workflow found in extended matrix"
         return 0
     fi
