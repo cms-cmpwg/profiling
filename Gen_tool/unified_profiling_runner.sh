@@ -40,17 +40,17 @@ declare -A profiling_commands=(
 )
 
 declare -A DEFAULT_WORKFLOWS=(
-    ["cpu"]="29834.21"
-    ["mem"]="23834.21"
-    ["mem_gc"]="23834.21"
-    ["mem_tc"]="23834.21"
-    ["gpu"]="23834.21"
-    ["nvprof"]="23834.21"
-    ["timemem"]="23834.21"
-    ["allocmon"]="23834.21"
-    ["vtune"]="29834.21"
-    ["jemal"]="23834.21"
-    ["fasttimer"]="23834.21"
+    ["cpu"]="13034.21"
+    ["mem"]="13034.21"
+    ["mem_gc"]="13034.21"
+    ["mem_tc"]="13034.21"
+    ["gpu"]="13034.21"
+    ["nvprof"]="13034.21"
+    ["timemem"]="13034.21"
+    ["allocmon"]="13034.21"
+    ["vtune"]="13034.21"
+    ["jemal"]="13034.21"
+    ["fasttimer"]="13034.21"
 )
 
 declare -A setup_functions=(

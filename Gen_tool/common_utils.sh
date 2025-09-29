@@ -150,7 +150,7 @@ setup_scram_arch() {
 
 # Set up profiling workflow with validation
 setup_profiling_workflow() {
-    local default_workflow=${1:-"29834.21"}
+    local default_workflow=${1:-"13034.21"}
     
     if [[ "X${PROFILING_WORKFLOW:-}" == "X" ]]; then
         export PROFILING_WORKFLOW="${default_workflow}"

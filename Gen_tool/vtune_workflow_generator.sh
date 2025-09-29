@@ -18,7 +18,7 @@ setup_error_handling
 # Configuration
 #==============================================================================
 
-readonly DEFAULT_WORKFLOW="24834.21"
+readonly DEFAULT_WORKFLOW="13034.21"
 readonly DEFAULT_NTHREADS=1
 readonly DEFAULT_EVENTS=10
 readonly MATRIX_WHAT_FLAGS='-w upgrade,cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
