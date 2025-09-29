@@ -20,7 +20,7 @@ setup_error_handling
 
 readonly DEFAULT_WORKFLOW="29834.21"
 readonly DEFAULT_NTHREADS=1
-readonly MATRIX_WHAT_FLAGS='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
+readonly MATRIX_WHAT_FLAGS='-w upgrade,cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
 
 # Command file names
 readonly CMD_FILES=(
