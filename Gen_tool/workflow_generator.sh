@@ -173,7 +173,6 @@ generate_workflow_configs() {
     execute_with_timeout 300 "runTheMatrix workflow generation" \
         "${matrix_cmd}" "${matrix_args[@]}" || {
         log_error "Failed to generate workflow configurations"
-        return 1
     }
     
     setup_workflow_directory "${workflow}"

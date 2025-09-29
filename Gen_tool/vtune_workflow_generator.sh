@@ -263,7 +263,6 @@ generate_vtune_workflow_configs() {
     execute_with_timeout 300 "runTheMatrix VTune workflow generation" \
         "${matrix_cmd}" "${matrix_args[@]}" || {
         log_error "Failed to generate VTune workflow configurations"
-        return 1
     }
     
     setup_vtune_workflow_directory "${workflow}"
