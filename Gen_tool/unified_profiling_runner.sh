@@ -45,6 +45,9 @@ declare -A DEFAULT_WORKFLOWS=(
     ["mem_gc"]="13034.21"
     ["mem_tc"]="13034.21"
     ["gpu"]="13034.21"
+    ["gpu_igmp"]="13034.21"
+    ["gpu_igpp"]="13034.21"
+    ["gpu_nsys"]="13034.21"
     ["nvprof"]="13034.21"
     ["timemem"]="13034.21"
     ["allocmon"]="13034.21"
@@ -189,6 +192,41 @@ setup_tensorflow_env() {
     fi
 }
 
+setup_fasttimer_env() {
+    log "Setting up FastTimer environment"
+    
+    # Set up TensorFlow environment
+    setup_tensorflow_env
+    
+    log "FastTimer environment configured"
+}
+
+setup_nvprof_env() {
+    log "Setting up nvprof environment"
+    
+    # Validate nvprof command availability
+    if ! command -v nvprof >/dev/null 2>&1; then
+        log_error "nvprof command not found. Ensure CUDA toolkit is installed."
+        return 1
+    fi
+    
+    log "nvprof environment configured"
+}
+
+setup_timemem_env() {
+    log "Setting up TimeMemoryService environment"
+    
+    # No special setup required for TimeMemoryService
+    log "TimeMemoryService environment configured"
+}
+
+setup_allocmon_env() {
+    log "Setting up AllocMonitor environment"
+    
+    # No special setup required for AllocMonitor
+    log "AllocMonitor environment configured"
+}
+
 #==============================================================================
 # Profiling Functions
 #==============================================================================
@@ -196,7 +234,7 @@ setup_tensorflow_env() {
 # Run profiling steps based on type
 run_profiling_steps() {
     local profiling_type=$1
-    local cmd_prefix="${PROFILING_CONFIGS[${profiling_type}]}"
+    local cmd_prefix="${profiling_commands[${profiling_type}]}"
     
     if [[ -z "${cmd_prefix}" ]]; then
         log_error "Unknown profiling type: ${profiling_type}"
@@ -729,9 +767,9 @@ main() {
     print_header "${BASH_SOURCE[0]}" "Unified CMS Profiling Runner"
     
     # Validate profiling type
-    if [[ -z "${PROFILING_CONFIGS[${profiling_type}]}" ]]; then
+    if [[ -z "${profiling_commands[${profiling_type}]}" ]]; then
         log_error "Invalid profiling type: ${profiling_type}"
-        log_error "Valid types: ${!PROFILING_CONFIGS[*]}"
+        log_error "Valid types: ${!profiling_commands[*]}"
         exit 1
     fi
     
@@ -745,7 +783,7 @@ main() {
     setup_common_env
     
     # Setup profiling-specific environment
-    local env_setup_func="${ENV_SETUPS[${profiling_type}]:-}"
+    local env_setup_func="${setup_functions[${profiling_type}]:-}"
     if [[ -n "${env_setup_func}" ]]; then
         ${env_setup_func} || exit 1
     fi
