@@ -220,7 +220,7 @@ validate_vtune_workflow() {
     log "Validating VTune workflow: ${workflow}"
     
     # Check if workflow exists in matrix
-    if runTheMatrix.py -n | grep -q "^${workflow} " 2>/dev/null; then
+    if runTheMatrix.py -n | grep -q "^${workflow}" 2>/dev/null; then
         log "VTune workflow found in default matrix"
         return 0
 

@@ -130,7 +130,7 @@ validate_workflow() {
     log "Validating workflow: ${workflow}"
     
     # Check if workflow exists in matrix
-    if runTheMatrix.py -n | grep -q "^${workflow} " 2>/dev/null; then
+    if runTheMatrix.py -n | grep -q "^${workflow}" 2>/dev/null; then
         log "Workflow found in default matrix"
         return 0
     
