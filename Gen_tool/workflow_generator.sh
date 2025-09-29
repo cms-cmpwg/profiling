@@ -294,27 +294,13 @@ generate_step_commands() {
     log_debug "Generating commands for step ${step_num}"
     
     # TimeMemory command
-    {
-        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py \ "
-        echo "  --python_filename=step${step_num}_timememoryinfo.py \ "
-    } >> cmd_ts.sh
-    
-    # IgProf command  
-    {
-        echo "${base_cmd} --customise Validation/Performance/IgProfInfo.customise \ "
-        echo "  --customise_commands \"$(get_output_customizations); \ "
-        echo "  process.options.numberOfThreads = 1; \ "
-        echo "  process.add_(cms.Service('ZombieKillerService', secondsBetweenChecks = cms.untracked.uint32(10), numberOfAllowedFailedChecksInARow = cms.untracked.uint32(6)))\" \ "
-        echo "  --python_filename=step${step_num}_igprof.py"
-    } >> cmd_ig.sh
+        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
+
+    # IgProf command
+        echo "${base_cmd} --customise=Validation/Performance/IgProfInfo.customise --customise_commands \"$(get_output_customizations);process.options.numberOfThreads = 1;process.add_(cms.Service('ZombieKillerService', secondsBetweenChecks = cms.untracked.uint32(10), numberOfAllowedFailedChecksInARow = cms.untracked.uint32(6)))\" --python_filename=step${step_num}_igprof.py" >> cmd_ig.sh
     
     # JeProf command
-    {
-        echo "${base_cmd} --customise Validation/Performance/JeProfInfo.customise \ "
-        echo "  --customise_commands \"$(get_output_customizations); \ "
-        echo "  process.options.numberOfThreads = 1\" \ "
-        echo "  --python_filename=step${step_num}_jeprof.py"
-    } >> cmd_je.sh
+        echo "${base_cmd} --customise Validation/Performance/JeProfInfo.customise --customise_commands \"$(get_output_customizations);process.options.numberOfThreads = 1\" --python_filename=step${step_num}_jeprof.py" >> cmd_je.sh
 }
 
 get_output_customizations() {
@@ -345,23 +331,12 @@ generate_fasttimer_commands() {
         local step_cmd="${workflow_steps[step_idx]}"
         local step_num=$((step_idx + step_offset))
         
-        {
-            echo "${step_cmd}"
-            echo "  --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob \ "
-            echo "  --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True); \ "
-            echo "  process.FastTimerService.jsonFileName = cms.untracked.string('step${step_num}_cpu.resources.json'); \ "
-            echo "  process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False); \ "
-            echo "  process.options.numberOfConcurrentLuminosityBlocks = 1\" \ "
-            echo "  --python_filename=step${step_num}_fasttimer.py"
-        } >> cmd_ft.sh
+        # Add FastTimer command
+            echo "${step_cmd} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step${step_num}_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False); process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_fasttimer.py" >> cmd_ft.sh
         
         # Add AllocMonitor command
-        {
-            echo "${step_cmd}"
-            echo "  --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise \ "
-            echo "  --customise_commands \"process.options.numberOfThreads = 1\" \ "
-            echo "  --python_filename=step${step_num}_allocmon.py"
-        } >> cmd_am.sh
+        
+            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --customise_commands \"process.options.numberOfThreads = 1\" --python_filename=step${step_num}_allocmon.py">> cmd_am.sh
     done
     
     # Add EOS modifications for step2 in FastTimer and AllocMonitor
