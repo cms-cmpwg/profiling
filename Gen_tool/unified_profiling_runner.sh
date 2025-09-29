@@ -234,7 +234,7 @@ setup_allocmon_env() {
 # Run profiling steps based on type
 run_profiling_steps() {
     local profiling_type=$1
-    local cmd_prefix="${profiling_commands[${profiling_type}]}"
+    local cmd_prefix="${profiling_commands[${profiling_type}]:-}"
     
     if [[ -z "${cmd_prefix}" ]]; then
         log_error "Unknown profiling type: ${profiling_type}"
@@ -767,7 +767,7 @@ main() {
     print_header "${BASH_SOURCE[0]}" "Unified CMS Profiling Runner"
     
     # Validate profiling type
-    if [[ -z "${profiling_commands[${profiling_type}]}" ]]; then
+    if [[ -z "${profiling_commands[${profiling_type}]:-}" ]]; then
         log_error "Invalid profiling type: ${profiling_type}"
         log_error "Valid types: ${!profiling_commands[*]}"
         exit 1
