@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # VTune Workflow Generator - Refactored
 # Generates VTune profiling configurations for CMSSW workflows
@@ -223,14 +223,13 @@ validate_vtune_workflow() {
     if runTheMatrix.py -n | grep -q "^${workflow} " 2>/dev/null; then
         log "VTune workflow found in default matrix"
         return 0
-    fi
-    
+
     # Check with extended flags
-    if runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -q "^${workflow}"; then
+    elif runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -q "^${workflow}"; then
         log "VTune workflow found in extended matrix"
         return 0
     fi
-    
+
     log_error "VTune workflow ${workflow} not found in matrix"
     return 1
 }

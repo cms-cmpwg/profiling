@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # Refactored CMSSW Workflow Generator
 # Generates CMSSW profiling configurations with better error handling and modularity
@@ -133,14 +133,13 @@ validate_workflow() {
     if runTheMatrix.py -n | grep -q "^${workflow} " 2>/dev/null; then
         log "Workflow found in default matrix"
         return 0
-    fi
     
     # Check with extended flags
-    if runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -q "^${workflow}"; then
+    elif runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -q "^${workflow}"; then
         log "Workflow found in extended matrix"
         return 0
     fi
-    
+
     log_error "Workflow ${workflow} not found in matrix"
     return 1
 }
