@@ -20,7 +20,7 @@ setup_error_handling
 
 readonly DEFAULT_WORKFLOW="13034.21"
 readonly DEFAULT_NTHREADS=1
-readonly MATRIX_WHAT_FLAGS='-w upgrade,cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
+readonly MATRIX_WHAT_FLAGS='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
 
 # Command file names
 readonly CMD_FILES=(
@@ -257,7 +257,7 @@ generate_command_files() {
     
     # Check if this is a reHLT workflow
     local is_rehlt_workflow=false
-    if [[ "${workflow_dir}" =~ 136\. ]] || [[ "${workflow_dir}" =~ 141\. ]]; then
+    if [[ "${PROFILING_WORKFLOW}" =~ 136\. ]] || [[ "${PROFILING_WORKFLOW}" =~ 141\. ]]; then
         is_rehlt_workflow=true
         log "Detected reHLT workflow, adjusting step numbering"
     fi
