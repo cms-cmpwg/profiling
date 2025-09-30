@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # VTune Workflow Generator - Refactored
 # Generates VTune profiling configurations for CMSSW workflows

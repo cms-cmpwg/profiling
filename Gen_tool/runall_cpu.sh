@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # runall_cpu.sh - Wrapper for CPU Profiling with IgProf
 # This script has been refactored to use the unified profiling runner

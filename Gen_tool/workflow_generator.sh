@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # Refactored CMSSW Workflow Generator
 # Generates CMSSW profiling configurations with better error handling and modularity

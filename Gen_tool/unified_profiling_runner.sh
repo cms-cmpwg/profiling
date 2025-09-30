@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 #
 # Unified Profiling Runner
 # Replaces multiple runall_*.sh scripts with a single configurable runner
