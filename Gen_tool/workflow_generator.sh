@@ -18,9 +18,9 @@ setup_error_handling
 # Configuration
 #==============================================================================
 
-readonly DEFAULT_WORKFLOW="29834.21"
+readonly DEFAULT_WORKFLOW="13034.21"
 readonly DEFAULT_NTHREADS=1
-readonly MATRIX_WHAT_FLAGS='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
+readonly MATRIX_WHAT_FLAGS_EXTENDED='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
 
 # Command file names
 readonly CMD_FILES=(
@@ -130,26 +130,34 @@ validate_workflow() {
     log "Validating workflow: ${workflow}"
     
     # Check if workflow exists in matrix
-    if runTheMatrix.py -n | grep -q "^${workflow} " 2>/dev/null; then
+    if [ $(runTheMatrix.py -n | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
         log "Workflow found in default matrix"
         return 0
-    fi
     
     # Check with extended flags
-    if runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -q "^${workflow}"; then
+    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
         log "Workflow found in extended matrix"
         return 0
     fi
-    
+
     log_error "Workflow ${workflow} not found in matrix"
     return 1
 }
 
 generate_workflow_configs() {
     local workflow=$1
-    
+    local MATRIX_WHAT_FLAGS=""
     log "Generating workflow configurations for: ${workflow}"
+    # Check if workflow exists in matrix
+    if [ $(runTheMatrix.py -n | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+        log "Workflow found in default matrix"
     
+    # Check with extended flags
+    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS_EXTENDED} | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+        log "Workflow found in extended matrix"
+        MATRIX_WHAT_FLAGS=${MATRIX_WHAT_FLAGS_EXTENDED}
+    fi
+ 
     # Determine command based on environment
     local matrix_cmd="runTheMatrix.py"
     local matrix_args=()
@@ -174,7 +182,6 @@ generate_workflow_configs() {
     execute_with_timeout 300 "runTheMatrix workflow generation" \
         "${matrix_cmd}" "${matrix_args[@]}" || {
         log_error "Failed to generate workflow configurations"
-        return 1
     }
     
     setup_workflow_directory "${workflow}"
@@ -259,7 +266,7 @@ generate_command_files() {
     
     # Check if this is a reHLT workflow
     local is_rehlt_workflow=false
-    if [[ "${workflow_dir}" =~ 136\. ]] || [[ "${workflow_dir}" =~ 141\. ]]; then
+    if [[ "${PROFILING_WORKFLOW}" =~ 136\. ]] || [[ "${PROFILING_WORKFLOW}" =~ 141\. ]]; then
         is_rehlt_workflow=true
         log "Detected reHLT workflow, adjusting step numbering"
     fi
@@ -296,27 +303,13 @@ generate_step_commands() {
     log_debug "Generating commands for step ${step_num}"
     
     # TimeMemory command
-    {
-        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py"
-        echo "  --python_filename=step${step_num}_timememoryinfo.py"
-    } >> cmd_ts.sh
-    
-    # IgProf command  
-    {
-        echo "${base_cmd} --customise Validation/Performance/IgProfInfo.customise"
-        echo "  --customise_commands \"$(get_output_customizations);"
-        echo "  process.options.numberOfThreads = 1;"
-        echo "  process.add_(cms.Service('ZombieKillerService', secondsBetweenChecks = cms.untracked.uint32(10), numberOfAllowedFailedChecksInARow = cms.untracked.uint32(6)))\""
-        echo "  --python_filename=step${step_num}_igprof.py"
-    } >> cmd_ig.sh
+        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
+
+    # IgProf command
+        echo "${base_cmd} --customise=Validation/Performance/IgProfInfo.customise --customise_commands \"$(get_output_customizations);process.options.numberOfThreads = 1;process.add_(cms.Service('ZombieKillerService', secondsBetweenChecks = cms.untracked.uint32(10), numberOfAllowedFailedChecksInARow = cms.untracked.uint32(6)))\" --python_filename=step${step_num}_igprof.py" >> cmd_ig.sh
     
     # JeProf command
-    {
-        echo "${base_cmd} --customise Validation/Performance/JeProfInfo.customise"
-        echo "  --customise_commands \"$(get_output_customizations);"
-        echo "  process.options.numberOfThreads = 1\""
-        echo "  --python_filename=step${step_num}_jeprof.py"
-    } >> cmd_je.sh
+        echo "${base_cmd} --customise Validation/Performance/JeProfInfo.customise --customise_commands \"$(get_output_customizations);process.options.numberOfThreads = 1\" --python_filename=step${step_num}_jeprof.py" >> cmd_je.sh
 }
 
 get_output_customizations() {
@@ -347,23 +340,12 @@ generate_fasttimer_commands() {
         local step_cmd="${workflow_steps[step_idx]}"
         local step_num=$((step_idx + step_offset))
         
-        {
-            echo "${step_cmd}"
-            echo "  --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob"
-            echo "  --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);"
-            echo "  process.FastTimerService.jsonFileName = cms.untracked.string('step${step_num}_cpu.resources.json');"
-            echo "  process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False);"
-            echo "  process.options.numberOfConcurrentLuminosityBlocks = 1\""
-            echo "  --python_filename=step${step_num}_fasttimer.py"
-        } >> cmd_ft.sh
+        # Add FastTimer command
+            echo "${step_cmd} --customise=HLTrigger/Timer/FastTimer.customise_timer_service_singlejob --customise_commands \"process.FastTimerService.writeJSONSummary = cms.untracked.bool(True);process.FastTimerService.jsonFileName = cms.untracked.string('step${step_num}_cpu.resources.json');process.FastTimerService.enableDQMbyLumiSection = cms.untracked.bool(False); process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_fasttimer.py" >> cmd_ft.sh
         
         # Add AllocMonitor command
-        {
-            echo "${step_cmd}"
-            echo "  --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise"
-            echo "  --customise_commands \"process.options.numberOfThreads = 1\""
-            echo "  --python_filename=step${step_num}_allocmon.py"
-        } >> cmd_am.sh
+        
+            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --customise_commands \"process.options.numberOfThreads = 1\" --python_filename=step${step_num}_allocmon.py">> cmd_am.sh
     done
     
     # Add EOS modifications for step2 in FastTimer and AllocMonitor
