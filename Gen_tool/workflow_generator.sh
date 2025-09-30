@@ -156,7 +156,7 @@ generate_workflow_configs() {
     if [[ "X${WORKSPACE:-}" != "X" ]]; then
         # Jenkins mode
         matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}" --ibeos)
-        matrix_args+=(--command="--number=${EVENTS} --nThreads=${NTHREADS} --no_exec")
+        matrix_args+=(--command="--number=${EVENTS}\ --nThreads=${NTHREADS}\ --no_exec")
     else
         # Local mode
         local ncpu
@@ -165,7 +165,7 @@ generate_workflow_configs() {
         local local_events=$((local_nthreads * 10))
         
         matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}" --ibeos)
-        matrix_args+=(--command="--number=${local_events} --nThreads=${local_nthreads} --no_exec")
+        matrix_args+=(--command="--number=${local_events}\ --nThreads=${local_nthreads}\ --no_exec")
     fi
     
     log "Running matrix command: ${matrix_cmd} ${matrix_args[*]}"
