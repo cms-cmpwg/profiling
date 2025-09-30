@@ -33,7 +33,7 @@ declare -A profiling_commands=(
     ["gpu_nsys"]="nsys profile --kill=sigkill --export=sqlite --stats=true"
     ["nvprof"]="nvprof -o"
     ["timemem"]="cmsRun"
-    ["allocmon"]="cmsRun"
+    ["allocmon"]="edmModuleAllocMonitoryAnalyze.py"
     ["vtune"]="amplxe-cl -collect hotspots -r"
     ["jemal"]="igprof -mp -t cmsRun -z"
     ["fasttimer"]="cmsRun"
@@ -593,14 +593,16 @@ run_allocmon_step() {
         log "Running ${step_name} with AllocMonitor profiling"
         
         execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
-            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+            env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
         
+        rename_profiling_files "moduleAllocMonitor.log" "${step_name}_module_allocMonitor.log"
+
         log "AllocMonitor profiling completed for ${step_name}"
         
         # Check for AllocMonitor output files
-        if ls allocmonitor_*.json >/dev/null 2>&1; then
+        if ls *moduleAllocMonitor.log >/dev/null 2>&1; then
             log "AllocMonitor output files generated:"
-            for file in allocmonitor_*.json; do
+            for file in *moduleAllocMonitor.log; do
                 log "  - ${file}"
             done
         else
