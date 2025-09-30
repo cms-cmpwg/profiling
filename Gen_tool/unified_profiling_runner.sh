@@ -594,7 +594,7 @@ run_allocmon_step() {
         
         # Create moduleAllocMonitor log for analysis
         local module_alloc_log="moduleAllocMonitor.log"
-        local step_module_alloc_log="${step_name}${module_alloc_log}"
+        local step_module_alloc_log="${step_name}_${module_alloc_log}"
 
         execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
             env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
