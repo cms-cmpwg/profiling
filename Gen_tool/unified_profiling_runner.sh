@@ -595,7 +595,7 @@ run_allocmon_step() {
         execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
             env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
 
-        rename_profiling_files "moduleAllocMonitor.log" "moduleAllocMonitor" "${step_name}_"
+        rename_profiling_files "moduleAllocMonitor.log" "moduleAllocMonitor" "${step_name}"
 
         log "AllocMonitor profiling completed for ${step_name}"
         
