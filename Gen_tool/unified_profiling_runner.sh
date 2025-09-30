@@ -398,7 +398,7 @@ run_cpu_step() {
             igprof -pp -d -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" >& "${log_file}"
         
         # Rename igprof files
-        rename_profiling_files "IgProf*.gz" "igprofCPU_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf" "igprofCPU_${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
@@ -419,7 +419,7 @@ run_mem_step() {
             igprof -mp -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename igprof files
-        rename_profiling_files "IgProf*.gz" "igprofMEM_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf""igprofMEM_${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
@@ -440,7 +440,7 @@ run_mem_gc_step() {
             igprof -mp -t cmsRunGlibC -z -o "${output_file}" -- cmsRunGlibC "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename igprof files for GlibC profiling
-        rename_profiling_files "IgProf*.gz" "igprofMEM_GC_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_GC_${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
@@ -463,7 +463,7 @@ run_gpu_igmp_step() {
             cmsRunGlibC "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename output files
-        rename_profiling_files "IgProf*.gz" "igprofMEM_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_${step_name}"
     else
         log "missing ${config_file}"
     fi
@@ -485,7 +485,7 @@ run_gpu_igpp_step() {
             cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename output files
-        rename_profiling_files "IgProf*.gz" "igprofCPU_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf" "igprofCPU_${step_name}"
     else
         log "missing ${config_file}"
     fi
@@ -534,7 +534,7 @@ run_mem_tc_step() {
             igprof -mp -t cmsRunTC -z -o "${output_file}" -- cmsRunTC "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename igprof files for tcmalloc profiling
-        rename_profiling_files "IgProf*.gz" "igprofMEM_TC_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_TC_${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
@@ -595,7 +595,7 @@ run_allocmon_step() {
         execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
             env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
 
-        rename_profiling_files "moduleAllocMonitor.log" "${step_name}_moduleAllocMonitor.log"
+        rename_profiling_files "moduleAllocMonitor.log" "moduleAllocMonitor" "${step_name}_"
 
         log "AllocMonitor profiling completed for ${step_name}"
         
@@ -645,7 +645,7 @@ run_jemal_step() {
             env MALLOC_CONF="${MALLOC_CONF}" cmsRunJEProf "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename jemalloc files
-        rename_profiling_files "jeprof.*.heap" "${step_name}_jeprof"
+        rename_profiling_files "jeprof.*.heap" "jeprof" "${step_name}_jeprof"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1

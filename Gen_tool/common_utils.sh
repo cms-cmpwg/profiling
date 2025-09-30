@@ -279,13 +279,14 @@ run_profiling_step() {
 
 # Rename files with a common pattern
 rename_profiling_files() {
-    local pattern=$1
-    local prefix=$2
+    local wildcard=$1
+    local pattern=$2
+    local prefix=$3
     local files_found=0
 
-    for file in $( ls ${pattern} 2>/dev/null ); do
+    for file in $( ls ${wildcard} 2>/dev/null ); do
         if [[ -f "${file}" ]]; then
-            local new_name="${file/${pattern%\*}/${prefix}_}"
+            local new_name="${file/${pattern}/${prefix}_${pattern}}"
             mv "${file}" "${new_name}"
             log "Renamed ${file} to ${new_name}"
             ((files_found++))
