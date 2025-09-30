@@ -20,7 +20,7 @@ setup_error_handling
 
 readonly DEFAULT_WORKFLOW="13034.21"
 readonly DEFAULT_NTHREADS=1
-readonly MATRIX_WHAT_FLAGS='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
+readonly MATRIX_WHAT_FLAGS_EXTENDED='-w cleanedupgrade,standard,highstats,pileup,generator,extendedgen,production,identity,ged,machine,premix,nano,gpu,2017,2026'
 
 # Command file names
 readonly CMD_FILES=(
@@ -146,9 +146,18 @@ validate_workflow() {
 
 generate_workflow_configs() {
     local workflow=$1
-    
+    local MATRIX_WHAT_FLAGS=""
     log "Generating workflow configurations for: ${workflow}"
+    # Check if workflow exists in matrix
+    if [ $(runTheMatrix.py -n | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+        log "Workflow found in default matrix"
     
+    # Check with extended flags
+    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS_EXTENDED} | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+        log "Workflow found in extended matrix"
+        MATRIX_WHAT_FLAGS=${MATRIX_WHAT_FLAGS_EXTENDED}
+    fi
+ 
     # Determine command based on environment
     local matrix_cmd="runTheMatrix.py"
     local matrix_args=()
