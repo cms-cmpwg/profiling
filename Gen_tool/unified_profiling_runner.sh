@@ -33,7 +33,7 @@ declare -A profiling_commands=(
     ["gpu_nsys"]="nsys profile --kill=sigkill --export=sqlite --stats=true"
     ["nvprof"]="nvprof -o"
     ["timemem"]="cmsRun"
-    ["allocmon"]="edmModuleAllocMonitoryAnalyze.py"
+    ["allocmon"]="edmModuleAllocMonitoryAnalyze.py -j"
     ["vtune"]="amplxe-cl -collect hotspots -r"
     ["jemal"]="igprof -mp -t cmsRun -z"
     ["fasttimer"]="cmsRun"
@@ -419,7 +419,7 @@ run_mem_step() {
             igprof -mp -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
         
         # Rename igprof files
-        rename_profiling_files "IgProf*.gz" "IgProf""igprofMEM_${step_name}"
+        rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
@@ -592,21 +592,39 @@ run_allocmon_step() {
     if validate_file "${config_file}"; then
         log "Running ${step_name} with AllocMonitor profiling"
         
+        # Create moduleAllocMonitor log for analysis
+        local module_alloc_log="moduleAllocMonitor.log"
+        local step_module_alloc_log="${step_name}${module_alloc_log}"
+
         execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
             env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
 
-        rename_profiling_files "moduleAllocMonitor.log" "moduleAllocMonitor" "${step_name}"
+        # Copy relevant log content for module analysis (if needed)
+        if [[ -f "${module_alloc_log}" ]]; then
+            cp "${module_alloc_log}" "${step_module_alloc_log}"
+        fi
 
         log "AllocMonitor profiling completed for ${step_name}"
         
+        # Run edmModuleAllocMonitorAnalyze post-processing
+        run_edmmodule_allocmonitor_analyze "${step_name}"
+
         # Check for AllocMonitor output files
-        if ls *moduleAllocMonitor.log >/dev/null 2>&1; then
+        if ls *${module_alloc_log} >/dev/null 2>&1; then
             log "AllocMonitor output files generated:"
-            for file in *moduleAllocMonitor.log; do
+            for file in *${module_alloc_log}; do
                 log "  - ${file}"
             done
-        else
-            log_warn "No AllocMonitor output files found"
+        fi
+
+        # Check for module analysis output
+        if [[ -f "${step_name}_moduleAllocMonitor.json" ]]; then
+            log "Module AllocMonitor analysis completed: ${step_name}_moduleAllocMonitor.json"
+        fi
+
+        # Check for circles analysis output
+        if [[ -f "${step_name}_moduleAllocMonitor.circles.json" ]]; then
+            log "Module AllocMonitor circles analysis completed: ${step_name}_moduleAllocMonitor.circles.json"
         fi
     else
         log_warn "Missing ${config_file} for ${step_name}"
@@ -699,6 +717,45 @@ run_fasttimer_step() {
     fi
 }
 
+# Run edmModuleAllocMonitorAnalyze for AllocMonitor post-processing
+run_edmmodule_allocmonitor_analyze() {
+    local step_name=$1
+    local input_log="${step_name}_moduleAllocMonitor.log"
+    local output_json="${step_name}_moduleAllocMonitor.json"
+    local circles_json="${step_name}_moduleAllocMonitor.circles.json"
+
+    if [[ -f "${input_log}" ]]; then
+        log "Running edmModuleAllocMonitorAnalyze for ${step_name}"
+
+        execute_with_timeout 300 "edmModuleAllocMonitorAnalyze ${step_name}" \
+            edmModuleAllocMonitorAnalyze.py -j "${input_log}" > "${output_json}" || {
+            log_warn "Failed to run edmModuleAllocMonitorAnalyze for ${step_name}"
+            return 1
+        }
+
+        log "AllocMonitor analysis output saved to: ${output_json}"
+
+        # Convert JSON to circles format if the analysis succeeded
+        if [[ -f "${output_json}" ]]; then
+            log "Running edmModuleAllocJsonToCircles for ${step_name}"
+
+            execute_with_timeout 300 "edmModuleAllocJsonToCircles ${step_name}" \
+                edmModuleAllocJsonToCircles.py "${output_json}" > "${circles_json}" || {
+                log_warn "Failed to run edmModuleAllocJsonToCircles for ${step_name}"
+                return 1
+            }
+
+            log "AllocMonitor circles output saved to: ${circles_json}"
+        else
+            log_warn "JSON file not found for circles conversion: ${output_json}"
+            return 1
+        fi
+    else
+        log_warn "AllocMonitor log file not found: ${input_log}"
+        return 1
+    fi
+}
+
 # Run post-processing specific to profiling type
 run_post_processing() {
     local profiling_type=$1
@@ -709,6 +766,9 @@ run_post_processing() {
             ;;
         "timemem")
             generate_timemem_event_sizes
+            ;;
+        "allocmon")
+            log "AllocMonitor post-processing completed during step execution"
             ;;
         "jemal")
             unset MALLOC_CONF
