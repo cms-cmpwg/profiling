@@ -727,15 +727,26 @@ run_edmmodule_allocmonitor_analyze() {
     if [[ -f "${input_log}" ]]; then
         log "Running edmModuleAllocMonitorAnalyze for ${step_name}"
 
-            edmModuleAllocMonitorAnalyze.py -j "${input_log}" > "${output_json}" || return 1
-
-        log "AllocMonitor analysis output saved to: ${output_json}"
+        # Run without execute_with_timeout to avoid log messages in JSON output
+        if timeout 300 edmModuleAllocMonitorAnalyze.py -j "${input_log}" > "${output_json}"; then
+            log "AllocMonitor analysis output saved to: ${output_json}"
+        else
+            log_warn "Failed to run edmModuleAllocMonitorAnalyze for ${step_name}"
+            return 1
+        fi
 
         # Convert JSON to circles format if the analysis succeeded
         if [[ -f "${output_json}" ]]; then
             log "Running edmModuleAllocJsonToCircles for ${step_name}"
 
-                edmModuleAllocJsonToCircles.py "${output_json}" > "${circles_json}" || return 1
+            # Run without execute_with_timeout to avoid log messages in JSON output
+            if timeout 300 edmModuleAllocJsonToCircles.py "${output_json}" > "${circles_json}"; then
+                log "AllocMonitor circles output saved to: ${circles_json}"
+            else
+                log_warn "Failed to run edmModuleAllocJsonToCircles for ${step_name}"
+                return 1
+            }
+
 
             log "AllocMonitor circles output saved to: ${circles_json}"
         else
