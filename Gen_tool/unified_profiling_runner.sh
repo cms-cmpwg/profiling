@@ -222,8 +222,8 @@ setup_timemem_env() {
 
 setup_allocmon_env() {
     log "Setting up AllocMonitor environment"
-    
-    # No special setup required for AllocMonitor
+    # AllocMonitor requires edmModuleAllocJsonToCircles.py for post-processing
+    validate_command "edmModuleAllocJsonToCircles.py" || { log_error "edmModuleAllocJsonToCircles.py not found"; return 1; }
     log "AllocMonitor environment configured"
 }
 
