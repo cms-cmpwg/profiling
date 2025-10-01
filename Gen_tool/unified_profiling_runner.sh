@@ -747,7 +747,6 @@ run_edmmodule_allocmonitor_analyze() {
                 return 1
 
 
-            log "AllocMonitor circles output saved to: ${circles_json}"
             fi
         else
             log_warn "JSON file not found for circles conversion: ${output_json}"
