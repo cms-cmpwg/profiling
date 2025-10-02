@@ -768,7 +768,7 @@ run_igprof_post_processing() {
     log "Running igprof post-processing for ${profiling_type}"
     
     # Process all igprof .gz files
-    for gz_file in *CPU*.gz *MEM*.gz 2>/dev/null; do
+    for gz_file in $(ls *CPU*.gz *MEM*.gz 2>/dev/null); do
         if [[ -f "${gz_file}" ]]; then
             log "Processing igprof file: ${gz_file}"
             
