@@ -182,7 +182,7 @@ setup_tensorflow_env() {
             base_version="${BASH_REMATCH[1]}"
         fi
         local tf_file
-        tf_file=$(ls -1 "/cvmfs/cms-ib.cern.ch/sw/x86_64/nweek-*/${SCRAM_ARCH}/cms/cmssw/${base_version}_MKLDNN0_*/config/toolbox/${SCRAM_ARCH}/tools/selected/tensorflow.xml" 2>/dev/null | tail -1)
+        tf_file=$(ls -1 /cvmfs/cms-ib.cern.ch/sw/x86_64/nweek-*/${SCRAM_ARCH}/cms/cmssw/${base_version}MKLDNN0_*/config/toolbox/${SCRAM_ARCH}/tools/selected/tensorflow.xml 2>/dev/null | tail -1)
         
         if [[ -f "${tf_file}" ]]; then
             log "Found TensorFlow config: ${tf_file}"
