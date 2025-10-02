@@ -174,12 +174,15 @@ setup_vtune_env() {
 }
 
 setup_tensorflow_env() {
-    if [[ "${CMSSW_VERSION}" =~ CMSSW_15_1_.* ]]; then
-        log "Setting up TensorFlow for CMSSW 15.1.x"
+        log "Setting up TensorFlow for ${CMSSW_VERSION}"
         scram tool info tensorflow
-        
+
+        local base_version=""
+        if [[ "${CMSSW_VERSION}" =~ ^(CMSSW_[0-9]+_[0-9]+_) ]]; then
+            base_version="${BASH_REMATCH[1]}"
+        fi
         local tf_file
-        tf_file=$(ls -1 "/cvmfs/cms-ib.cern.ch/sw/x86_64/nweek-*/${SCRAM_ARCH}/cms/cmssw/CMSSW_15_1_MKLDNN0_*/config/toolbox/${SCRAM_ARCH}/tools/selected/tensorflow.xml" 2>/dev/null | tail -1)
+        tf_file=$(ls -1 "/cvmfs/cms-ib.cern.ch/sw/x86_64/nweek-*/${SCRAM_ARCH}/cms/cmssw/${base_version}_MKLDNN0_*/config/toolbox/${SCRAM_ARCH}/tools/selected/tensorflow.xml" 2>/dev/null | tail -1)
         
         if [[ -f "${tf_file}" ]]; then
             log "Found TensorFlow config: ${tf_file}"
@@ -187,9 +190,9 @@ setup_tensorflow_env() {
             scram b ToolUpdated || log_warn "Failed to update TensorFlow tools"
             scram tool info tensorflow
         else
-            log_warn "TensorFlow config not found for CMSSW 15.1.x"
+            log_warn "TensorFlow config not found for ${CMSSW_VERSION}"
         fi
-    fi
+
 }
 
 setup_fasttimer_env() {
