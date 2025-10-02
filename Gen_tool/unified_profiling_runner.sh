@@ -767,12 +767,12 @@ run_igprof_post_processing() {
     local gzip_names=""
     local report_name=""
     case "${profiling_type}" in
-        "cpu") gzip_names=(*CPU*.gz);;
-        "mem") gzip_names=(*MEM*.gz);;
-        "mem_gc") gzip_names=(*MEM*.gz); report_name="-r MEM_LIVE";;
-        "mem_tc") gzip_names=(*MEM*.gz); report_name="-r MEM_LIVE";;
-        "gpu_igmp") gzip_names=(*MEM*.gz); report_name="-r MEM_LIVE";;
-        "gpu_igpp") gzip_names=(*CPU*.gz); report_name="-r MEM_LIVE";;
+        "cpu") gzip_names=(igprofCPU_step*.gz);;
+        "mem") gzip_names=(igprofMEM_step*.gz);;
+        "mem_gc") gzip_names=(igprofMEM_GC_step*.gz); report_name="-r MEM_LIVE";;
+        "mem_tc") gzip_names=(igprofMEM_TC_step*.gz); report_name="-r MEM_LIVE";;
+        "gpu_igmp") gzip_names=(igprofMEM_step*.gz); report_name="-r MEM_LIVE";;
+        "gpu_igpp") gzip_names=(igprofCPU_step*.gz);;
         *) 
             log_error "Invalid profiling type for igprof post-processing: ${profiling_type}"
             return 1
