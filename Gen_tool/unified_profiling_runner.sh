@@ -758,11 +758,89 @@ run_edmmodule_allocmonitor_analyze() {
     fi
 }
 
+# Run igprof post-processing with SQL analysis
+run_igprof_post_processing() {
+    local profiling_type=$1
+    
+    log "Running igprof post-processing for ${profiling_type}"
+    
+    # Process all igprof .gz files
+    for gz_file in *CPU*.gz *MEM*.gz 2>/dev/null; do
+        if [[ -f "${gz_file}" ]]; then
+            log "Processing igprof file: ${gz_file}"
+            
+            # Generate SQL database file
+            local sql_file="${gz_file%.gz}.sql3"
+            local log_file="${gz_file%.gz}.log"
+            local res_file="RES_${gz_file#igprof}"
+            local txt_file="${res_file%.gz}.txt.gz"
+            
+            # Run igprof-analyse for SQL output with fix-igprof-sql.py
+            log "Generating SQL database: ${sql_file}"
+            if igprof-analyse --sqlite -v -d -g "${gz_file}" 2>> "${log_file}" | \
+               python "${SCRIPT_DIR}/fix-igprof-sql.py" /dev/stdin | \
+               sqlite3 "${sql_file}" 2>> "${log_file}"; then
+                log "SQL database generated: ${sql_file}"
+            else
+                log_warn "Failed to generate SQL database for ${gz_file}"
+            fi
+            
+            # Run igprof-analyse for text output
+            log "Generating text report: ${txt_file}"
+            if igprof-analyse -v -d -g "${gz_file}" 2>> "${log_file}" | gzip -c > "${txt_file}"; then
+                log "Text report generated: ${txt_file}"
+            else
+                log_warn "Failed to generate text report for ${gz_file}"
+            fi
+        fi
+    done
+    
+    # Process step3 CPU results if available
+    if [[ -f "RES_CPU_step3.txt.gz" ]]; then
+        log "Processing step3 CPU results for doEvent analysis"
+        
+        local igrep_file="RES_CPU_step3.txt"
+        local sorted_file="sorted_RES_CPU_step3.txt"
+        
+        # Extract and process step3 results
+        if gzip -dc "RES_CPU_step3.txt.gz" > "${igrep_file}"; then
+            # Run AWK processing for doEvent module analysis
+            awk -v module=doEvent '
+                BEGIN { total = 0; }
+                {
+                    if(substr($0,0,1)=="-") { good = 0; }
+                    if(good && length($0)>0) { print $0; total += $3; }
+                    if(substr($0,0,1)=="[" && index($0,module)!=0) { good = 1; }
+                }
+                END { print "Total: "total }
+            ' "${igrep_file}" | \
+            sort -n -r -k1 | \
+            awk '{
+                if(index($0,"Total: ")!=0) { total=$0; }
+                else { print $0; }
+            }
+            END { print total; }' > "${sorted_file}" 2>&1
+            
+            # Clean up temporary file
+            rm -f "${igrep_file}"
+            
+            log "doEvent analysis completed: ${sorted_file}"
+        else
+            log_warn "Failed to extract RES_CPU_step3.txt.gz"
+        fi
+    fi
+    
+    log "igprof post-processing completed"
+}
+
 # Run post-processing specific to profiling type
 run_post_processing() {
     local profiling_type=$1
     
     case "${profiling_type}" in
+        "cpu"|"mem"|"mem_gc"|"mem_tc"|"gpu_igmp"|"gpu_igpp")
+            run_igprof_post_processing "${profiling_type}"
+            ;;
         "fasttimer"|"gpu")
             generate_event_sizes
             ;;
