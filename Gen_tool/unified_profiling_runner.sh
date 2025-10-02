@@ -764,11 +764,24 @@ run_edmmodule_allocmonitor_analyze() {
 # Run igprof post-processing with SQL analysis
 run_igprof_post_processing() {
     local profiling_type=$1
-    
+    local gzip_names=""
+    local report_name=""
+    case "${profiling_type}" in
+        "cpu") gzip_names=(*CPU*.gz);;
+        "mem") gzip_names=(*MEM*.gz);;
+        "mem_gc") gzip_names=(*MEM*.gz); report_name="-r MEM_LIVE";;
+        "mem_tc") gzip_names=(*MEM*.gz); report_name="-r MEM_LIVE";;
+        "gpu_igmp") gzip_names=(*MEM*.gz); report_name="-r MEM_LIVE";;
+        "gpu_igpp") gzip_names=(*CPU*.gz); report_name="-r MEM_LIVE";;
+        *) 
+            log_error "Invalid profiling type for igprof post-processing: ${profiling_type}"
+            return 1
+            ;;
+    esac
+
     log "Running igprof post-processing for ${profiling_type}"
-    
     # Process all igprof .gz files
-    for gz_file in $(ls *CPU*.gz *MEM*.gz 2>/dev/null); do
+    for gz_file in "${gzip_names}"; do
         if [[ -f "${gz_file}" ]]; then
             log "Processing igprof file: ${gz_file}"
             
@@ -780,8 +793,8 @@ run_igprof_post_processing() {
             
             # Run igprof-analyse for SQL output with fix-igprof-sql.py
             log "Generating SQL database: ${sql_file}"
-            if igprof-analyse --sqlite -v -d -g "${gz_file}" 2>> "${log_file}" | \
-               python "${SCRIPT_DIR}/fix-igprof-sql.py" /dev/stdin | \
+            if igprof-analyse --sqlite -v -d ${report_name} -g "${gz_file}" 2>> "${log_file}" | \
+               python3 "${SCRIPT_DIR}/fix-igprof-sql.py" /dev/stdin | \
                sqlite3 "${sql_file}" 2>> "${log_file}"; then
                 log "SQL database generated: ${sql_file}"
             else
@@ -790,7 +803,7 @@ run_igprof_post_processing() {
             
             # Run igprof-analyse for text output
             log "Generating text report: ${txt_file}"
-            if igprof-analyse -v -d -g "${gz_file}" 2>> "${log_file}" | gzip -c > "${txt_file}"; then
+            if igprof-analyse -v -d ${report_name} -g "${gz_file}" 2>> "${log_file}" | gzip -c > "${txt_file}"; then
                 log "Text report generated: ${txt_file}"
             else
                 log_warn "Failed to generate text report for ${gz_file}"
