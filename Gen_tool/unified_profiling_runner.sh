@@ -687,7 +687,7 @@ run_vtune_step() {
         execute_with_timeout "${TIMEOUT}" "VTune ${step_name}" \
             vtune -collect hotspots -r "${result_dir}" -data-limit=0 \
                 -knob enable-stack-collection=true -knob stack-size=4096 \
-                -knob sampling-mode=sw -- cmsRun "${config_file}" >& "${log_file}"
+                -knob sampling-mode=sw -- cmsRun "${config_file}" >& "${log_file/_/-}"
         
         # Generate report
         vtune -report gprof-cc -r "${result_dir}" -format=csv \
