@@ -238,7 +238,7 @@ setup_common_env() {
     export LC_ALL=C
     
     if [[ "X${TIMEOUT:-}" == "X" ]]; then
-        export TIMEOUT=18000
+        export TIMEOUT=43200
     fi
     
     log "Set LC_ALL=C and TIMEOUT=${TIMEOUT}"
