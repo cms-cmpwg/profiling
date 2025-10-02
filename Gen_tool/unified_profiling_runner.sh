@@ -794,7 +794,7 @@ run_igprof_post_processing() {
             # Run igprof-analyse for SQL output with fix-igprof-sql.py
             log "Generating SQL database: ${sql_file}"
             if igprof-analyse --sqlite -v -d ${report_name} -g "${gz_file}" 2>> "${log_file}" | \
-               python3 "${SCRIPT_DIR}/fix-igprof-sql.py" /dev/stdin | \
+               "${SCRIPT_DIR}/fix-igprof-sql.py" /dev/stdin | \
                sqlite3 "${sql_file}" 2>> "${log_file}"; then
                 log "SQL database generated: ${sql_file}"
             else
