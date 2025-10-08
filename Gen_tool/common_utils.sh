@@ -8,7 +8,6 @@ set -euo pipefail
 # Global variables
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly LOG_FILE="${LOG_FILE:-${SCRIPT_DIR}/profiling.log}"
-readonly TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
 # Color codes for output
 readonly RED='\033[0;31m'
@@ -21,25 +20,30 @@ readonly NC='\033[0m' # No Color
 # Logging Functions
 #==============================================================================
 
+# Helper function to get current timestamp
+get_timestamp() {
+    date '+%Y-%m-%d %H:%M:%S'
+}
+
 log() {
-    echo -e "${TIMESTAMP} [INFO] $*" | tee -a "${LOG_FILE}"
+    echo -e "$(get_timestamp) [INFO] $*" | tee -a "${LOG_FILE}"
 }
 
 log_error() {
-    echo -e "${TIMESTAMP} [${RED}ERROR${NC}] $*" | tee -a "${LOG_FILE}" >&2
+    echo -e "$(get_timestamp) [${RED}ERROR${NC}] $*" | tee -a "${LOG_FILE}" >&2
 }
 
 log_warn() {
-    echo -e "${TIMESTAMP} [${YELLOW}WARN${NC}] $*" | tee -a "${LOG_FILE}"
+    echo -e "$(get_timestamp) [${YELLOW}WARN${NC}] $*" | tee -a "${LOG_FILE}"
 }
 
 log_success() {
-    echo -e "${TIMESTAMP} [${GREEN}SUCCESS${NC}] $*" | tee -a "${LOG_FILE}"
+    echo -e "$(get_timestamp) [${GREEN}SUCCESS${NC}] $*" | tee -a "${LOG_FILE}"
 }
 
 log_debug() {
     if [[ "${DEBUG:-0}" == "1" ]]; then
-        echo -e "${TIMESTAMP} [${BLUE}DEBUG${NC}] $*" | tee -a "${LOG_FILE}"
+        echo -e "$(get_timestamp) [${BLUE}DEBUG${NC}] $*" | tee -a "${LOG_FILE}"
     fi
 }
 
@@ -317,7 +321,7 @@ print_header() {
     log "=============================================="
     log "${description}"
     log "Script: ${script_name}"
-    log "Started at: ${TIMESTAMP}"
+    log "Started at: $(get_timestamp)"
     log "Working directory: $(pwd)"
     log "=============================================="
 }
@@ -325,7 +329,7 @@ print_header() {
 # Print script footer
 print_footer() {
     local exit_code=${1:-0}
-    local end_time=$(date '+%Y-%m-%d %H:%M:%S')
+    local end_time=$(get_timestamp)
     
     log "=============================================="
     if [[ ${exit_code} -eq 0 ]]; then
