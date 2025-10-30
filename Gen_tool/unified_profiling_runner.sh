@@ -398,7 +398,7 @@ run_cpu_step() {
         local output_file="./igprofCPU_${step_name}.gz"
         
         execute_with_timeout "${TIMEOUT}" "igprof CPU ${step_name}" \
-            igprof -pp -d -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" >& "${log_file}"
+            igprof -pp -d -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" 2>&1 | tee "${log_file}"
         
         # Rename igprof files
         rename_profiling_files "IgProf*.gz" "IgProf" "igprofCPU_${step_name}"
@@ -419,8 +419,8 @@ run_mem_step() {
         local output_file="./igprofMEM_${step_name}.gz"
         
         execute_with_timeout "${TIMEOUT}" "igprof MEM ${step_name}" \
-            igprof -mp -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            igprof -mp -t cmsRun -z -o "${output_file}" -- cmsRun "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         # Rename igprof files
         rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_${step_name}"
     else
@@ -440,8 +440,8 @@ run_mem_gc_step() {
         local output_file="./igprofMEM_GC_${step_name}.gz"
         
         execute_with_timeout "${TIMEOUT}" "igprof MEM_GC ${step_name}" \
-            igprof -mp -t cmsRunGlibC -z -o "${output_file}" -- cmsRunGlibC "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            igprof -mp -t cmsRunGlibC -z -o "${output_file}" -- cmsRunGlibC "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         # Rename igprof files for GlibC profiling
         rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_GC_${step_name}"
     else
@@ -463,8 +463,8 @@ run_gpu_igmp_step() {
         
         execute_with_timeout "${TIMEOUT}" "igprof GPU MEM ${step_name}" \
             igprof -mp -t cmsRunGlibC -z -o "${output_file}" -- \
-            cmsRunGlibC "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            cmsRunGlibC "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         # Rename output files
         rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_${step_name}"
     else
@@ -485,8 +485,8 @@ run_gpu_igpp_step() {
         
         execute_with_timeout "${TIMEOUT}" "igprof GPU CPU ${step_name}" \
             igprof -pp -d -t cmsRun -z -o "${output_file}" -- \
-            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            cmsRun "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         # Rename output files
         rename_profiling_files "IgProf*.gz" "IgProf" "igprofCPU_${step_name}"
     else
@@ -510,8 +510,8 @@ run_gpu_nsys_step() {
         execute_with_timeout "${TIMEOUT}" "nsys GPU ${step_name}" \
             nsys profile --kill=sigkill --output="${output_file}" --export=sqlite --stats=true \
             --trace=cuda,nvtx,osrt,openmp,mpi,oshmem,ucx --mpi-impl=openmpi --show-output=true \
-            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            cmsRun "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         # Generate statistics if profiling succeeded
         if [[ -f "${output_file}.nsys-rep" ]]; then
             log "Generating GPU statistics for ${step_name}"
@@ -534,8 +534,8 @@ run_mem_tc_step() {
         local output_file="./igprofMEM_TC_${step_name}.gz"
         
         execute_with_timeout "${TIMEOUT}" "igprof MEM_TC ${step_name}" \
-            igprof -mp -t cmsRunTC -z -o "${output_file}" -- cmsRunTC "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            igprof -mp -t cmsRunTC -z -o "${output_file}" -- cmsRunTC "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         # Rename igprof files for tcmalloc profiling
         rename_profiling_files "IgProf*.gz" "IgProf" "igprofMEM_TC_${step_name}"
     else
@@ -555,8 +555,8 @@ run_nvprof_step() {
         local output_file="${step_name}.nvprof"
         
         execute_with_timeout "${TIMEOUT}" "nvprof ${step_name}" \
-            nvprof -o "${output_file}" -s cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
-        
+            nvprof -o "${output_file}" -s cmsRun "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
+
         log "NVIDIA Profiler output saved to: ${output_file}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
@@ -574,8 +574,8 @@ run_timemem_step() {
         log "Running ${step_name} with TimeMemoryService profiling"
         
         execute_with_timeout "${TIMEOUT}" "TimeMemory ${step_name}" \
-            cmsRun "${config_file}" >& "${log_file}"
-        
+            cmsRun "${config_file}" 2>&1 | tee "${log_file}"
+
         log "TimeMemoryService profiling completed for ${step_name}"
         
         # Generate event size information if ROOT files exist
@@ -600,7 +600,7 @@ run_allocmon_step() {
         local step_module_alloc_log="${step_name}_${module_alloc_log}"
 
         execute_with_timeout "${TIMEOUT}" "AllocMonitor ${step_name}" \
-            env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+            env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
 
         # Copy relevant log content for module analysis (if needed)
         if [[ -f "${module_alloc_log}" ]]; then
@@ -663,7 +663,7 @@ run_jemal_step() {
         log "Running ${step_name} with jemalloc profiling"
         
         execute_with_timeout "${TIMEOUT}" "jemalloc ${step_name}" \
-            env MALLOC_CONF="${MALLOC_CONF}" cmsRunJEProf "${config_file}" -j "${job_report}" >& "${log_file}"
+            env MALLOC_CONF="${MALLOC_CONF}" cmsRunJEProf "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
         
         # Rename jemalloc files
         rename_profiling_files "jeprof.*.heap" "jeprof" "${step_name}_jeprof"
@@ -687,7 +687,7 @@ run_vtune_step() {
         execute_with_timeout "${TIMEOUT}" "VTune ${step_name}" \
             vtune -collect hotspots -r "${result_dir}" -data-limit=0 \
                 -knob enable-stack-collection=true -knob stack-size=4096 \
-                -knob sampling-mode=sw -- cmsRun "${config_file}" >& "${log_file/_/-}"
+                -knob sampling-mode=sw -- cmsRun "${config_file}" 2>&1 | tee "${log_file/_/-}"
         
         # Generate report
         vtune -report gprof-cc -r "${result_dir}" -format=csv \
@@ -713,7 +713,7 @@ run_fasttimer_step() {
         log "Running ${step_name} with FastTimer"
         
         execute_with_timeout "${TIMEOUT}" "FastTimer ${step_name}" \
-            cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+            cmsRun "${config_file}" -j "${job_report}" 2>&1 | tee "${log_file}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
