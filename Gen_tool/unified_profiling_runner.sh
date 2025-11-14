@@ -682,6 +682,7 @@ run_vtune_step() {
         log "Running ${step_name} with VTune profiling"
         local result_dir="r-${step_name}-${PROFILING_WORKFLOW}-hs"
         local output_csv="${step_name}-${PROFILING_WORKFLOW}.gprof-cc.csv"
+        local output_csv2="${step_name}-${PROFILING_WORKFLOW}.top-down.csv"
         
         # Run VTune collection
         execute_with_timeout "${TIMEOUT}" "VTune ${step_name}" \
@@ -692,11 +693,18 @@ run_vtune_step() {
         # Generate report
         vtune -report gprof-cc -r "${result_dir}" -format=csv \
             -csv-delimiter=semicolon -report-output "${output_csv}" || {
-            log_warn "Failed to generate VTune report for ${step_name}"
+            log_warn "Failed to generate VTune gprof-cc report for ${step_name}"
+        }
+        # Generate report
+        vtune -report top-down -r "${result_dir}" -format=csv \
+            -csv-delimiter=semicolon -report-output "${output_csv2}" || {
+            log_warn "Failed to generate VTune top-down report for ${step_name}"
         }
         
         # Compress the CSV
-        gzip "${output_csv}" || log_warn "Failed to compress VTune CSV for ${step_name}"
+        gzip "${output_csv}" || log_warn "Failed to compress VTune gprof-cc CSV for ${step_name}"
+         # Compress the CSV
+        gzip "${output_csv2}" || log_warn "Failed to compress VTune top-down CSV for ${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
