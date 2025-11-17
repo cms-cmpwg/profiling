@@ -697,6 +697,7 @@ run_vtune_step() {
         }
         # Generate report
         vtune -report top-down -r "${result_dir}" -format=csv \
+            -column="CPU time:total" -column="CPU time:self" -column="function" \
             -csv-delimiter=semicolon -report-output "${output_csv2}" || {
             log_warn "Failed to generate VTune top-down report for ${step_name}"
         }
