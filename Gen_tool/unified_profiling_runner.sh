@@ -102,7 +102,7 @@ setup_igprof_env() {
     export ROOT_INCLUDE_PATH
     
     # Set up TensorFlow environment for newer CMSSW versions
-    setup_tensorflow_env
+#    setup_tensorflow_env
     
     # Set environment variables for optimal performance
     export TF_ENABLE_ZENDNN_OPTS=1
@@ -162,7 +162,7 @@ setup_vtune_env() {
     validate_command "vtune" || return 1
     
     # Set up TensorFlow environment for VTune profiling
-    setup_tensorflow_env
+#    setup_tensorflow_env
     
     # Set environment variables for VTune
     export TF_ENABLE_ZENDNN_OPTS=1
@@ -199,7 +199,7 @@ setup_fasttimer_env() {
     log "Setting up FastTimer environment"
     
     # Set up TensorFlow environment
-    setup_tensorflow_env
+#    setup_tensorflow_env
     
     log "FastTimer environment configured"
 }
