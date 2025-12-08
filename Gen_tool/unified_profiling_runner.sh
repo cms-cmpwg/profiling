@@ -102,7 +102,7 @@ setup_igprof_env() {
     export ROOT_INCLUDE_PATH
     
     # Set up TensorFlow environment for newer CMSSW versions
-    setup_tensorflow_env
+#    setup_tensorflow_env
     
     # Set environment variables for optimal performance
     export TF_ENABLE_ZENDNN_OPTS=1
@@ -162,7 +162,7 @@ setup_vtune_env() {
     validate_command "vtune" || return 1
     
     # Set up TensorFlow environment for VTune profiling
-    setup_tensorflow_env
+#    setup_tensorflow_env
     
     # Set environment variables for VTune
     export TF_ENABLE_ZENDNN_OPTS=1
@@ -199,7 +199,7 @@ setup_fasttimer_env() {
     log "Setting up FastTimer environment"
     
     # Set up TensorFlow environment
-    setup_tensorflow_env
+#    setup_tensorflow_env
     
     log "FastTimer environment configured"
 }
@@ -682,6 +682,7 @@ run_vtune_step() {
         log "Running ${step_name} with VTune profiling"
         local result_dir="r-${step_name}-${PROFILING_WORKFLOW}-hs"
         local output_csv="${step_name}-${PROFILING_WORKFLOW}.gprof-cc.csv"
+        local output_csv2="${step_name}-${PROFILING_WORKFLOW}.top-down.csv"
         
         # Run VTune collection
         execute_with_timeout "${TIMEOUT}" "VTune ${step_name}" \
@@ -692,11 +693,19 @@ run_vtune_step() {
         # Generate report
         vtune -report gprof-cc -r "${result_dir}" -format=csv \
             -csv-delimiter=semicolon -report-output "${output_csv}" || {
-            log_warn "Failed to generate VTune report for ${step_name}"
+            log_warn "Failed to generate VTune gprof-cc report for ${step_name}"
+        }
+        # Generate report
+        vtune -report top-down -r "${result_dir}" -format=csv \
+            -column="CPU time:total" -column="CPU time:self" -column="function" -show-as=values \
+            -csv-delimiter=semicolon -report-output "${output_csv2}" || {
+            log_warn "Failed to generate VTune top-down report for ${step_name}"
         }
         
         # Compress the CSV
-        gzip "${output_csv}" || log_warn "Failed to compress VTune CSV for ${step_name}"
+        gzip "${output_csv}" || log_warn "Failed to compress VTune gprof-cc CSV for ${step_name}"
+         # Compress the CSV
+        gzip "${output_csv2}" || log_warn "Failed to compress VTune top-down CSV for ${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
