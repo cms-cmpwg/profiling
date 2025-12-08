@@ -135,7 +135,7 @@ validate_workflow() {
         return 0
     
     # Check with extended flags
-    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS} | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
+    elif [ $(runTheMatrix.py -n ${MATRIX_WHAT_FLAGS_EXTENDED} | grep -w "${workflow}" 2>/dev/null | wc -l) -gt 0 ]; then
         log "Workflow found in extended matrix"
         return 0
     fi
