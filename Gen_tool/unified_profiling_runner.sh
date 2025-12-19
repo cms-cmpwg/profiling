@@ -751,6 +751,7 @@ run_edmmodule_allocmonitor_analyze() {
 
 
             fi
+            gzip -f "${output_json}" || log_warn "Failed to compress output JSON for ${step_name}"
         else
             log_warn "JSON file not found for circles conversion: ${output_json}"
             return 1
