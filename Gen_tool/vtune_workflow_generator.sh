@@ -203,7 +203,7 @@ setup_vtune_workflow_parameters() {
     if [[ "X${NTHREADS:-}" == "X" ]]; then
         local ncpu
         ncpu=$(grep -c processor /proc/cpuinfo)
-        local local_nthreads=$((ncpu / 2))
+        local local_nthreads=$ncpu
         local local_events=$((local_nthreads * 10))
         export NTHREADS=$local_nthreads
         export EVENTS=$local_events
@@ -247,7 +247,7 @@ generate_vtune_workflow_configs() {
     # Local mode with dynamic CPU detection
     local ncpu
     ncpu=$(grep -c processor /proc/cpuinfo)
-    local local_nthreads=$((ncpu / 2))
+    local local_nthreads=$ncpu
     local local_events=$((local_nthreads * 10))
         
     matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}" --ibeos)
