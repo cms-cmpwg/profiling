@@ -243,20 +243,15 @@ generate_vtune_workflow_configs() {
     local matrix_cmd="runTheMatrix.py"
     local matrix_args=()
     
-    if [[ "X${WORKSPACE:-}" != "X" ]]; then
-        # Jenkins mode
-        matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}")
-        matrix_args+=(--command="--number=${EVENTS} --nThreads=${NTHREADS} --no_exec")
-    else
-        # Local mode with dynamic CPU detection
-        local ncpu
-        ncpu=$(grep -c processor /proc/cpuinfo)
-        local local_nthreads=$((ncpu / 2))
-        local local_events=$((local_nthreads * 10))
+    # Local mode with dynamic CPU detection
+    local ncpu
+    ncpu=$(grep -c processor /proc/cpuinfo)
+    local local_nthreads=$((ncpu / 2))
+    local local_events=$((local_nthreads * 10))
         
-        matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}" --ibeos)
-        matrix_args+=(--command="--number=${local_events} --nThreads=${local_nthreads} --no_exec")
-    fi
+    matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}" --ibeos)
+    matrix_args+=(--command="--number=${local_events} --nThreads=${local_nthreads} --no_exec")
+
     
     log "Running VTune matrix command: ${matrix_cmd} ${matrix_args[*]}"
     
