@@ -701,8 +701,8 @@ run_vtune_step() {
             -csv-delimiter=semicolon -report-output "${output_csv2}" || {
             log_warn "Failed to generate VTune top-down report for ${step_name}"
         }
-        local sorted_file="sorted_RES_CPU_${step_name}.txt"
-        python3 ${SCRIPT_DIR}/extract_children.py "${output_csv2}" > "${sorted_file}" || log_warn "Failed to extract children in VTune top-down report for ${step_name}"
+        local sorted_file="sorted_RES_CPU_${step_name}.html"
+        python3 ${SCRIPT_DIR}/extract_children.py "${output_csv2}" --html "${sorted_file}" || log_warn "Failed to extract children in VTune top-down report for ${step_name}"
         # Compress the CSV
         gzip "${output_csv}" || log_warn "Failed to compress VTune gprof-cc CSV for ${step_name}"
          # Compress the CSV
