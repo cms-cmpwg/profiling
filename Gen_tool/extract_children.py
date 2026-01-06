@@ -47,6 +47,13 @@ def get_total_cpu_time(filename):
     return 0.0
 
 
+def _safe_float(val):
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return float('-inf')
+
+
 def extract_immediate_children(filename, parent_function):
     """
     Extract all immediate children of a given parent function.
@@ -62,6 +69,7 @@ def extract_immediate_children(filename, parent_function):
     parent_indent = None
     found_parent = False
     parent_total_time = None
+    unknown_block_active = False
     
     with open(filename, 'r', encoding='utf-8') as f:
         # Skip the header lines
@@ -102,10 +110,23 @@ def extract_immediate_children(filename, parent_function):
             if found_parent and parent_indent is not None:
                 # Immediate children have exactly one more level of indentation
                 if indent == parent_indent + 1:
+                    # If this child is the Unknown placeholder, don't add it;
+                    # instead, activate a block to collect its immediate children.
+                    if full_function.strip() == "[Unknown stack frame(s)]":
+                        unknown_block_active = True
+                    else:
+                        children.append((full_function, total_time))
+                        unknown_block_active = False
+                # If we're inside an Unknown block, collect its immediate children
+                elif indent == parent_indent + 2 and unknown_block_active:
                     children.append((full_function, total_time))
-                # If we encounter a function at the same or lower level, we're done
+                # If we encounter a function at the same or lower level as the parent, we're done
                 elif indent <= parent_indent:
                     break
+                # If we encounter another sibling at the child level, toggle Unknown block appropriately
+                elif indent == parent_indent + 1:
+                    unknown_block_active = (full_function.strip() == "[Unknown stack frame(s)]")
+                # For deeper levels beyond immediate children of Unknown, ignore
     
     return children, parent_total_time
 
@@ -135,6 +156,9 @@ def main():
     if not children:
         print("No children found.")
         return
+    
+    # Sort by total time (descending)
+    children.sort(key=lambda item: _safe_float(item[1]), reverse=True)
     
     print(f"Found {len(children)} immediate children:\n")
     print("-" * 150)
