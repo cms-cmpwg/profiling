@@ -107,11 +107,12 @@ setup_workflow_parameters() {
     fi
     
     if [[ "X${NTHREADS:-}" == "X" ]]; then
-        export NTHREADS="${DEFAULT_NTHREADS}"
-    fi
-    
-    if [[ "X${EVENTS:-}" == "X" ]]; then
-        export EVENTS=$((NTHREADS * 10))
+        local ncpu
+        ncpu=$(grep -c processor /proc/cpuinfo)
+        local local_nthreads=$((ncpu / 2))
+        local local_events=$((local_nthreads * 10))
+        export NTHREADS=$local_nthreads
+        export EVENTS=$local_events
     fi
     
     log "Workflow parameters:"
