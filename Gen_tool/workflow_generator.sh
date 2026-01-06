@@ -345,7 +345,7 @@ generate_fasttimer_commands() {
         
         # Add AllocMonitor command
         
-            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --customise_commands \"process.options.numberOfThreads = 1\" --python_filename=step${step_num}_allocmon.py">> cmd_am.sh
+            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --python_filename=step${step_num}_allocmon.py">> cmd_am.sh
     done
     
     # Add EOS modifications for step2 in FastTimer and AllocMonitor
