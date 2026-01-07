@@ -54,6 +54,11 @@ def _safe_float(val):
         return float('-inf')
 
 
+def escape_html(text):
+    """Escape HTML special characters in text."""
+    return text.replace('<', '&lt;').replace('>', '&gt;')
+
+
 def extract_immediate_children(filename, parent_function):
     """
     Extract all immediate children of a given parent function.
@@ -154,12 +159,12 @@ def generate_html_table(children, parent_function, parent_total_time, total_cpu_
     html.append('        body { font-family: Arial, sans-serif; margin: 20px; }')
     html.append('        h1, h2 { color: #333; }')
     html.append('        .info { background-color: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 4px; }')
-    html.append('        table { border-collapse: collapse; width: 100%; margin: 20px 0; }')
+    html.append('        table { border-collapse: collapse; width: 100%; margin: 20px 0; table-layout: auto; }')
     html.append('        th { background-color: #4CAF50; color: white; padding: 12px; text-align: left; }')
     html.append('        td { padding: 10px; border-bottom: 1px solid #ddd; }')
     html.append('        tr:hover { background-color: #f5f5f5; }')
-    html.append('        .function-name { width: 400px; word-wrap: break-word; white-space: normal; }')
-    html.append('        .numeric { text-align: right; font-family: monospace; }')
+    html.append('        .function-name { width: auto; overflow-wrap: break-word; white-space: normal; }')
+    html.append('        .numeric { text-align: right; font-family: monospace; white-space: nowrap; }')
     html.append('    </style>')
     html.append('</head>')
     html.append('<body>')
@@ -179,17 +184,16 @@ def generate_html_table(children, parent_function, parent_total_time, total_cpu_
     html.append('<table>')
     html.append('    <thead>')
     html.append('        <tr>')
-    html.append('            <th class="function-name">Function</th>')
     html.append('            <th class="numeric">Total Time</th>')
     html.append('            <th class="numeric">% of Parent</th>')
     html.append('            <th class="numeric">% of Total</th>')
+    html.append('            <th class="function-name">Function</th>')
     html.append('        </tr>')
     html.append('    </thead>')
     html.append('    <tbody>')
     
     for full_function, total_time in children:
         html.append('        <tr>')
-        html.append(f'            <td class="function-name">{full_function}</td>')
         try:
             time_val = float(total_time)
             html.append(f'            <td class="numeric">{time_val:.6f}</td>')
@@ -205,10 +209,13 @@ def generate_html_table(children, parent_function, parent_total_time, total_cpu_
                 html.append(f'            <td class="numeric">{pct_total:.2f}%</td>')
             else:
                 html.append('            <td class="numeric">N/A</td>')
+            
+            html.append(f'            <td class="function-name">{escape_html(full_function)}</td>')
         except ValueError:
-            html.append(f'            <td class="numeric">{total_time}</td>')
+            html.append('            <td class="numeric">' + total_time + '</td>')
             html.append('            <td class="numeric">N/A</td>')
             html.append('            <td class="numeric">N/A</td>')
+            html.append(f'            <td class="function-name">{escape_html(full_function)}</td>')
         
         html.append('        </tr>')
     
