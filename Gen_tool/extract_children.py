@@ -136,14 +136,14 @@ def extract_immediate_children(filename, parent_function):
     return children, parent_total_time
 
 
-def generate_html_table(children, parent_function, parent_total_time, total_cpu_time):
+def generate_html_table(children, parent_functions, parent_total_time, total_cpu_time):
     """
     Generate an HTML table representation of the data.
     
     Args:
         children: List of (function_name, total_time) tuples
-        parent_function: The parent function name
-        parent_total_time: Total time of parent function
+        parent_functions: The parent function names
+        parent_total_time: Total time of parent functions
         total_cpu_time: Total CPU time
     
     Returns:
@@ -172,11 +172,11 @@ def generate_html_table(children, parent_function, parent_total_time, total_cpu_
     # Add title and info
     html.append('<h1>Function Profile Analysis</h1>')
     html.append(f'<div class="info">')
-    html.append(f'    <h2>Parent Function: {parent_function}</h2>')
+    html.append(f'    <h2>Parent Functions: {parent_functions}</h2>')
     html.append(f'    <p><strong>Total CPU Time:</strong> {total_cpu_time:.6f}</p>')
     if parent_total_time is not None:
         parent_percentage = (parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
-        html.append(f'    <p><strong>Parent Total Time:</strong> {parent_total_time:.6f} ({parent_percentage:.2f}% of total)</p>')
+        html.append(f'    <p><strong>Parents Total Time:</strong> {parent_total_time:.6f} ({parent_percentage:.2f}% of total)</p>')
     html.append(f'    <p><strong>Number of Children:</strong> {len(children)}</p>')
     html.append('</div>')
     
@@ -234,68 +234,63 @@ def main():
     
     filename = sys.argv[1]
     parent_functions = ["edm::stream::EDProducerAdaptorBase::doEvent", "edm::global::EDProducerBase::doEvent", "edm::one::EDProducerBase::doEvent","edm::limited::EDProducerBase::doEvent"]
-    
     # Check for HTML output option
     html_output = None
     if len(sys.argv) >= 4 and sys.argv[2] == "--html":
         html_output = sys.argv[3]
     
+    global_children = []
+    global_parent_total_time = 0.0
+    # Get total CPU time
+    total_cpu_time = get_total_cpu_time(filename)
+    print(f"Total CPU time: {total_cpu_time}\n")
+
     for parent_function in parent_functions:
         print(f"Extracting immediate children of: {parent_function}\n")
-        
-        # Get total CPU time
-        total_cpu_time = get_total_cpu_time(filename)
-        print(f"Total CPU time: {total_cpu_time}\n")
-    
         children, parent_total_time = extract_immediate_children(filename, parent_function)
+        global_children.extend(children)
+        global_parent_total_time += parent_total_time if parent_total_time is not None else 0.0
     
-        if parent_total_time is not None:
-            parent_percentage = (parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
-            print(f"{parent_function} total time: {parent_total_time:.6f} ({parent_percentage:.2f}% of total)\n")
-        else:
-            print(f"{parent_function} total time: N/A (function not found)\n")
+    if global_parent_total_time is not None:
+        parent_percentage = (global_parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
+        print(f"{parent_functions} total time: {global_parent_total_time:.6f} ({parent_percentage:.2f}% of total)\n")
+    else:
+        print(f"{parent_functions} total time: N/A (function not found)\n")
     
-        if not children:
-            print("No children found.")
-            continue
     
-        # Sort by total time (descending)
-        children.sort(key=lambda item: _safe_float(item[1]), reverse=True)
-        print(f"Found {len(children)} immediate children:\n")
-        print("-" * 150)
-        print(f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Function':<90}")
-        print("-" * 150)
+    # Sort by total time (descending)
+    global_children.sort(key=lambda item: _safe_float(item[1]), reverse=True)
+    print(f"Found {len(global_children)} immediate children:\n")
+    print("-" * 150)
+    print(f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Function':<90}")
+    print("-" * 150)
     
-        for full_function, total_time in children:
-            try:
-                time_val = float(total_time)
-                if parent_total_time and parent_total_time > 0:
-                    pct_parent = time_val / parent_total_time * 100
-                    pct_parent_str = f"{pct_parent:>9.2f}%"
-                else:
-                    pct_parent_str = "N/A"
-                if total_cpu_time > 0:
-                    pct_total = time_val / total_cpu_time * 100
-                    pct_total_str = f"{pct_total:>9.2f}%"
-                else:
-                    pct_total_str = "N/A"
-                print(f"{time_val:>12.6f} {pct_parent_str:>15} {pct_total_str:>15} {full_function:<90}")
-            except ValueError:
-                print(f"{total_time:>12} {'N/A':>15} {'N/A':>15} {full_function:<90}")
+    for full_function, total_time in global_children:
+        try:
+            time_val = float(total_time)
+            if global_parent_total_time and global_parent_total_time > 0:
+                pct_parent = time_val / global_parent_total_time * 100
+                pct_parent_str = f"{pct_parent:>9.2f}%"
+            else:
+                pct_parent_str = "N/A"
+            if total_cpu_time > 0:
+                pct_total = time_val / total_cpu_time * 100
+                pct_total_str = f"{pct_total:>9.2f}%"
+            else:
+                pct_total_str = "N/A"
+            print(f"{time_val:>12.6f} {pct_parent_str:>15} {pct_total_str:>15} {full_function:<90}")
+        except ValueError:
+            print(f"{total_time:>12} {'N/A':>15} {'N/A':>15} {full_function:<90}")
     
-        print("-" * 150)
-        print(f"\nTotal: {len(children)} functions")
-        print("\n")
+    print("-" * 150)
+    print(f"\nTotal: {len(global_children)} functions")
+    print("\n")
     # Generate HTML output if requested
     if html_output:
-        for parent_function in parent_functions:
-            children, parent_total_time = extract_immediate_children(filename, parent_function)
-            if parent_total_time is not None:
-                parent_percentage = (parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
-            html_content = generate_html_table(children, parent_function, parent_total_time, total_cpu_time)
-            with open(html_output, 'a', encoding='utf-8') as f:
-                f.write(html_content)
-            print(f"HTML table appended to: {html_output}\n")
+        html_content = generate_html_table(global_children, parent_functions, global_parent_total_time, total_cpu_time)
+        with open(html_output, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+            print(f"HTML table written to: {html_output}\n")
         return
     
 
