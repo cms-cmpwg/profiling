@@ -681,8 +681,7 @@ run_vtune_step() {
     if validate_file "${config_file}"; then
         log "Running ${step_name} with VTune profiling"
         local result_dir="r-${step_name}-${PROFILING_WORKFLOW}-hs"
-        local output_csv="${step_name}-${PROFILING_WORKFLOW}.gprof-cc.csv"
-        local output_csv2="${step_name}-${PROFILING_WORKFLOW}.top-down.csv"
+        local output_csv="${step_name}-${PROFILING_WORKFLOW}.top-down.csv"
         
         # Run VTune collection
         execute_with_timeout "${TIMEOUT}" "VTune ${step_name}" \
@@ -690,22 +689,15 @@ run_vtune_step() {
                 -knob enable-stack-collection=true -knob stack-size=4096 \
                 -knob sampling-mode=sw -- cmsRun "${config_file}" 2>&1 | tee "${log_file/_/-}"
         
-        # Generate report
-        vtune -report gprof-cc -r "${result_dir}" -format=csv \
-            -csv-delimiter=semicolon -report-output "${output_csv}" || {
-            log_warn "Failed to generate VTune gprof-cc report for ${step_name}"
-        }
-        # Generate report
+        # Generate top-down report
         vtune -report top-down -r "${result_dir}" -format=csv \
             -column="CPU time:total" -column="CPU time:self" -column="function" -show-as=values \
-            -csv-delimiter=semicolon -report-output "${output_csv2}" || {
+            -csv-delimiter=semicolon -report-output "${output_csv}" || {
             log_warn "Failed to generate VTune top-down report for ${step_name}"
         }
         local sorted_file="sorted_RES_CPU_${step_name}.html"
-        python3 ${SCRIPT_DIR}/extract_children.py "${output_csv2}" --html "${sorted_file}" || log_warn "Failed to extract children in VTune top-down report for ${step_name}"
+        python3 ${SCRIPT_DIR}/extract_children.py "${output_csv}" --html "${sorted_file}" || log_warn "Failed to extract children in VTune top-down report for ${step_name}"
         # Compress the CSV
-        gzip "${output_csv}" || log_warn "Failed to compress VTune gprof-cc CSV for ${step_name}"
-         # Compress the CSV
         gzip "${output_csv2}" || log_warn "Failed to compress VTune top-down CSV for ${step_name}"
     else
         log_warn "Missing ${config_file} for ${step_name}"
