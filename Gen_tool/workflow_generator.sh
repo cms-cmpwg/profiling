@@ -29,6 +29,7 @@ readonly CMD_FILES=(
     "cmd_ts.sh"     # TimeMemory
     "cmd_je.sh"     # JeProf
     "cmd_am.sh"     # AllocMonitor
+    "cmd_eam.sh"    # EventAllocMonitor
 )
 
 #==============================================================================
@@ -315,7 +316,7 @@ EOF
 add_step2_modifications() {
     log "Adding step2 modifications for EOS access"
     
-    for cmd_file in cmd_ts.sh cmd_ig.sh cmd_je.sh cmd_ft.sh cmd_am.sh; do
+    for cmd_file in cmd_ts.sh cmd_ig.sh cmd_je.sh cmd_ft.sh cmd_am.sh cmd_eam; do
         echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_*.py" >> "${cmd_file}"
     done
 }
@@ -340,11 +341,15 @@ generate_fasttimer_commands() {
         # Add AllocMonitor command
         
             echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --python_filename=step${step_num}_allocmon.py">> cmd_am.sh
+        
+        # Add EventAllocMonitor command
+        
+            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleEventAllocMonitor.customise --python_filename=step${step_num}_eventallocmon.py">> cmd_eam.sh
     done
     
     # Add EOS modifications for step2 in FastTimer and AllocMonitor
     if [[ "${is_rehlt_workflow}" == "false" ]]; then
-        for cmd_file in cmd_ft.sh cmd_am.sh; do
+        for cmd_file in cmd_ft.sh cmd_am.sh cmd_eam.sh; do
             echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_*.py" >> "${cmd_file}"
         done
     fi

@@ -34,6 +34,7 @@ declare -A profiling_commands=(
     ["nvprof"]="nvprof -o"
     ["timemem"]="cmsRun"
     ["allocmon"]="edmModuleAllocMonitoryAnalyze.py -j"
+    ["eventallocmon"]="edmModuleAllocMonitoryAnalyze.py -j"
     ["vtune"]="amplxe-cl -collect hotspots -r"
     ["jemal"]="igprof -mp -t cmsRun -z"
     ["fasttimer"]="cmsRun"
@@ -51,6 +52,7 @@ declare -A DEFAULT_WORKFLOWS=(
     ["nvprof"]="13034.21"
     ["timemem"]="13034.21"
     ["allocmon"]="13034.21"
+    ["eventallocmon"]="13034.21"
     ["vtune"]="13034.21"
     ["jemal"]="13034.21"
     ["fasttimer"]="13034.21"
@@ -68,6 +70,7 @@ declare -A setup_functions=(
     ["nvprof"]="setup_nvprof_env"
     ["timemem"]="setup_timemem_env"
     ["allocmon"]="setup_allocmon_env"
+    ["eventallocmon"]="setup_eventallocmon_env"
     ["vtune"]="setup_vtune_env"
     ["jemal"]="setup_igprof_env"
     ["fasttimer"]="setup_fasttimer_env"
@@ -230,6 +233,12 @@ setup_allocmon_env() {
     log "AllocMonitor environment configured"
 }
 
+setup_eventallocmon_env() {
+    log "Setting up EventAllocMonitor environment"
+    # EventAllocMonitor requires edmEventModuleAllocJsonToCircles.py for post-processing
+    #validate_command "edmEventModuleAllocJsonToCircles.py" || { log_error "edmEventModuleAllocJsonToCircles.py not found"; return 1; }
+    log "EventAllocMonitor environment configured"
+}
 #==============================================================================
 # Profiling Functions
 #==============================================================================
@@ -256,6 +265,7 @@ run_profiling_steps() {
         "gpu_nsys") cmd_file="cmd_nsys.sh" ;;
         "nvprof") cmd_file="cmd_np.sh" ;;
         "allocmon") cmd_file="cmd_am.sh" ;;
+        "eventallocmon") cmd_file="cmd_eam.sh" ;;
         *) 
             log_error "No command file mapping for profiling type: ${profiling_type}"
             return 1
@@ -354,6 +364,9 @@ run_step() {
         "allocmon")
             run_allocmon_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
             ;;
+        "eventallocmon")
+            run_eventallocmon_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
+            ;;
         "jemal")
             run_jemal_step "${step_name}" "${config_file}" "${log_file}" "${job_report}"
             ;;
@@ -382,8 +395,9 @@ get_config_suffix() {
         "gpu_nsys") echo "gpu_nvprof" ;;
         "nvprof") echo "nvprof" ;;
         "allocmon") echo "allocmon" ;;
+        "eventallocmon") echo "eventallocmon" ;;
         "fasttimer") echo "fasttimer" ;;
-        *) echo "igprof" ;;
+        *) echo "unknown" ;;
     esac
 }
 
@@ -634,6 +648,56 @@ run_allocmon_step() {
         return 1
     fi
 }
+
+run_eventallocmon_step() {
+    local step_name=$1
+    local config_file=$2
+    local log_file=$3
+    local job_report=$4
+    
+    if validate_file "${config_file}"; then
+        log "Running ${step_name} with EventAllocMonitor profiling"
+        
+        # Create moduleEventAllocMonitor log for analysis
+        local module_alloc_log="moduleEventAllocMonitor.log"
+        local step_module_alloc_log="${step_name}_${module_alloc_log}"
+
+        execute_with_timeout "${TIMEOUT}" "EventAllocMonitor ${step_name}" \
+            env LD_PRELOAD=libPerfToolsAllocMonitorPreload.so cmsRun "${config_file}" -j "${job_report}" >& "${log_file}"
+
+        # Copy relevant log content for module analysis (if needed)
+        if [[ -f "${module_alloc_log}" ]]; then
+            cp "${module_alloc_log}" "${step_module_alloc_log}"
+        fi
+
+        log "EventAllocMonitor profiling completed for ${step_name}"
+        
+        # Run edmModuleEventAllocMonitorAnalyze post-processing
+        #run_edmmodule_eventallocmonitor_analyze "${step_name}"
+
+        # Check for EventAllocMonitor output files
+        if ls *${module_alloc_log} >/dev/null 2>&1; then
+            log "EventAllocMonitor output files generated:"
+            for file in *${module_alloc_log}; do
+                log "  - ${file}"
+            done
+        fi
+
+        # Check for module analysis output
+        #if [[ -f "${step_name}_moduleEventAllocMonitor.json" ]]; then
+        #    log "Module EventAllocMonitor analysis completed: ${step_name}_moduleEventAllocMonitor.json"
+        #fi
+
+        # Check for circles analysis output
+        #if [[ -f "${step_name}_moduleEventAllocMonitor.circles.json" ]]; then
+        #    log "Module EventAllocMonitor circles analysis completed: ${step_name}_moduleEventAllocMonitor.circles.json"
+        #fi
+    else
+        log_warn "Missing ${config_file} for ${step_name}"
+        return 1
+    fi
+}
+
 
 generate_event_sizes() {
     local step_name=$1
