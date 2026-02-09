@@ -235,8 +235,8 @@ setup_allocmon_env() {
 
 setup_eventallocmon_env() {
     log "Setting up EventAllocMonitor environment"
-    # EventAllocMonitor requires edmEventModuleAllocJsonToCircles.py for post-processing
-    #validate_command "edmEventModuleAllocJsonToCircles.py" || { log_error "edmEventModuleAllocJsonToCircles.py not found"; return 1; }
+    # EventAllocMonitor requires edmEventModuleMonitorAnalyze.py for post-processing
+    validate_command "edmEventModuleMonitorAnalyze.py" || { log_error "edmEventModuleMonitorAnalyze.py not found"; return 1; }
     log "EventAllocMonitor environment configured"
 }
 #==============================================================================
@@ -673,7 +673,7 @@ run_eventallocmon_step() {
         log "EventAllocMonitor profiling completed for ${step_name}"
         
         # Run edmModuleEventAllocMonitorAnalyze post-processing
-        #run_edmmodule_eventallocmonitor_analyze "${step_name}"
+        run_edmmodule_eventallocmonitor_analyze "${step_name}"
 
         # Check for EventAllocMonitor output files
         if ls *${module_alloc_log} >/dev/null 2>&1; then
@@ -684,14 +684,10 @@ run_eventallocmon_step() {
         fi
 
         # Check for module analysis output
-        #if [[ -f "${step_name}_moduleEventAllocMonitor.json" ]]; then
-        #    log "Module EventAllocMonitor analysis completed: ${step_name}_moduleEventAllocMonitor.json"
-        #fi
+        if [[ -f "${step_name}_moduleEventAllocMonitor.log" ]]; then
+            log "Module EventAllocMonitor analysis completed: ${step_name}_moduleEventAllocMonitor.log"
+        fi
 
-        # Check for circles analysis output
-        #if [[ -f "${step_name}_moduleEventAllocMonitor.circles.json" ]]; then
-        #    log "Module EventAllocMonitor circles analysis completed: ${step_name}_moduleEventAllocMonitor.circles.json"
-        #fi
     else
         log_warn "Missing ${config_file} for ${step_name}"
         return 1
@@ -824,6 +820,29 @@ run_edmmodule_allocmonitor_analyze() {
         fi
     else
         log_warn "AllocMonitor log file not found: ${input_log}"
+        return 1
+    fi
+}
+
+# Run edmModuleEventAllocMonitorAnalyze for EventAllocMonitor post-processing
+run_edmmodule_eventallocmonitor_analyze() {
+    local step_name=$1
+    local input_log="${step_name}_moduleEventAllocMonitor.log"
+    local output_txt="${step_name}_moduleEventAllocMonitor.txt"
+
+    if [[ -f "${input_log}" ]]; then
+        log "Running edmModuleEventAllocMonitorAnalyze for ${step_name}"
+
+        # Run without execute_with_timeout to avoid log messages in JSON output
+        if timeout 300 edmModuleEventAllocMonitorAnalyze.py --grew --retained  --tempSize --nTemp --eventData  --csv "${input_log}" > "${output_txt}"; then
+            log "EventAllocMonitor analysis output saved to: ${output_txt}"
+        else
+            log_warn "Failed to run edmModuleEventAllocMonitorAnalyze for ${step_name}"
+            return 1
+        fi
+
+    else
+        log_warn "EventAllocMonitor log file not found: ${input_log}"
         return 1
     fi
 }
