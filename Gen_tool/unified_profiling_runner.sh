@@ -34,7 +34,7 @@ declare -A profiling_commands=(
     ["nvprof"]="nvprof -o"
     ["timemem"]="cmsRun"
     ["allocmon"]="edmModuleAllocMonitoryAnalyze.py -j"
-    ["eventallocmon"]="edmModuleAllocMonitoryAnalyze.py -j"
+    ["eventallocmon"]="edmModuleEventAllocMonitorAnalyze.py --grew --retained --product --tempSize --nTemp --eventData  --csv"
     ["vtune"]="amplxe-cl -collect hotspots -r"
     ["jemal"]="igprof -mp -t cmsRun -z"
     ["fasttimer"]="cmsRun"
@@ -234,10 +234,10 @@ setup_allocmon_env() {
 }
 
 setup_eventallocmon_env() {
-    log "Setting up EventAllocMonitor environment"
-    # EventAllocMonitor requires edmEventModuleMonitorAnalyze.py for post-processing
-    validate_command "edmEventModuleMonitorAnalyze.py" || { log_error "edmEventModuleMonitorAnalyze.py not found"; return 1; }
-    log "EventAllocMonitor environment configured"
+    log "Setting up ModuleEventAllocMonitor environment"
+    # EventAllocMonitor requires edmModuleEventAllocMonitorAnalyze.py for post-processing
+    validate_command "edmModuleEventAllocMonitorAnalyze.py" || { log_error "edmModuleEventAllocMonitorAnalyze.py not found"; return 1; }
+    log "ModuleEventAllocMonitor environment configured"
 }
 #==============================================================================
 # Profiling Functions
@@ -842,7 +842,7 @@ run_edmmodule_eventallocmonitor_analyze() {
         fi
 
     else
-        log_warn "EventAllocMonitor log file not found: ${input_log}"
+        log_warn "ModuleEventAllocMonitor log file not found: ${input_log}"
         return 1
     fi
 }
