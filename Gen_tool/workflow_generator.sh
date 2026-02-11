@@ -316,7 +316,7 @@ EOF
 add_step2_modifications() {
     log "Adding step2 modifications for EOS access"
     
-    for cmd_file in cmd_ts.sh cmd_ig.sh cmd_je.sh cmd_ft.sh cmd_am.sh cmd_eam; do
+    for cmd_file in cmd_ts.sh cmd_ig.sh cmd_je.sh cmd_ft.sh cmd_am.sh cmd_eam.sh; do
         echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_*.py" >> "${cmd_file}"
     done
 }
