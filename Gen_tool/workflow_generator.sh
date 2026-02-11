@@ -344,7 +344,7 @@ generate_fasttimer_commands() {
         
         # Add EventAllocMonitor command
         
-            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleEventAllocMonitor.customise --python_filename=step${step_num}_eventallocmon.py">> cmd_eam.sh
+            echo "${step_cmd} --numberEvents=10 --numberThreads=1 --customise PerfTools/AllocMonitor/ModuleEventAllocMonitor.customise --python_filename=step${step_num}_eventallocmon.py">> cmd_eam.sh
     done
     
     # Add EOS modifications for step2 in FastTimer and AllocMonitor
