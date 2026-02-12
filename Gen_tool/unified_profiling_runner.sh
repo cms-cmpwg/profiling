@@ -310,12 +310,13 @@ run_profiling_steps() {
         run_step "${profiling_type}" "step3" && ((steps_run++))
         run_step "${profiling_type}" "step4" && ((steps_run++))
         
-        # Check for step5
-        if ls step5_*.py &>/dev/null; then
-            run_step "${profiling_type}" "step5" && ((steps_run++))
-        else
-            log "No step5 in workflow ${PROFILING_WORKFLOW}"
-        fi
+        for step in 5 6 7 8 9 10 11;do
+            if ls step${step}_*.py &>/dev/null; then
+              run_step "${profiling_type}" "step${step}" && ((steps_run++))
+            else
+                log "No step${step} in workflow ${PROFILING_WORKFLOW}"
+            fi
+        done
     fi
     
     log "Completed ${steps_run} profiling steps"
@@ -867,7 +868,7 @@ run_igprof_post_processing() {
 
     log "Running igprof post-processing for ${profiling_type}"
     # Process all igprof .gz files
-    for gz_file in "${gzip_names}"; do
+    for gz_file in ${gzip_names}; do
         if [[ -f "${gz_file}" ]]; then
             log "Processing igprof file: ${gz_file}"
             
