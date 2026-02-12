@@ -260,9 +260,9 @@ generate_command_files() {
     done
     
     # Check if this is a reHLT workflow
-    local is_rehlt_workflow=false
-    if [[ "${PROFILING_WORKFLOW}" =~ 136\. ]] || [[ "${PROFILING_WORKFLOW}" =~ 141\. ]]; then
-        is_rehlt_workflow=true
+    local step1_is_dasquery=false
+    if [[ "${workflow_steps[0]}" =~ step2 ]]; then
+        step1_is_dasquery=true
         log "Detected reHLT workflow, adjusting step numbering"
     fi
     
@@ -271,7 +271,7 @@ generate_command_files() {
         local step_cmd="${workflow_steps[step_idx]}"
         local step_number
         
-        if [[ "${is_rehlt_workflow}" == "true" ]]; then
+        if [[ "${step1_is_dasquery}" == "true" ]]; then
             step_number=$((step_idx + 2))
         else
             step_number=$((step_idx + 1))
@@ -280,13 +280,13 @@ generate_command_files() {
         generate_step_commands "${step_cmd}" "${step_number}"
     done
     
-    # Add special handling for step2 in non-reHLT workflows
-    if [[ "${is_rehlt_workflow}" == "false" ]]; then
+    # Add special handling when step2 is DIGI step for EOS access
+    if [[ "${workflow_steps[1]}" =~ DIGI ]]; then
         add_step2_modifications
     fi
     
     # Generate FastTimer commands
-    generate_fasttimer_commands "${is_rehlt_workflow}"
+    generate_fasttimer_commands "${step1_is_dasquery}"
     
     log_success "All command files generated successfully"
 }
@@ -322,12 +322,12 @@ add_step2_modifications() {
 }
 
 generate_fasttimer_commands() {
-    local is_rehlt_workflow=$1
+    local step1_is_dasquery=$1
     
     log "Generating FastTimer commands"
     
     local step_offset=1
-    if [[ "${is_rehlt_workflow}" == "true" ]]; then
+    if [[ "${step1_is_dasquery}" == "true" ]]; then
         step_offset=2
     fi
     
@@ -345,13 +345,7 @@ generate_fasttimer_commands() {
         # Add EventAllocMonitor command
             echo "${step_cmd} --number=10 --nThreads=1 --customise PerfTools/AllocMonitor/ModuleEventAllocMonitor.customise --python_filename=step${step_num}_eventallocmon.py">> cmd_eam.sh
     done
-    
-    # Add EOS modifications for step2 in FastTimer and AllocMonitor
-    if [[ "${is_rehlt_workflow}" == "false" ]]; then
-        for cmd_file in cmd_ft.sh cmd_am.sh cmd_eam.sh; do
-            echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_*.py" >> "${cmd_file}"
-        done
-    fi
+
 }
 
 #==============================================================================
