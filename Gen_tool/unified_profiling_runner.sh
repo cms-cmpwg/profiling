@@ -286,23 +286,13 @@ run_profiling_steps() {
     # Run profiling steps
     local steps_run=0
     
-    # Special handling for mem_gc, mem_tc, and gpu_igprof profiling types
-    if [[ "${profiling_type}" == "mem_gc" || "${profiling_type}" == "mem_tc" || "${profiling_type}" == "gpu_igmp" || "${profiling_type}" == "gpu_igpp" ]]; then
-        # GlibC, tcmalloc memory profiling, and GPU IgProf have specific step requirements
-        if [[ "X${RUNALLSTEPS:-}" != "X" ]]; then
-            run_step "${profiling_type}" "step1" && ((steps_run++))
-            run_step "${profiling_type}" "step2" && ((steps_run++))
-        fi
-        
-        # Always run step3 for these profiling types
-        run_step "${profiling_type}" "step3" && ((steps_run++))
-        
-        # Step4 and Step5 are commented out in original mem_GC, mem_TC, and GPU IgProf scripts
-        log "Note: step4 and step5 are disabled for ${profiling_type} profiling type"
-    else
         # Standard step execution for other profiling types
         if [[ "X${RUNALLSTEPS:-}" != "X" ]]; then
-            run_step "${profiling_type}" "step1" && ((steps_run++))
+            if ls step1_*.py &>/dev/null; then
+                run_step "${profiling_type}" "step1" && ((steps_run++))
+            else
+                log "No step1 in workflow ${PROFILING_WORKFLOW}"
+            fi
             run_step "${profiling_type}" "step2" && ((steps_run++))
         fi
         
@@ -317,7 +307,6 @@ run_profiling_steps() {
                 log "No step${step} in workflow ${PROFILING_WORKFLOW}"
             fi
         done
-    fi
     
     log "Completed ${steps_run} profiling steps"
     
@@ -868,7 +857,7 @@ run_igprof_post_processing() {
 
     log "Running igprof post-processing for ${profiling_type}"
     # Process all igprof .gz files
-    for gz_file in ${gzip_names}; do
+    for gz_file in "${gzip_names[@]}"; do
         if [[ -f "${gz_file}" ]]; then
             log "Processing igprof file: ${gz_file}"
             
