@@ -340,10 +340,10 @@ generate_fasttimer_commands() {
         
         # Add AllocMonitor command
         
-            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --python_filename=step${step_num}_allocmon.py">> cmd_am.sh
+            echo "${step_cmd} --customise PerfTools/AllocMonitor/ModuleAllocMonitor.customise --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_allocmon.py" >> cmd_am.sh
         
         # Add EventAllocMonitor command
-            echo "${step_cmd} --number=10 --nThreads=1 --customise PerfTools/AllocMonitor/ModuleEventAllocMonitor.customise --python_filename=step${step_num}_eventallocmon.py">> cmd_eam.sh
+            echo "${step_cmd} --number=10 --nThreads=1 --customise PerfTools/AllocMonitor/ModuleEventAllocMonitor.customise --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_eventallocmon.py">> cmd_eam.sh
     done
 
 }
