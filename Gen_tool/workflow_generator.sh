@@ -298,7 +298,7 @@ generate_step_commands() {
     log_debug "Generating commands for step ${step_num}"
     
     # TimeMemory command
-        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
+        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
 
     # IgProf command
         echo "${base_cmd} --customise=Validation/Performance/IgProfInfo.customise --customise_commands \"$(get_output_customizations);process.options.numberOfThreads = 1;process.add_(cms.Service('ZombieKillerService', secondsBetweenChecks = cms.untracked.uint32(10), numberOfAllowedFailedChecksInARow = cms.untracked.uint32(6)))\" --python_filename=step${step_num}_igprof.py" >> cmd_ig.sh
