@@ -17,6 +17,16 @@ if [[ -f "${SCRIPT_DIR}/common_utils.sh" ]]; then
     
     # Set profiling type and call unified runner
     export PROFILING_TYPE="eventallocmon"
+    # because eventallocmon is very expensive in time and memory
+    # we override the number of events and threads to use
+    local ncpu
+    local events_per_thread=10
+    ncpu=$(grep -c processor /proc/cpuinfo)
+    local local_nthreads=$ncpu
+    local local_events=$((local_nthreads * $events_per_thread))
+    export NTHREADS=$local_nthreads
+    export EVENTS=$local_events
+
     exec "${SCRIPT_DIR}/unified_profiling_runner.sh" "eventallocmon" "$@"
 else
     echo "Error: common_utils.sh not found"
