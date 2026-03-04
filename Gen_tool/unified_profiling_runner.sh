@@ -162,7 +162,6 @@ setup_gpu_nsys_env() {
 
 setup_vtune_env() {
     log "Setting up VTune environment"
-    validate_command "vtune" || return 1
     
     # Set up TensorFlow environment for VTune profiling
 #    setup_tensorflow_env
@@ -172,9 +171,8 @@ setup_vtune_env() {
     export OMP_NUM_THREADS=1
     export MALLOC_CONF=zero:true
     export TF_ENABLE_ONEDNN_OPTS=0
-    source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2025/vtune/latest/vtune-vars.sh || {
-        log_warn "Failed to source VTune environment variables, continuing anyway"
-    }
+    source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2025/vtune/latest/vtune-vars.sh 
+    validate_command "vtune" || return 1
     log "VTune environment configured"
 }
 
