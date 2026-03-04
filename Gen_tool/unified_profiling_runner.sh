@@ -172,7 +172,9 @@ setup_vtune_env() {
     export OMP_NUM_THREADS=1
     export MALLOC_CONF=zero:true
     export TF_ENABLE_ONEDNN_OPTS=0
-    
+    source /cvmfs/projects.cern.ch/intelsw/oneAPI/linux/x86_64/2025/vtune/latest/vtune-vars.sh || {
+        log_warn "Failed to source VTune environment variables, continuing anyway"
+    }
     log "VTune environment configured"
 }
 
