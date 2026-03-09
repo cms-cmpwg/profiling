@@ -108,14 +108,15 @@ setup_workflow_parameters() {
     fi
     
     if [[ "X${NTHREADS:-}" == "X" ]]; then
-        local ncpu
-        ncpu=$(grep -c processor /proc/cpuinfo)
-        local local_nthreads=$ncpu
+#        local ncpu
+#        ncpu=$(grep -c processor /proc/cpuinfo)
+#       local local_nthreads=$ncpu
+        local local_nthreads=1
         local local_events=$((local_nthreads * 10))
         export NTHREADS=$local_nthreads
-        if [[ "X${EVENTS:-}" == "X" ]]; then
+#        if [[ "X${EVENTS:-}" == "X" ]]; then
             export EVENTS=$local_events
-        fi
+#        fi
     fi
     
     log "Workflow parameters:"
@@ -166,9 +167,10 @@ generate_workflow_configs() {
     local matrix_cmd="runTheMatrix.py"
     local matrix_args=()
     
-    local ncpu
-    ncpu=$(grep -c processor /proc/cpuinfo)
-    local local_nthreads=$ncpu
+#    local ncpu
+#    ncpu=$(grep -c processor /proc/cpuinfo)
+#    local local_nthreads=$ncpu
+    local local_nthreads=1
     local local_events=$((local_nthreads * 10))
         
     matrix_args+=(${MATRIX_WHAT_FLAGS} -l "${workflow}" --ibeos)
