@@ -347,17 +347,45 @@ execute_with_timeout() {
     local description=$2
     shift 2
     local cmd=("$@")
+    local timeout_cmd=()
     
     log "Executing (timeout ${timeout_duration}s): ${description}"
     log_debug "Command: ${cmd[*]}"
+
+    if command -v timeout >/dev/null 2>&1; then
+        timeout_cmd=(timeout "${timeout_duration}")
+    elif command -v gtimeout >/dev/null 2>&1; then
+        timeout_cmd=(gtimeout "${timeout_duration}")
+    else
+        log_warn "Neither timeout nor gtimeout found; running without timeout: ${description}"
+    fi
     
-    if timeout "${timeout_duration}" "${cmd[@]}"; then
+    if [[ ${#timeout_cmd[@]} -gt 0 ]]; then
+        "${timeout_cmd[@]}" "${cmd[@]}"
+    else
+        "${cmd[@]}"
+    fi
+
+    local exit_code=$?
+
+    if [[ ${exit_code} -eq 0 ]]; then
         log_success "Command completed: ${description}"
         return 0
     else
-        local exit_code=$?
         if [[ ${exit_code} -eq 124 ]]; then
             log_error "Command timed out after ${timeout_duration}s: ${description}"
+        elif [[ ${exit_code} -eq 139 ]]; then
+            log_error "Command crashed with segmentation fault (SIGSEGV): ${description}"
+        elif [[ ${exit_code} -gt 128 ]]; then
+            local signal_number=$((exit_code - 128))
+            local signal_name
+            signal_name=$(kill -l "${signal_number}" 2>/dev/null || true)
+
+            if [[ -n "${signal_name}" ]]; then
+                log_error "Command terminated by signal ${signal_name} (${signal_number}): ${description}"
+            else
+                log_error "Command terminated by signal ${signal_number}: ${description}"
+            fi
         else
             log_error "Command failed with exit code ${exit_code}: ${description}"
         fi

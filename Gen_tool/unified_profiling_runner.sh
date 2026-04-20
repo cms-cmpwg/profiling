@@ -5,6 +5,7 @@
 
 #
 # Usage: ./unified_profiling_runner.sh [PROFILING_TYPE] [CMSSW_VERSION]
+#        ./unified_profiling_runner.sh --self-test-segv
 #
 # PROFILING_TYPE can be: cpu, mem, mem_gc, mem_tc, gpu, gpu_igmp, gpu_igpp, gpu_nsys, nvprof, timemem, allocmon, vtune, jemal, fasttimer
 #
@@ -16,6 +17,37 @@ source "${SCRIPT_DIR}/common_utils.sh"
 
 # Set up error handling
 setup_error_handling
+
+run_selftest_segv() {
+    print_header "${BASH_SOURCE[0]}" "Unified CMS Profiling Runner - SIGSEGV Self-Test"
+    log "Running SIGSEGV handling self-test"
+
+    set +e
+    execute_with_timeout 30 "SIGSEGV self-test" bash -c 'kill -SEGV $$'
+    local exit_code=$?
+    set -e
+
+    if [[ ${exit_code} -eq 0 ]]; then
+        log_error "Self-test failed: expected SIGSEGV, but command succeeded"
+        print_footer 1
+        return 1
+    fi
+
+    if [[ ${exit_code} -eq 139 ]]; then
+        log_success "SIGSEGV handling self-test passed (exit code 139 detected)"
+        print_footer 0
+        return 0
+    fi
+
+    log_error "Self-test failed: expected exit code 139, got ${exit_code}"
+    print_footer "${exit_code}"
+    return "${exit_code}"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" && "${1:-}" == "--self-test-segv" ]]; then
+    run_selftest_segv
+    exit $?
+fi
 
 #==============================================================================
 # Configuration
@@ -285,24 +317,38 @@ run_profiling_steps() {
     
     # Run profiling steps
     local steps_run=0
+
+    run_required_step() {
+        local step_profiling_type=$1
+        local step_to_run=$2
+
+        if run_step "${step_profiling_type}" "${step_to_run}"; then
+            ((steps_run++))
+            return 0
+        fi
+
+        local step_exit_code=$?
+        log_error "${step_to_run} failed for profiling type ${step_profiling_type} (exit code: ${step_exit_code})"
+        return ${step_exit_code}
+    }
     
         # Standard step execution for other profiling types
         if [[ "X${RUNALLSTEPS:-}" != "X" ]]; then
             if ls step1_*.py &>/dev/null; then
-                run_step "${profiling_type}" "step1" && ((steps_run++))
+                run_required_step "${profiling_type}" "step1" || return $?
             else
                 log "No step1 in workflow ${PROFILING_WORKFLOW}"
             fi
-            run_step "${profiling_type}" "step2" && ((steps_run++))
+            run_required_step "${profiling_type}" "step2" || return $?
         fi
         
         # Always run step3 and step4
-        run_step "${profiling_type}" "step3" && ((steps_run++))
-        run_step "${profiling_type}" "step4" && ((steps_run++))
+        run_required_step "${profiling_type}" "step3" || return $?
+        run_required_step "${profiling_type}" "step4" || return $?
         
         for step in 5 6 7 8 9 10 11;do
             if ls step${step}_*.py &>/dev/null; then
-              run_step "${profiling_type}" "step${step}" && ((steps_run++))
+              run_required_step "${profiling_type}" "step${step}" || return $?
             else
                 log "No step${step} in workflow ${PROFILING_WORKFLOW}"
             fi
