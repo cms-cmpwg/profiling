@@ -778,12 +778,67 @@ run_vtune_step() {
         log "Running ${step_name} with VTune profiling"
         local result_dir="r-${step_name}-${PROFILING_WORKFLOW}-hs"
         local output_csv="${step_name}-${PROFILING_WORKFLOW}.top-down.csv"
+        local vtune_log="${log_file/_/-}"
+        local vtune_pid
+        local start_time=${SECONDS}
+        local poll_interval=2
+        local timed_out=0
+        local segv_detected=0
+        local vtune_exit_code=0
         
-        # Run VTune collection
-        execute_with_timeout "${TIMEOUT}" "VTune ${step_name}" \
-            vtune -collect hotspots -r "${result_dir}" -data-limit=0 \
-                -knob enable-stack-collection=true -knob stack-size=4096 \
-                -knob sampling-mode=sw -- cmsRun "${config_file}" 2>&1 | tee "${log_file/_/-}"
+        # Run VTune collection in background so we can monitor the log for hangs.
+        : > "${vtune_log}"
+        vtune -collect hotspots -r "${result_dir}" -data-limit=0 \
+            -knob enable-stack-collection=true -knob stack-size=4096 \
+            -knob sampling-mode=sw -- cmsRun "${config_file}" > "${vtune_log}" 2>&1 &
+        vtune_pid=$!
+
+        while kill -0 "${vtune_pid}" 2>/dev/null; do
+            if grep -qi "segmentation violation" "${vtune_log}"; then
+                log_error "Detected 'segmentation violation' in VTune output for ${step_name}; terminating process"
+                pkill -9 -P "${vtune_pid}" 2>/dev/null || true
+                kill -9 "${vtune_pid}" 2>/dev/null || true
+                segv_detected=1
+                break
+            fi
+
+            if (( SECONDS - start_time >= TIMEOUT )); then
+                log_error "VTune ${step_name} timed out after ${TIMEOUT}s"
+                pkill -9 -P "${vtune_pid}" 2>/dev/null || true
+                kill -9 "${vtune_pid}" 2>/dev/null || true
+                timed_out=1
+                break
+            fi
+
+            sleep "${poll_interval}"
+        done
+
+        set +e
+        wait "${vtune_pid}"
+        vtune_exit_code=$?
+        set -e
+
+        cat "${vtune_log}"
+
+        if (( segv_detected )); then
+            log_error "VTune ${step_name} aborted after segmentation violation"
+            return 139
+        fi
+
+        if (( timed_out )); then
+            return 124
+        fi
+
+        if [[ ${vtune_exit_code} -ne 0 ]]; then
+            if [[ ${vtune_exit_code} -eq 139 ]]; then
+                log_error "VTune ${step_name} exited with segmentation fault"
+            else
+                log_error "VTune ${step_name} failed with exit code ${vtune_exit_code}"
+            fi
+            return ${vtune_exit_code}
+        fi
+
+        log_success "VTune collection completed: ${step_name}"
         
         # Generate top-down report
         vtune -report top-down -r "${result_dir}" -format=csv \
