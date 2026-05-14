@@ -920,6 +920,7 @@ run_edmmodule_eventallocmonitor_analyze() {
     local step_name=$1
     local input_log="${step_name}_moduleEventAllocMonitor.log"
     local output_txt="${step_name}_moduleEventAllocMonitor.txt"
+    local output_json="${step_name}_moduleEventAllocMonitor.json"
 
     if [[ -f "${input_log}" ]]; then
         log "Running edmModuleEventAllocMonitorAnalyze for ${step_name}"
@@ -931,7 +932,13 @@ run_edmmodule_eventallocmonitor_analyze() {
             log_warn "Failed to run edmModuleEventAllocMonitorAnalyze for ${step_name}"
             return 1
         fi
-
+        # Run without execute_with_timeout to avoid log messages in JSON output
+        if timeout 300 edmModuleEventAllocMonitorAnalyze.py --grew --retained  --tempSize --nTemp --eventData  --json "${input_log}" > "${output_json}"; then
+            log "EventAllocMonitor analysis output saved to: ${output_json}"
+        else
+            log_warn "Failed to run edmModuleEventAllocMonitorAnalyze for ${step_name}"
+            return 1
+        fi
     else
         log_warn "ModuleEventAllocMonitor log file not found: ${input_log}"
         return 1
