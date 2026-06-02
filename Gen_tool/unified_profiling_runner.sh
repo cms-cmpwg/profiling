@@ -934,7 +934,6 @@ run_edmmodule_eventallocmonitor_analyze() {
         # Convert JSON to circles format if the analysis succeeded
         if [[ -f "${output_json}" ]]; then
             log "Running edmModuleEventAllocJsonToCircles for ${step_name}"
-
             # Run without execute_with_timeout to avoid log messages in JSON output
             if timeout 300 edmModuleEventAllocJsonToCircles.py "${output_json}" -o "${circles_json}"; then
                 log "EventAllocMonitor circles output saved to: ${circles_json}"
@@ -942,6 +941,7 @@ run_edmmodule_eventallocmonitor_analyze() {
                 log_warn "Failed to run edmModuleEventAllocJsonToCircles for ${step_name}"
                 return 1
             fi
+        fi
     else
         log_warn "ModuleEventAllocMonitor log file not found: ${input_log}"
         return 1
