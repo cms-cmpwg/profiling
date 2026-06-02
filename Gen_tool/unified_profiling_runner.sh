@@ -924,8 +924,15 @@ run_edmmodule_eventallocmonitor_analyze() {
     if [[ -f "${input_log}" ]]; then
         log "Running edmModuleEventAllocMonitorAnalyze for ${step_name}"
 
-        # Run without execute_with_timeout to avoid log messages in JSON output
-        if timeout 300 edmModuleEventAllocMonitorAnalyze.py --grew --retained  --tempSize --nTemp --eventData  --csv "${input_log}" > "${output_txt}"; then
+        # Run without execute_with_timeout to avoid log messages in csv output
+        if edmModuleEventAllocMonitorAnalyze.py --grew --retained  --tempSize --nTemp --eventData  --csv "${input_log}" > "${output_txt}"; then
+            log "EventAllocMonitor analysis output saved to: ${output_txt}"
+        else
+            log_warn "Failed to run edmModuleEventAllocMonitorAnalyze for ${step_name}"
+            return 1
+        fi
+       # Run without execute_with_timeout to avoid log messages in JSON output
+        if edmModuleEventAllocMonitorAnalyze.py --grew --retained  --tempSize --nTemp --eventData --json "${input_log}" > "${output_json}"; then
             log "EventAllocMonitor analysis output saved to: ${output_txt}"
         else
             log_warn "Failed to run edmModuleEventAllocMonitorAnalyze for ${step_name}"
