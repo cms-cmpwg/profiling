@@ -143,7 +143,7 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
     Build a JSON-serializable profile payload.
     
     Args:
-        children: List of (function_name, total_time) tuples
+        children: List of dict rows with parent/function/total_time
         parent_functions: The parent function names
         parent_total_time: Total time of parent functions
         total_cpu_time: Total CPU time
@@ -152,12 +152,16 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
         dict: Profile payload
     """
     rows = []
-    for full_function, total_time in children:
+    for child in children:
+        parent_function = child["parent_function"]
+        full_function = child["function"]
+        total_time = child["total_time"]
         try:
             time_val = float(total_time)
             pct_parent = _safe_percentage(time_val, parent_total_time)
             pct_total = _safe_percentage(time_val, total_cpu_time)
             rows.append({
+                "parent_function": parent_function,
                 "function": full_function,
                 "total_time": time_val,
                 "pct_of_parent": pct_parent,
@@ -165,6 +169,7 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
             })
         except ValueError:
             rows.append({
+                "parent_function": parent_function,
                 "function": full_function,
                 "total_time": None,
                 "total_time_raw": total_time,
@@ -251,7 +256,14 @@ def main():
     for parent_function in parent_functions:
         print(f"Extracting immediate children of: {parent_function}\n")
         children, parent_total_time = extract_immediate_children(filename, parent_function)
-        global_children.extend(children)
+        global_children.extend(
+            {
+                "parent_function": parent_function,
+                "function": full_function,
+                "total_time": total_time,
+            }
+            for full_function, total_time in children
+        )
         global_parent_total_time += parent_total_time if parent_total_time is not None else 0.0
     
     if global_parent_total_time is not None:
@@ -262,13 +274,16 @@ def main():
     
     
     # Sort by total time (descending)
-    global_children.sort(key=lambda item: _safe_float(item[1]), reverse=True)
+    global_children.sort(key=lambda item: _safe_float(item["total_time"]), reverse=True)
     print(f"Found {len(global_children)} immediate children:\n")
     print("-" * 150)
-    print(f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Function':<90}")
+    print(f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Parent Function':<45} {'Function':<90}")
     print("-" * 150)
     
-    for full_function, total_time in global_children:
+    for child in global_children:
+        parent_function = child["parent_function"]
+        full_function = child["function"]
+        total_time = child["total_time"]
         try:
             time_val = float(total_time)
             if global_parent_total_time and global_parent_total_time > 0:
@@ -281,9 +296,9 @@ def main():
                 pct_total_str = f"{pct_total:>9.2f}%"
             else:
                 pct_total_str = "N/A"
-            print(f"{time_val:>12.6f} {pct_parent_str:>15} {pct_total_str:>15} {full_function:<90}")
+            print(f"{time_val:>12.6f} {pct_parent_str:>15} {pct_total_str:>15} {parent_function:<45} {full_function:<90}")
         except ValueError:
-            print(f"{total_time:>12} {'N/A':>15} {'N/A':>15} {full_function:<90}")
+            print(f"{total_time:>12} {'N/A':>15} {'N/A':>15} {parent_function:<45} {full_function:<90}")
     
     print("-" * 150)
     print(f"\nTotal: {len(global_children)} functions")

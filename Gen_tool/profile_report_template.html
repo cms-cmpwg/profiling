@@ -13,6 +13,7 @@
       --line: #dde3ed;
       --accent: #0a7a6c;
       --accent-soft: #e5f5f2;
+      --parent-col-width: 280px;
     }
 
     body {
@@ -23,9 +24,11 @@
     }
 
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: none;
+      margin: 0;
       padding: 24px;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -68,7 +71,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      table-layout: fixed;
+      table-layout: auto;
     }
 
     thead th {
@@ -77,6 +80,18 @@
       padding: 12px;
       text-align: left;
       font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    thead th.sort-asc::after {
+      content: " ▲";
+      font-size: 11px;
+    }
+
+    thead th.sort-desc::after {
+      content: " ▼";
+      font-size: 11px;
     }
 
     tbody td {
@@ -98,6 +113,11 @@
 
     .function {
       word-break: break-word;
+    }
+
+    .parent-function {
+      width: var(--parent-col-width);
+      white-space: nowrap;
     }
 
     @media (max-width: 800px) {
@@ -128,10 +148,11 @@
       <table>
         <thead>
           <tr>
-            <th class="num" style="width: 150px;">Total Time</th>
-            <th class="num" style="width: 140px;">% of Parent</th>
-            <th class="num" style="width: 140px;">% of Total</th>
-            <th>Function</th>
+            <th class="num sort-desc" style="width: 150px;" data-sort-key="total_time" data-sort-type="number">Total Time</th>
+            <th class="num" style="width: 140px;" data-sort-key="pct_of_parent" data-sort-type="number">% of Parent</th>
+            <th class="num" style="width: 140px;" data-sort-key="pct_of_total" data-sort-type="number">% of Total</th>
+            <th class="parent-function" data-sort-key="parent_function" data-sort-type="string">Parent Function</th>
+            <th data-sort-key="function" data-sort-type="string">Function</th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>
@@ -156,6 +177,81 @@
       return Number(value).toFixed(2) + "%";
     }
 
+    function sortValueForRow(row, key, type) {
+      const value = row[key];
+      if (type === "number") {
+        if (value === null || value === undefined || Number.isNaN(Number(value))) {
+          return Number.NEGATIVE_INFINITY;
+        }
+        return Number(value);
+      }
+      return String(value || "").toLowerCase();
+    }
+
+    function renderRows(dataRows) {
+      const rows = document.getElementById("rows");
+      rows.innerHTML = "";
+
+      for (const child of dataRows) {
+        const tr = document.createElement("tr");
+
+        const tdTime = document.createElement("td");
+        tdTime.className = "num";
+        tdTime.textContent = child.total_time === null
+          ? (child.total_time_raw || "N/A")
+          : formatNumber(child.total_time, 6);
+
+        const tdParent = document.createElement("td");
+        tdParent.className = "num";
+        tdParent.textContent = formatPercent(child.pct_of_parent);
+
+        const tdTotal = document.createElement("td");
+        tdTotal.className = "num";
+        tdTotal.textContent = formatPercent(child.pct_of_total);
+
+        const tdParentFn = document.createElement("td");
+        tdParentFn.className = "parent-function";
+        tdParentFn.textContent = child.parent_function || "N/A";
+
+        const tdFn = document.createElement("td");
+        tdFn.className = "function";
+        tdFn.textContent = child.function || "N/A";
+
+        tr.appendChild(tdTime);
+        tr.appendChild(tdParent);
+        tr.appendChild(tdTotal);
+        tr.appendChild(tdParentFn);
+        tr.appendChild(tdFn);
+        rows.appendChild(tr);
+      }
+    }
+
+    function clearSortIndicators(headers) {
+      for (const header of headers) {
+        header.classList.remove("sort-asc", "sort-desc");
+      }
+    }
+
+    function applyParentColumnWidth(children) {
+      const names = ["Parent Function", ...(children || []).map((row) => row.parent_function || "N/A")];
+      const probe = document.createElement("span");
+      probe.style.position = "absolute";
+      probe.style.visibility = "hidden";
+      probe.style.whiteSpace = "nowrap";
+      probe.style.font = "13px \"Segoe UI\", Helvetica, Arial, sans-serif";
+      document.body.appendChild(probe);
+
+      let maxWidth = 0;
+      for (const name of names) {
+        probe.textContent = String(name);
+        maxWidth = Math.max(maxWidth, Math.ceil(probe.getBoundingClientRect().width));
+      }
+
+      document.body.removeChild(probe);
+      const paddedWidth = maxWidth + 24;
+      document.documentElement.style.setProperty("--parent-col-width", paddedWidth + "px");
+    }
+
     document.getElementById("sourceFile").textContent = "Source: " + (profileData.source_file || "N/A");
     document.getElementById("parentFunctions").textContent = (profileData.parent_functions || []).join(", ");
 
@@ -169,34 +265,39 @@
 
     document.getElementById("childCount").textContent = String(summary.children_count || 0);
 
-    const rows = document.getElementById("rows");
-    for (const child of profileData.children || []) {
-      const tr = document.createElement("tr");
+    const tableRows = [...(profileData.children || [])];
+    const headers = document.querySelectorAll("thead th[data-sort-key]");
+    applyParentColumnWidth(tableRows);
 
-      const tdTime = document.createElement("td");
-      tdTime.className = "num";
-      tdTime.textContent = child.total_time === null
-        ? (child.total_time_raw || "N/A")
-        : formatNumber(child.total_time, 6);
+    function sortByColumn(key, type, direction) {
+      tableRows.sort((a, b) => {
+        const left = sortValueForRow(a, key, type);
+        const right = sortValueForRow(b, key, type);
 
-      const tdParent = document.createElement("td");
-      tdParent.className = "num";
-      tdParent.textContent = formatPercent(child.pct_of_parent);
-
-      const tdTotal = document.createElement("td");
-      tdTotal.className = "num";
-      tdTotal.textContent = formatPercent(child.pct_of_total);
-
-      const tdFn = document.createElement("td");
-      tdFn.className = "function";
-      tdFn.textContent = child.function || "N/A";
-
-      tr.appendChild(tdTime);
-      tr.appendChild(tdParent);
-      tr.appendChild(tdTotal);
-      tr.appendChild(tdFn);
-      rows.appendChild(tr);
+        if (left < right) {
+          return direction === "asc" ? -1 : 1;
+        }
+        if (left > right) {
+          return direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+      renderRows(tableRows);
     }
+
+    for (const header of headers) {
+      header.addEventListener("click", () => {
+        const key = header.dataset.sortKey;
+        const type = header.dataset.sortType || "string";
+        const direction = header.classList.contains("sort-asc") ? "desc" : "asc";
+
+        clearSortIndicators(headers);
+        header.classList.add(direction === "asc" ? "sort-asc" : "sort-desc");
+        sortByColumn(key, type, direction);
+      });
+    }
+
+    sortByColumn("total_time", "number", "desc");
   </script>
 </body>
 </html>
