@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Function Profile Analysis</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #1d2636;
+      --muted: #5f6b7d;
+      --line: #dde3ed;
+      --accent: #0a7a6c;
+      --accent-soft: #e5f5f2;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, #fbfcfe 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .info {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 18px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 8px 14px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-right: 4px;
+    }
+
+    .table-wrap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    thead th {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 12px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    tbody td {
+      padding: 10px 12px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    tbody tr:hover {
+      background: var(--accent-soft);
+    }
+
+    .num {
+      text-align: right;
+      white-space: nowrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .function {
+      word-break: break-word;
+    }
+
+    @media (max-width: 800px) {
+      thead th:nth-child(2),
+      thead th:nth-child(3),
+      tbody td:nth-child(2),
+      tbody td:nth-child(3) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Function Profile Analysis</h1>
+    <p class="subtitle" id="sourceFile"></p>
+
+    <div class="info">
+      <div class="info-grid">
+        <div><span class="label">Parent Functions:</span><span id="parentFunctions"></span></div>
+        <div><span class="label">Total CPU Time:</span><span id="totalCpu"></span></div>
+        <div><span class="label">Parents Total Time:</span><span id="parentTotal"></span></div>
+        <div><span class="label">Number of Children:</span><span id="childCount"></span></div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num" style="width: 150px;">Total Time</th>
+            <th class="num" style="width: 140px;">% of Parent</th>
+            <th class="num" style="width: 140px;">% of Total</th>
+            <th>Function</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const profileData = __PROFILE_DATA_JSON__;
+
+    function formatNumber(value, digits) {
+      if (value === null || value === undefined || Number.isNaN(value)) {
+        return "N/A";
+      }
+      return Number(value).toFixed(digits);
+    }
+
+    function formatPercent(value) {
+      if (value === null || value === undefined || Number.isNaN(value)) {
+        return "N/A";
+      }
+      return Number(value).toFixed(2) + "%";
+    }
+
+    document.getElementById("sourceFile").textContent = "Source: " + (profileData.source_file || "N/A");
+    document.getElementById("parentFunctions").textContent = (profileData.parent_functions || []).join(", ");
+
+    const summary = profileData.summary || {};
+    document.getElementById("totalCpu").textContent = formatNumber(summary.total_cpu_time, 6);
+
+    const parentTotalLabel =
+      formatNumber(summary.parent_total_time, 6) +
+      " (" + formatPercent(summary.parent_pct_of_total) + " of total)";
+    document.getElementById("parentTotal").textContent = parentTotalLabel;
+
+    document.getElementById("childCount").textContent = String(summary.children_count || 0);
+
+    const rows = document.getElementById("rows");
+    for (const child of profileData.children || []) {
+      const tr = document.createElement("tr");
+
+      const tdTime = document.createElement("td");
+      tdTime.className = "num";
+      tdTime.textContent = child.total_time === null
+        ? (child.total_time_raw || "N/A")
+        : formatNumber(child.total_time, 6);
+
+      const tdParent = document.createElement("td");
+      tdParent.className = "num";
+      tdParent.textContent = formatPercent(child.pct_of_parent);
+
+      const tdTotal = document.createElement("td");
+      tdTotal.className = "num";
+      tdTotal.textContent = formatPercent(child.pct_of_total);
+
+      const tdFn = document.createElement("td");
+      tdFn.className = "function";
+      tdFn.textContent = child.function || "N/A";
+
+      tr.appendChild(tdTime);
+      tr.appendChild(tdParent);
+      tr.appendChild(tdTotal);
+      tr.appendChild(tdFn);
+      rows.appendChild(tr);
+    }
+  </script>
+</body>
+</html>

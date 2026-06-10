@@ -5,7 +5,8 @@ from a top-down profiling CSV file.
 """
 
 import sys
-import csv
+import os
+import json
 
 
 def count_leading_spaces(line):
@@ -52,11 +53,6 @@ def _safe_float(val):
         return float(val)
     except (ValueError, TypeError):
         return float('-inf')
-
-
-def escape_html(text):
-    """Escape HTML special characters in text."""
-    return text.replace('<', '&lt;').replace('>', '&gt;')
 
 
 def extract_immediate_children(filename, parent_function):
@@ -136,9 +132,15 @@ def extract_immediate_children(filename, parent_function):
     return children, parent_total_time
 
 
-def generate_html_table(children, parent_functions, parent_total_time, total_cpu_time):
+def _safe_percentage(numerator, denominator):
+    if denominator and denominator > 0:
+        return numerator / denominator * 100
+    return None
+
+
+def build_profile_data(children, parent_functions, parent_total_time, total_cpu_time, source_file):
     """
-    Generate an HTML table representation of the data.
+    Build a JSON-serializable profile payload.
     
     Args:
         children: List of (function_name, total_time) tuples
@@ -147,97 +149,98 @@ def generate_html_table(children, parent_functions, parent_total_time, total_cpu
         total_cpu_time: Total CPU time
     
     Returns:
-        str: HTML table as a string
+        dict: Profile payload
     """
-    html = []
-    html.append('<!DOCTYPE html>')
-    html.append('<html>')
-    html.append('<head>')
-    html.append('    <meta charset="UTF-8">')
-    html.append('    <title>Function Profile Analysis</title>')
-    html.append('    <style>')
-    html.append('        body { font-family: Arial, sans-serif; margin: 20px; }')
-    html.append('        h1, h2 { color: #333; }')
-    html.append('        .info { background-color: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 4px; }')
-    html.append('        table { border-collapse: collapse; width: 100%; margin: 20px 0; table-layout: auto; }')
-    html.append('        th { background-color: #4CAF50; color: white; padding: 12px; text-align: left; }')
-    html.append('        td { padding: 10px; border-bottom: 1px solid #ddd; }')
-    html.append('        tr:hover { background-color: #f5f5f5; }')
-    html.append('        .function-name { width: auto; overflow-wrap: break-word; white-space: normal; }')
-    html.append('        .numeric { text-align: right; font-family: monospace; white-space: nowrap; }')
-    html.append('    </style>')
-    html.append('</head>')
-    html.append('<body>')
-    
-    # Add title and info
-    html.append('<h1>Function Profile Analysis</h1>')
-    html.append(f'<div class="info">')
-    html.append(f'    <h2>Parent Functions: {parent_functions}</h2>')
-    html.append(f'    <p><strong>Total CPU Time:</strong> {total_cpu_time:.6f}</p>')
-    if parent_total_time is not None:
-        parent_percentage = (parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
-        html.append(f'    <p><strong>Parents Total Time:</strong> {parent_total_time:.6f} ({parent_percentage:.2f}% of total)</p>')
-    html.append(f'    <p><strong>Number of Children:</strong> {len(children)}</p>')
-    html.append('</div>')
-    
-    # Add table
-    html.append('<table>')
-    html.append('    <thead>')
-    html.append('        <tr>')
-    html.append('            <th class="numeric">Total Time</th>')
-    html.append('            <th class="numeric">% of Parent</th>')
-    html.append('            <th class="numeric">% of Total</th>')
-    html.append('            <th class="function-name">Function</th>')
-    html.append('        </tr>')
-    html.append('    </thead>')
-    html.append('    <tbody>')
-    
+    rows = []
     for full_function, total_time in children:
-        html.append('        <tr>')
         try:
             time_val = float(total_time)
-            html.append(f'            <td class="numeric">{time_val:.6f}</td>')
-            
-            if parent_total_time and parent_total_time > 0:
-                pct_parent = time_val / parent_total_time * 100
-                html.append(f'            <td class="numeric">{pct_parent:.2f}%</td>')
-            else:
-                html.append('            <td class="numeric">N/A</td>')
-            
-            if total_cpu_time > 0:
-                pct_total = time_val / total_cpu_time * 100
-                html.append(f'            <td class="numeric">{pct_total:.2f}%</td>')
-            else:
-                html.append('            <td class="numeric">N/A</td>')
-            
-            html.append(f'            <td class="function-name">{escape_html(full_function)}</td>')
+            pct_parent = _safe_percentage(time_val, parent_total_time)
+            pct_total = _safe_percentage(time_val, total_cpu_time)
+            rows.append({
+                "function": full_function,
+                "total_time": time_val,
+                "pct_of_parent": pct_parent,
+                "pct_of_total": pct_total,
+            })
         except ValueError:
-            html.append('            <td class="numeric">' + total_time + '</td>')
-            html.append('            <td class="numeric">N/A</td>')
-            html.append('            <td class="numeric">N/A</td>')
-            html.append(f'            <td class="function-name">{escape_html(full_function)}</td>')
-        
-        html.append('        </tr>')
-    
-    html.append('    </tbody>')
-    html.append('</table>')
-    html.append('</body>')
-    html.append('</html>')
-    
-    return '\n'.join(html)
+            rows.append({
+                "function": full_function,
+                "total_time": None,
+                "total_time_raw": total_time,
+                "pct_of_parent": None,
+                "pct_of_total": None,
+            })
+
+    return {
+        "source_file": source_file,
+        "parent_functions": parent_functions,
+        "summary": {
+            "total_cpu_time": total_cpu_time,
+            "parent_total_time": parent_total_time,
+            "parent_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
+            "children_count": len(rows),
+        },
+        "children": rows,
+    }
+
+
+def render_template_html(template_path, profile_data):
+    """Render HTML by injecting profile JSON into a template page."""
+    with open(template_path, 'r', encoding='utf-8') as f:
+        template = f.read()
+
+    data_json = json.dumps(profile_data, indent=2, ensure_ascii=False)
+    # Keep JSON safe for embedding in a <script> tag.
+    data_json = data_json.replace('</', '<\\/')
+    return template.replace('__PROFILE_DATA_JSON__', data_json)
+
+
+def parse_args(argv):
+    """Parse command-line arguments."""
+    if len(argv) < 2:
+        return None
+
+    args = {
+        "filename": argv[1],
+        "html_output": None,
+        "json_output": None,
+        "template_path": os.path.join(os.path.dirname(__file__), 'profile_report_template.html'),
+    }
+
+    i = 2
+    while i < len(argv):
+        token = argv[i]
+        if token == '--html' and i + 1 < len(argv):
+            args["html_output"] = argv[i + 1]
+            i += 2
+        elif token == '--json' and i + 1 < len(argv):
+            args["json_output"] = argv[i + 1]
+            i += 2
+        elif token == '--template' and i + 1 < len(argv):
+            args["template_path"] = argv[i + 1]
+            i += 2
+        else:
+            print(f"Unknown or incomplete argument: {token}")
+            return None
+
+    return args
 
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python extract_children.py <csv_file> [--html <output_file>]")
+    args = parse_args(sys.argv)
+    if not args:
+        print(
+            "Usage: python extract_children.py <csv_file> "
+            "[--html <output_file>] [--json <output_file>] [--template <template_file>]"
+        )
         sys.exit(1)
-    
-    filename = sys.argv[1]
+
+    filename = args["filename"]
     parent_functions = ["edm::stream::EDProducerAdaptorBase::doEvent", "edm::global::EDProducerBase::doEvent", "edm::one::EDProducerBase::doEvent","edm::limited::EDProducerBase::doEvent"]
-    # Check for HTML output option
-    html_output = None
-    if len(sys.argv) >= 4 and sys.argv[2] == "--html":
-        html_output = sys.argv[3]
+    html_output = args["html_output"]
+    json_output = args["json_output"]
+    template_path = args["template_path"]
     
     global_children = []
     global_parent_total_time = 0.0
@@ -285,12 +288,28 @@ def main():
     print("-" * 150)
     print(f"\nTotal: {len(global_children)} functions")
     print("\n")
-    # Generate HTML output if requested
+
+    profile_data = build_profile_data(
+        global_children,
+        parent_functions,
+        global_parent_total_time,
+        total_cpu_time,
+        source_file=filename,
+    )
+
+    if html_output and not json_output:
+        json_output = os.path.splitext(html_output)[0] + '.json'
+
+    if json_output:
+        with open(json_output, 'w', encoding='utf-8') as f:
+            json.dump(profile_data, f, indent=2, ensure_ascii=False)
+            print(f"JSON data written to: {json_output}\n")
+
     if html_output:
-        html_content = generate_html_table(global_children, parent_functions, global_parent_total_time, total_cpu_time)
+        html_content = render_template_html(template_path, profile_data)
         with open(html_output, 'w', encoding='utf-8') as f:
             f.write(html_content)
-            print(f"HTML table written to: {html_output}\n")
+            print(f"HTML report written to: {html_output}\n")
         return
     
 
