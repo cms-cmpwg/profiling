@@ -152,12 +152,17 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
         dict: Profile payload
     """
     rows = []
+    children_total_time = 0.0
+    parent_time_by_function = {name: 0.0 for name in parent_functions}
     for child in children:
         parent_function = child["parent_function"]
         full_function = child["function"]
         total_time = child["total_time"]
         try:
             time_val = float(total_time)
+            children_total_time += time_val
+            if parent_function in parent_time_by_function:
+                parent_time_by_function[parent_function] += time_val
             pct_parent = _safe_percentage(time_val, parent_total_time)
             pct_total = _safe_percentage(time_val, total_cpu_time)
             rows.append({
@@ -184,8 +189,18 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
             "total_cpu_time": total_cpu_time,
             "parent_total_time": parent_total_time,
             "parent_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
+            "total_children_time": children_total_time,
+            "children_pct_of_total": _safe_percentage(children_total_time, total_cpu_time),
+            "children_pct_of_parent": _safe_percentage(children_total_time, parent_total_time),
             "children_count": len(rows),
         },
+        "parent_function_totals": [
+            {
+                "parent_function": parent_function,
+                "children_total_time": parent_time_by_function.get(parent_function, 0.0),
+            }
+            for parent_function in parent_functions
+        ],
         "children": rows,
     }
 
