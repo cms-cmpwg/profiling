@@ -7,6 +7,9 @@ from a top-down profiling CSV file.
 import sys
 import os
 import json
+import re
+
+_PRODUCE_RE = re.compile(r'::produce')
 
 
 def count_leading_spaces(line):
@@ -70,33 +73,31 @@ def extract_immediate_children(filename, parent_function):
     parent_indent = None
     found_parent = False
     parent_total_time = None
-    unknown_block_active = False
-    
+
     with open(filename, 'r', encoding='utf-8') as f:
         # Skip the header lines
         for line in f:
             if line.startswith('Function Stack;'):
                 break
-        
+
         # Process the data lines
         for line in f:
             # Skip empty lines
             if not line.strip():
                 continue
-            
+
             # Parse the line
             parts = line.split(';')
             if len(parts) < 4:
                 continue
-            
+
             function_stack = parts[0]
             total_time = parts[1]
-            # self_time = parts[2]
             full_function = parts[3].strip()
-            
+
             # Count leading spaces
             indent = count_leading_spaces(function_stack)
-            
+
             # Check if this is the parent function we're looking for
             if parent_function in function_stack and not found_parent:
                 parent_indent = indent
@@ -106,29 +107,15 @@ def extract_immediate_children(filename, parent_function):
                 except ValueError:
                     parent_total_time = None
                 continue
-            
-            # If we found the parent, look for immediate children
+
+            # Once inside the parent's subtree, stop when we leave it
             if found_parent and parent_indent is not None:
-                # Immediate children have exactly one more level of indentation
-                if indent == parent_indent + 1:
-                    # If this child is the Unknown placeholder, don't add it;
-                    # instead, activate a block to collect its immediate children.
-                    if full_function.strip() == "[Unknown stack frame(s)]":
-                        unknown_block_active = True
-                    else:
-                        children.append((full_function, total_time))
-                        unknown_block_active = False
-                # If we're inside an Unknown block, collect its immediate children
-                elif indent == parent_indent + 2 and unknown_block_active:
-                    children.append((full_function, total_time))
-                # If we encounter a function at the same or lower level as the parent, we're done
-                elif indent <= parent_indent:
+                if indent <= parent_indent:
                     break
-                # If we encounter another sibling at the child level, toggle Unknown block appropriately
-                elif indent == parent_indent + 1:
-                    unknown_block_active = (full_function.strip() == "[Unknown stack frame(s)]")
-                # For deeper levels beyond immediate children of Unknown, ignore
-    
+                # Collect any ::produce(...) function anywhere in the subtree
+                if _PRODUCE_RE.search(full_function):
+                    children.append((full_function, total_time))
+
     return children, parent_total_time
 
 
@@ -138,31 +125,29 @@ def _safe_percentage(numerator, denominator):
     return None
 
 
-def build_profile_data(children, parent_functions, parent_total_time, total_cpu_time, source_file):
+def build_profile_data(children, parent_functions, parent_total_time, total_cpu_time, source_file, parent_csv_times=None):
     """
     Build a JSON-serializable profile payload.
     
     Args:
         children: List of dict rows with parent/function/total_time
         parent_functions: The parent function names
-        parent_total_time: Total time of parent functions
+        parent_total_time: Total time of parent functions (sum of CSV field 2 per parent)
         total_cpu_time: Total CPU time
+        parent_csv_times: Dict mapping parent function name -> time from CSV field 2
     
     Returns:
         dict: Profile payload
     """
+    if parent_csv_times is None:
+        parent_csv_times = {}
     rows = []
-    children_total_time = 0.0
-    parent_time_by_function = {name: 0.0 for name in parent_functions}
     for child in children:
         parent_function = child["parent_function"]
         full_function = child["function"]
         total_time = child["total_time"]
         try:
             time_val = float(total_time)
-            children_total_time += time_val
-            if parent_function in parent_time_by_function:
-                parent_time_by_function[parent_function] += time_val
             pct_parent = _safe_percentage(time_val, parent_total_time)
             pct_total = _safe_percentage(time_val, total_cpu_time)
             rows.append({
@@ -189,15 +174,15 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
             "total_cpu_time": total_cpu_time,
             "parent_total_time": parent_total_time,
             "parent_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
-            "total_children_time": children_total_time,
-            "children_pct_of_total": _safe_percentage(children_total_time, total_cpu_time),
-            "children_pct_of_parent": _safe_percentage(children_total_time, parent_total_time),
+            "total_children_time": parent_total_time,
+            "children_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
+            "children_pct_of_parent": _safe_percentage(parent_total_time, parent_total_time),
             "children_count": len(rows),
         },
         "parent_function_totals": [
             {
                 "parent_function": parent_function,
-                "children_total_time": parent_time_by_function.get(parent_function, 0.0),
+                "children_total_time": parent_csv_times.get(parent_function, 0.0),
             }
             for parent_function in parent_functions
         ],
@@ -264,6 +249,7 @@ def main():
     
     global_children = []
     global_parent_total_time = 0.0
+    parent_csv_times = {}
     # Get total CPU time
     total_cpu_time = get_total_cpu_time(filename)
     print(f"Total CPU time: {total_cpu_time}\n")
@@ -279,7 +265,9 @@ def main():
             }
             for full_function, total_time in children
         )
-        global_parent_total_time += parent_total_time if parent_total_time is not None else 0.0
+        csv_time = parent_total_time if parent_total_time is not None else 0.0
+        global_parent_total_time += csv_time
+        parent_csv_times[parent_function] = csv_time
     
     if global_parent_total_time is not None:
         parent_percentage = (global_parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
@@ -325,6 +313,7 @@ def main():
         global_parent_total_time,
         total_cpu_time,
         source_file=filename,
+        parent_csv_times=parent_csv_times,
     )
 
     if html_output and not json_output:
