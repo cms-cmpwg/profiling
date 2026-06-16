@@ -119,6 +119,45 @@ def extract_immediate_children(filename, parent_function):
     return children, parent_total_time
 
 
+def extract_all_produce_functions(filename):
+    """
+    Extract ALL ::produce functions in the entire file, regardless of parent.
+    
+    Args:
+        filename: Path to the CSV file
+    
+    Returns:
+        List[Tuple[str, str]]: List of (full_function, total_time) tuples
+    """
+    all_produce = []
+    
+    with open(filename, 'r', encoding='utf-8') as f:
+        # Skip the header lines
+        for line in f:
+            if line.startswith('Function Stack;'):
+                break
+        
+        # Process the data lines
+        for line in f:
+            # Skip empty lines
+            if not line.strip():
+                continue
+            
+            # Parse the line
+            parts = line.split(';')
+            if len(parts) < 4:
+                continue
+            
+            total_time = parts[1]
+            full_function = parts[3].strip()
+            
+            # Collect any ::produce(...) function
+            if _PRODUCE_RE.search(full_function):
+                all_produce.append((full_function, total_time))
+    
+    return all_produce
+
+
 def _safe_percentage(numerator, denominator):
     if denominator and denominator > 0:
         return numerator / denominator * 100
@@ -141,6 +180,7 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
     """
     if parent_csv_times is None:
         parent_csv_times = {}
+    
     rows = []
     for child in children:
         parent_function = child["parent_function"]
@@ -167,6 +207,9 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
                 "pct_of_total": None,
             })
 
+    # Calculate total_children_time as sum of all parent times
+    total_children_time = sum(parent_csv_times.values())
+
     return {
         "source_file": source_file,
         "parent_functions": parent_functions,
@@ -174,9 +217,9 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
             "total_cpu_time": total_cpu_time,
             "parent_total_time": parent_total_time,
             "parent_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
-            "total_children_time": parent_total_time,
-            "children_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
-            "children_pct_of_parent": _safe_percentage(parent_total_time, parent_total_time),
+            "total_children_time": total_children_time,
+            "children_pct_of_total": _safe_percentage(total_children_time, total_cpu_time),
+            "children_pct_of_parent": _safe_percentage(total_children_time, total_children_time),
             "children_count": len(rows),
         },
         "parent_function_totals": [
@@ -254,31 +297,69 @@ def main():
     total_cpu_time = get_total_cpu_time(filename)
     print(f"Total CPU time: {total_cpu_time}\n")
 
+    # First, collect children from doEvent functions
     for parent_function in parent_functions:
-        print(f"Extracting immediate children of: {parent_function}\n")
         children, parent_total_time = extract_immediate_children(filename, parent_function)
-        global_children.extend(
-            {
-                "parent_function": parent_function,
-                "function": full_function,
-                "total_time": total_time,
-            }
-            for full_function, total_time in children
-        )
-        csv_time = parent_total_time if parent_total_time is not None else 0.0
-        global_parent_total_time += csv_time
-        parent_csv_times[parent_function] = csv_time
+        if children:  # Only if we found this parent function
+            print(f"Extracting immediate children of: {parent_function} ({len(children)} found)\n")
+            global_children.extend(
+                {
+                    "parent_function": parent_function,
+                    "function": full_function,
+                    "total_time": total_time,
+                }
+                for full_function, total_time in children
+            )
+            csv_time = parent_total_time if parent_total_time is not None else 0.0
+            global_parent_total_time += csv_time
+            parent_csv_times[parent_function] = csv_time
     
-    if global_parent_total_time is not None:
+    # Then, collect ALL ::produce functions (including ES producers not under doEvent)
+    all_produce = extract_all_produce_functions(filename)
+    
+    # Find produce functions not yet added (those not under doEvent)
+    other_produce_total = 0.0
+    other_produce_count = 0
+    added_functions = set(child["function"] for child in global_children)
+    
+    for full_function, total_time in all_produce:
+        if full_function not in added_functions:
+            # This is a produce function not under doEvent (likely ES producer)
+            other_produce_count += 1
+            try:
+                time_val = float(total_time)
+                other_produce_total += time_val
+                global_children.append({
+                    "parent_function": "[EventSetup Producers]",
+                    "function": full_function,
+                    "total_time": total_time,
+                })
+            except ValueError:
+                global_children.append({
+                    "parent_function": "[EventSetup Producers]",
+                    "function": full_function,
+                    "total_time": None,
+                    "total_time_raw": total_time,
+                })
+    
+    if parent_csv_times:
         parent_percentage = (global_parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
-        print(f"{parent_functions} total time: {global_parent_total_time:.6f} ({parent_percentage:.2f}% of total)\n")
-    else:
-        print(f"{parent_functions} total time: N/A (function not found)\n")
+        print(f"Event Producers total time: {global_parent_total_time:.6f} ({parent_percentage:.2f}% of total)\n")
+    
+    if other_produce_count > 0:
+        other_percentage = (other_produce_total / total_cpu_time * 100) if total_cpu_time > 0 else 0
+        print(f"[EventSetup Producers] total time: {other_produce_total:.6f} ({other_percentage:.2f}% of total, {other_produce_count} functions)\n")
     
     
     # Sort by total time (descending)
     global_children.sort(key=lambda item: _safe_float(item["total_time"]), reverse=True)
-    print(f"Found {len(global_children)} immediate children:\n")
+    print(f"Found {len(global_children)} total ::produce functions:\n")
+    
+    # Update parent_functions if we have EventSetup producers
+    if other_produce_count > 0:
+        parent_functions = list(parent_functions) + ["[EventSetup Producers]"]
+        parent_csv_times["[EventSetup Producers]"] = other_produce_total
+    
     print("-" * 150)
     print(f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Parent Function':<45} {'Function':<90}")
     print("-" * 150)

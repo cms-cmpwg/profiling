@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Function Profile Analysis</title>
+  <title>Produce Function Profile Analysis</title>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -132,7 +132,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Function Profile Analysis</h1>
+    <h1>Produce Function Profile Analysis</h1>
     <p class="subtitle" id="sourceFile"></p>
 
     <div class="info">
@@ -144,6 +144,28 @@
       </div>
     </div>
 
+    <div style="margin: 24px 0 12px; display: flex; align-items: center; gap: 8px;">
+      <label for="parentFilter" class="label" style="margin-right: 0;">Parents</label>
+      <select id="parentFilter" style="padding: 6px 10px; font-size: 13px; border: 1px solid var(--line); border-radius: 6px; background: white; cursor: pointer;">
+        <option value="">All Parents</option>
+      </select>
+    </div>
+
+    <h2 style="margin: 24px 0 12px; font-size: 18px;">Parent Functions Summary</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num sort-desc" style="width: 150px;" data-sort-key="children_total_time" data-sort-type="number">Total Time</th>
+            <th class="num" style="width: 140px;" data-sort-key="pct_of_total" data-sort-type="number">% of Total</th>
+            <th data-sort-key="parent_function" data-sort-type="string">Parent Function</th>
+          </tr>
+        </thead>
+        <tbody id="parentRows"></tbody>
+      </table>
+    </div>
+
+    <h2 style="margin: 24px 0 12px; font-size: 18px;">Children Functions</h2>
     <div class="table-wrap">
       <table>
         <thead>
@@ -226,6 +248,35 @@
       }
     }
 
+    function renderParentRows(parentData) {
+      const rows = document.getElementById("parentRows");
+      rows.innerHTML = "";
+
+      for (const parent of parentData) {
+        const tr = document.createElement("tr");
+
+        const tdTime = document.createElement("td");
+        tdTime.className = "num";
+        tdTime.textContent = parent.children_total_time === null || parent.children_total_time === undefined
+          ? "N/A"
+          : formatNumber(parent.children_total_time, 6);
+
+        const tdPercent = document.createElement("td");
+        tdPercent.className = "num";
+        const pct = parent.pct_of_total;
+        tdPercent.textContent = pct === null || pct === undefined || Number.isNaN(pct) ? "N/A" : formatPercent(pct);
+
+        const tdParentFn = document.createElement("td");
+        tdParentFn.className = "function";
+        tdParentFn.textContent = parent.parent_function || "N/A";
+
+        tr.appendChild(tdTime);
+        tr.appendChild(tdPercent);
+        tr.appendChild(tdParentFn);
+        rows.appendChild(tr);
+      }
+    }
+
     function clearSortIndicators(headers) {
       for (const header of headers) {
         header.classList.remove("sort-asc", "sort-desc");
@@ -265,12 +316,67 @@
 
     document.getElementById("childCount").textContent = String(summary.children_count || 0);
 
+    // Prepare parent function data with calculated percentages
+    const parentFunctionData = (profileData.parent_function_totals || []).map((parent) => {
+      const totalCpu = summary.total_cpu_time || 1;
+      return {
+        parent_function: parent.parent_function,
+        children_total_time: parent.children_total_time,
+        pct_of_total: (parent.children_total_time / totalCpu) * 100
+      };
+    });
+
+    // Sort parent data by children_total_time descending
+    parentFunctionData.sort((a, b) => {
+      const aVal = a.children_total_time || 0;
+      const bVal = b.children_total_time || 0;
+      return bVal - aVal;
+    });
+
+    // Render parent functions table
+    renderParentRows(parentFunctionData);
+
     const tableRows = [...(profileData.children || [])];
-    const headers = document.querySelectorAll("thead th[data-sort-key]");
+    
+    // Populate parent function dropdown
+    const parentFilter = document.getElementById("parentFilter");
+    const uniqueParents = [...new Set((profileData.children || []).map(c => c.parent_function))].sort();
+    for (const parent of uniqueParents) {
+      const option = document.createElement("option");
+      option.value = parent;
+      option.textContent = parent;
+      parentFilter.appendChild(option);
+    }
+    
+    // Track filtered data
+    let currentFilteredRows = [...tableRows];
+    
+    function updateChildCount() {
+      document.getElementById("childCount").textContent = String(currentFilteredRows.length);
+    }
+    
+    function applyFilter() {
+      const selectedParent = parentFilter.value;
+      if (selectedParent === "") {
+        currentFilteredRows = [...tableRows];
+      } else {
+        currentFilteredRows = tableRows.filter(row => row.parent_function === selectedParent);
+      }
+      updateChildCount();
+      // Re-render with current sort
+      renderRows(currentFilteredRows);
+    }
+    
+    parentFilter.addEventListener("change", applyFilter);
+    
+    // Get headers for each table separately
+    const parentTableHeaders = document.querySelector("#parentRows").closest("table").querySelectorAll("thead th[data-sort-key]");
+    const childTableHeaders = document.querySelector("#rows").closest("table").querySelectorAll("thead th[data-sort-key]");
+    
     applyParentColumnWidth(tableRows);
 
     function sortByColumn(key, type, direction) {
-      tableRows.sort((a, b) => {
+      currentFilteredRows.sort((a, b) => {
         const left = sortValueForRow(a, key, type);
         const right = sortValueForRow(b, key, type);
 
@@ -282,16 +388,46 @@
         }
         return 0;
       });
-      renderRows(tableRows);
+      renderRows(currentFilteredRows);
     }
 
-    for (const header of headers) {
+    function sortParentByColumn(key, type, direction) {
+      parentFunctionData.sort((a, b) => {
+        const left = sortValueForRow(a, key, type);
+        const right = sortValueForRow(b, key, type);
+
+        if (left < right) {
+          return direction === "asc" ? -1 : 1;
+        }
+        if (left > right) {
+          return direction === "asc" ? 1 : -1;
+        }
+        return 0;
+      });
+      renderParentRows(parentFunctionData);
+    }
+
+    // Add sorting to parent table headers
+    for (const header of parentTableHeaders) {
       header.addEventListener("click", () => {
         const key = header.dataset.sortKey;
         const type = header.dataset.sortType || "string";
         const direction = header.classList.contains("sort-asc") ? "desc" : "asc";
 
-        clearSortIndicators(headers);
+        clearSortIndicators(parentTableHeaders);
+        header.classList.add(direction === "asc" ? "sort-asc" : "sort-desc");
+        sortParentByColumn(key, type, direction);
+      });
+    }
+
+    // Add sorting to children table headers
+    for (const header of childTableHeaders) {
+      header.addEventListener("click", () => {
+        const key = header.dataset.sortKey;
+        const type = header.dataset.sortType || "string";
+        const direction = header.classList.contains("sort-asc") ? "desc" : "asc";
+
+        clearSortIndicators(childTableHeaders);
         header.classList.add(direction === "asc" ? "sort-asc" : "sort-desc");
         sortByColumn(key, type, direction);
       });
