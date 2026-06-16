@@ -9,14 +9,14 @@ import os
 import json
 import re
 
-_PRODUCE_RE = re.compile(r'::produce')
+_PRODUCE_RE = re.compile(r"::produce")
 
 
 def count_leading_spaces(line):
     """Count the number of leading spaces in a line."""
     count = 0
     for char in line:
-        if char == ' ':
+        if char == " ":
             count += 1
         else:
             break
@@ -26,23 +26,23 @@ def count_leading_spaces(line):
 def get_total_cpu_time(filename):
     """
     Get the total CPU time from the first data line.
-    
+
     Args:
         filename: Path to the CSV file
-    
+
     Returns:
         float: Total CPU time
     """
-    with open(filename, 'r', encoding='utf-8') as f:
+    with open(filename, "r", encoding="utf-8") as f:
         # Skip the header lines
         for line in f:
-            if line.startswith('Function Stack;'):
+            if line.startswith("Function Stack;"):
                 break
-        
+
         # Read the first data line (Total)
         for line in f:
             if line.strip():
-                parts = line.split(';')
+                parts = line.split(";")
                 if len(parts) >= 2:
                     try:
                         return float(parts[1])
@@ -55,17 +55,17 @@ def _safe_float(val):
     try:
         return float(val)
     except (ValueError, TypeError):
-        return float('-inf')
+        return float("-inf")
 
 
 def extract_immediate_children(filename, parent_function):
     """
     Extract all immediate children of a given parent function.
-    
+
     Args:
         filename: Path to the CSV file
         parent_function: The function name to find children for
-    
+
     Returns:
         Tuple[List[Tuple[str, str]], Optional[float]]: (children, parent_total_time)
     """
@@ -74,10 +74,10 @@ def extract_immediate_children(filename, parent_function):
     found_parent = False
     parent_total_time = None
 
-    with open(filename, 'r', encoding='utf-8') as f:
+    with open(filename, "r", encoding="utf-8") as f:
         # Skip the header lines
         for line in f:
-            if line.startswith('Function Stack;'):
+            if line.startswith("Function Stack;"):
                 break
 
         # Process the data lines
@@ -87,7 +87,7 @@ def extract_immediate_children(filename, parent_function):
                 continue
 
             # Parse the line
-            parts = line.split(';')
+            parts = line.split(";")
             if len(parts) < 4:
                 continue
 
@@ -122,39 +122,39 @@ def extract_immediate_children(filename, parent_function):
 def extract_all_produce_functions(filename):
     """
     Extract ALL ::produce functions in the entire file, regardless of parent.
-    
+
     Args:
         filename: Path to the CSV file
-    
+
     Returns:
         List[Tuple[str, str]]: List of (full_function, total_time) tuples
     """
     all_produce = []
-    
-    with open(filename, 'r', encoding='utf-8') as f:
+
+    with open(filename, "r", encoding="utf-8") as f:
         # Skip the header lines
         for line in f:
-            if line.startswith('Function Stack;'):
+            if line.startswith("Function Stack;"):
                 break
-        
+
         # Process the data lines
         for line in f:
             # Skip empty lines
             if not line.strip():
                 continue
-            
+
             # Parse the line
-            parts = line.split(';')
+            parts = line.split(";")
             if len(parts) < 4:
                 continue
-            
+
             total_time = parts[1]
             full_function = parts[3].strip()
-            
+
             # Collect any ::produce(...) function
             if _PRODUCE_RE.search(full_function):
                 all_produce.append((full_function, total_time))
-    
+
     return all_produce
 
 
@@ -164,23 +164,30 @@ def _safe_percentage(numerator, denominator):
     return None
 
 
-def build_profile_data(children, parent_functions, parent_total_time, total_cpu_time, source_file, parent_csv_times=None):
+def build_profile_data(
+    children,
+    parent_functions,
+    parent_total_time,
+    total_cpu_time,
+    source_file,
+    parent_csv_times=None,
+):
     """
     Build a JSON-serializable profile payload.
-    
+
     Args:
         children: List of dict rows with parent/function/total_time
         parent_functions: The parent function names
         parent_total_time: Total time of parent functions (sum of CSV field 2 per parent)
         total_cpu_time: Total CPU time
         parent_csv_times: Dict mapping parent function name -> time from CSV field 2
-    
+
     Returns:
         dict: Profile payload
     """
     if parent_csv_times is None:
         parent_csv_times = {}
-    
+
     rows = []
     for child in children:
         parent_function = child["parent_function"]
@@ -190,22 +197,26 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
             time_val = float(total_time)
             pct_parent = _safe_percentage(time_val, parent_total_time)
             pct_total = _safe_percentage(time_val, total_cpu_time)
-            rows.append({
-                "parent_function": parent_function,
-                "function": full_function,
-                "total_time": time_val,
-                "pct_of_parent": pct_parent,
-                "pct_of_total": pct_total,
-            })
+            rows.append(
+                {
+                    "parent_function": parent_function,
+                    "function": full_function,
+                    "total_time": time_val,
+                    "pct_of_parent": pct_parent,
+                    "pct_of_total": pct_total,
+                }
+            )
         except ValueError:
-            rows.append({
-                "parent_function": parent_function,
-                "function": full_function,
-                "total_time": None,
-                "total_time_raw": total_time,
-                "pct_of_parent": None,
-                "pct_of_total": None,
-            })
+            rows.append(
+                {
+                    "parent_function": parent_function,
+                    "function": full_function,
+                    "total_time": None,
+                    "total_time_raw": total_time,
+                    "pct_of_parent": None,
+                    "pct_of_total": None,
+                }
+            )
 
     # Calculate total_children_time as sum of all parent times
     total_children_time = sum(parent_csv_times.values())
@@ -218,8 +229,12 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
             "parent_total_time": parent_total_time,
             "parent_pct_of_total": _safe_percentage(parent_total_time, total_cpu_time),
             "total_children_time": total_children_time,
-            "children_pct_of_total": _safe_percentage(total_children_time, total_cpu_time),
-            "children_pct_of_parent": _safe_percentage(total_children_time, total_children_time),
+            "children_pct_of_total": _safe_percentage(
+                total_children_time, total_cpu_time
+            ),
+            "children_pct_of_parent": _safe_percentage(
+                total_children_time, total_children_time
+            ),
             "children_count": len(rows),
         },
         "parent_function_totals": [
@@ -235,13 +250,13 @@ def build_profile_data(children, parent_functions, parent_total_time, total_cpu_
 
 def render_template_html(template_path, profile_data):
     """Render HTML by injecting profile JSON into a template page."""
-    with open(template_path, 'r', encoding='utf-8') as f:
+    with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
 
     data_json = json.dumps(profile_data, indent=2, ensure_ascii=False)
     # Keep JSON safe for embedding in a <script> tag.
-    data_json = data_json.replace('</', '<\\/')
-    return template.replace('__PROFILE_DATA_JSON__', data_json)
+    data_json = data_json.replace("</", "<\\/")
+    return template.replace("__PROFILE_DATA_JSON__", data_json)
 
 
 def parse_args(argv):
@@ -253,19 +268,21 @@ def parse_args(argv):
         "filename": argv[1],
         "html_output": None,
         "json_output": None,
-        "template_path": os.path.join(os.path.dirname(__file__), 'profile_report_template.html'),
+        "template_path": os.path.join(
+            os.path.dirname(__file__), "profile_report_template.html"
+        ),
     }
 
     i = 2
     while i < len(argv):
         token = argv[i]
-        if token == '--html' and i + 1 < len(argv):
+        if token == "--html" and i + 1 < len(argv):
             args["html_output"] = argv[i + 1]
             i += 2
-        elif token == '--json' and i + 1 < len(argv):
+        elif token == "--json" and i + 1 < len(argv):
             args["json_output"] = argv[i + 1]
             i += 2
-        elif token == '--template' and i + 1 < len(argv):
+        elif token == "--template" and i + 1 < len(argv):
             args["template_path"] = argv[i + 1]
             i += 2
         else:
@@ -285,11 +302,16 @@ def main():
         sys.exit(1)
 
     filename = args["filename"]
-    parent_functions = ["edm::stream::EDProducerAdaptorBase::doEvent", "edm::global::EDProducerBase::doEvent", "edm::one::EDProducerBase::doEvent","edm::limited::EDProducerBase::doEvent"]
+    parent_functions = [
+        "edm::stream::EDProducerAdaptorBase::doEvent",
+        "edm::global::EDProducerBase::doEvent",
+        "edm::one::EDProducerBase::doEvent",
+        "edm::limited::EDProducerBase::doEvent",
+    ]
     html_output = args["html_output"]
     json_output = args["json_output"]
     template_path = args["template_path"]
-    
+
     global_children = []
     global_parent_total_time = 0.0
     parent_csv_times = {}
@@ -299,9 +321,13 @@ def main():
 
     # First, collect children from doEvent functions
     for parent_function in parent_functions:
-        children, parent_total_time = extract_immediate_children(filename, parent_function)
+        children, parent_total_time = extract_immediate_children(
+            filename, parent_function
+        )
         if children:  # Only if we found this parent function
-            print(f"Extracting immediate children of: {parent_function} ({len(children)} found)\n")
+            print(
+                f"Extracting immediate children of: {parent_function} ({len(children)} found)\n"
+            )
             global_children.extend(
                 {
                     "parent_function": parent_function,
@@ -313,15 +339,15 @@ def main():
             csv_time = parent_total_time if parent_total_time is not None else 0.0
             global_parent_total_time += csv_time
             parent_csv_times[parent_function] = csv_time
-    
+
     # Then, collect ALL ::produce functions (including ES producers not under doEvent)
     all_produce = extract_all_produce_functions(filename)
-    
+
     # Find produce functions not yet added (those not under doEvent)
     other_produce_total = 0.0
     other_produce_count = 0
     added_functions = set(child["function"] for child in global_children)
-    
+
     for full_function, total_time in all_produce:
         if full_function not in added_functions:
             # This is a produce function not under doEvent (likely ES producer)
@@ -329,41 +355,56 @@ def main():
             try:
                 time_val = float(total_time)
                 other_produce_total += time_val
-                global_children.append({
-                    "parent_function": "[EventSetup Producers]",
-                    "function": full_function,
-                    "total_time": total_time,
-                })
+                global_children.append(
+                    {
+                        "parent_function": "[EventSetup Producers]",
+                        "function": full_function,
+                        "total_time": total_time,
+                    }
+                )
             except ValueError:
-                global_children.append({
-                    "parent_function": "[EventSetup Producers]",
-                    "function": full_function,
-                    "total_time": None,
-                    "total_time_raw": total_time,
-                })
-    
+                global_children.append(
+                    {
+                        "parent_function": "[EventSetup Producers]",
+                        "function": full_function,
+                        "total_time": None,
+                        "total_time_raw": total_time,
+                    }
+                )
+
     if parent_csv_times:
-        parent_percentage = (global_parent_total_time / total_cpu_time * 100) if total_cpu_time > 0 else 0
-        print(f"Event Producers total time: {global_parent_total_time:.6f} ({parent_percentage:.2f}% of total)\n")
-    
+        parent_percentage = (
+            (global_parent_total_time / total_cpu_time * 100)
+            if total_cpu_time > 0
+            else 0
+        )
+        print(
+            f"Event Producers total time: {global_parent_total_time:.6f} ({parent_percentage:.2f}% of total)\n"
+        )
+
     if other_produce_count > 0:
-        other_percentage = (other_produce_total / total_cpu_time * 100) if total_cpu_time > 0 else 0
-        print(f"[EventSetup Producers] total time: {other_produce_total:.6f} ({other_percentage:.2f}% of total, {other_produce_count} functions)\n")
-    
-    
+        other_percentage = (
+            (other_produce_total / total_cpu_time * 100) if total_cpu_time > 0 else 0
+        )
+        print(
+            f"[EventSetup Producers] total time: {other_produce_total:.6f} ({other_percentage:.2f}% of total, {other_produce_count} functions)\n"
+        )
+
     # Sort by total time (descending)
     global_children.sort(key=lambda item: _safe_float(item["total_time"]), reverse=True)
     print(f"Found {len(global_children)} total ::produce functions:\n")
-    
+
     # Update parent_functions if we have EventSetup producers
     if other_produce_count > 0:
         parent_functions = list(parent_functions) + ["[EventSetup Producers]"]
         parent_csv_times["[EventSetup Producers]"] = other_produce_total
-    
+
     print("-" * 150)
-    print(f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Parent Function':<45} {'Function':<90}")
+    print(
+        f"{'Total Time':>12} {'Pct of parent':>15} {'Pct of total':>15} {'Parent Function':<45} {'Function':<90}"
+    )
     print("-" * 150)
-    
+
     for child in global_children:
         parent_function = child["parent_function"]
         full_function = child["function"]
@@ -380,10 +421,14 @@ def main():
                 pct_total_str = f"{pct_total:>9.2f}%"
             else:
                 pct_total_str = "N/A"
-            print(f"{time_val:>12.6f} {pct_parent_str:>15} {pct_total_str:>15} {parent_function:<45} {full_function:<90}")
+            print(
+                f"{time_val:>12.6f} {pct_parent_str:>15} {pct_total_str:>15} {parent_function:<45} {full_function:<90}"
+            )
         except ValueError:
-            print(f"{total_time:>12} {'N/A':>15} {'N/A':>15} {parent_function:<45} {full_function:<90}")
-    
+            print(
+                f"{total_time:>12} {'N/A':>15} {'N/A':>15} {parent_function:<45} {full_function:<90}"
+            )
+
     print("-" * 150)
     print(f"\nTotal: {len(global_children)} functions")
     print("\n")
@@ -398,21 +443,19 @@ def main():
     )
 
     if html_output and not json_output:
-        json_output = os.path.splitext(html_output)[0] + '.json'
+        json_output = os.path.splitext(html_output)[0] + ".json"
 
     if json_output:
-        with open(json_output, 'w', encoding='utf-8') as f:
+        with open(json_output, "w", encoding="utf-8") as f:
             json.dump(profile_data, f, indent=2, ensure_ascii=False)
             print(f"JSON data written to: {json_output}\n")
 
     if html_output:
         html_content = render_template_html(template_path, profile_data)
-        with open(html_output, 'w', encoding='utf-8') as f:
+        with open(html_output, "w", encoding="utf-8") as f:
             f.write(html_content)
             print(f"HTML report written to: {html_output}\n")
         return
-    
-
 
 
 if __name__ == "__main__":

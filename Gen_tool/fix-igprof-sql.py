@@ -17,7 +17,8 @@ def fix_file(line):
     global unknown
     line = remove_ascii_control_characters(line)
     m = re.match(
-        '^(\\s*INSERT\\s+INTO\\s+files\\s+VALUES\\s+\\((\\d+),\\s*["])([^"]*)(["].*$)', line
+        '^(\\s*INSERT\\s+INTO\\s+files\\s+VALUES\\s+\\((\\d+),\\s*["])([^"]*)(["].*$)',
+        line,
     )
     if m:
         xf = m.group(3)
