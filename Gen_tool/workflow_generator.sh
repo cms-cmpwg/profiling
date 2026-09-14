@@ -284,8 +284,8 @@ generate_command_files() {
         generate_step_commands "${step_cmd}" "${step_number}"
     done
     
-    # Add special handling when step2 is DIGI step for EOS access
-    if [[ "${workflow_steps[1]}" =~ DIGI ]]; then
+    # Add special handling when step2 is DIGI2RAW step for EOS access
+    if [[ "${workflow_steps[1]}" =~ DIGI2RAW ]]; then
         add_step2_modifications
     fi
     
