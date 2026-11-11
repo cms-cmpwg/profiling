@@ -306,7 +306,7 @@ generate_step_commands() {
     if [ -e "$CMSSW_RELEASE_BASE/src/PerfTools/VTune/" ]; then
         echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise=PerfTools/VTune/AnnontateService.customiseVTuneAnnotateService --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_vtuneannotate.py " >> cmd_vt.sh
     else
-        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_timememoryinfo.py " >> cmd_vt.sh
+        echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_vtuneannotate.py " >> cmd_vt.sh
     fi
     # TimeMemory command
         echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
