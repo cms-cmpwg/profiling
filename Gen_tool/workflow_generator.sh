@@ -303,7 +303,7 @@ generate_step_commands() {
     log_debug "Generating commands for step ${step_num}"
 
     # VTuneAnnontate command
-        echo "${base_cmd} --customise==PerfTools/VTune/AnnontateService.customiseVTuneAnnotateService --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_vtuneannotate.py " >> cmd_vt.sh
+        echo "${base_cmd} --customise=PerfTools/VTune/AnnontateService.customiseVTuneAnnotateService --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_vtuneannotate.py " >> cmd_vt.sh
     
     # TimeMemory command
         echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
