@@ -292,7 +292,8 @@ run_profiling_steps() {
     case "${profiling_type}" in
         "cpu"|"mem"|"mem_gc"|"mem_tc"|"gpu_igmp"|"gpu_igpp") cmd_file="cmd_ig.sh" ;;
         "jemal") cmd_file="cmd_je.sh" ;;
-        "vtune"|"timemem") cmd_file="cmd_ts.sh" ;;
+        "vtune") cmd_file="cmd_vt.sh" ;;
+        "timemem") cmd_file="cmd_ts.sh" ;;
         "gpu"|"fasttimer") cmd_file="cmd_ft.sh" ;;
         "gpu_nsys") cmd_file="cmd_nsys.sh" ;;
         "nvprof") cmd_file="cmd_np.sh" ;;
@@ -426,7 +427,8 @@ get_config_suffix() {
         "cpu"|"mem"|"mem_gc"|"mem_tc") echo "igprof" ;;
         "gpu_igmp"|"gpu_igpp") echo "gpu_igprof" ;;
         "jemal") echo "jeprof" ;;
-        "vtune"|"timemem") echo "timememoryinfo" ;;
+        "timemem") echo "timememoryinfo" ;;
+        "vtune") echo "vtuneannotate" ;;
         "gpu") echo "gpu_fasttimer" ;;
         "gpu_nsys") echo "gpu_nvprof" ;;
         "nvprof") echo "nvprof" ;;

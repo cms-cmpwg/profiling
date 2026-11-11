@@ -27,6 +27,7 @@ readonly CMD_FILES=(
     "cmd_ft.sh"     # FastTimer
     "cmd_ig.sh"     # IgProf  
     "cmd_ts.sh"     # TimeMemory
+    "cmd_vt.sh"     # VTuneAnnotate
     "cmd_je.sh"     # JeProf
     "cmd_am.sh"     # AllocMonitor
     "cmd_eam.sh"    # EventAllocMonitor
@@ -300,6 +301,9 @@ generate_step_commands() {
     local step_num=$2
     
     log_debug "Generating commands for step ${step_num}"
+
+    # VTuneAnnontate command
+        echo "${base_cmd} --customise==PerfTools/VTune/AnnontateService.customiseVTuneAnnotateService --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_vtuneannotate.py " >> cmd_vt.sh
     
     # TimeMemory command
         echo "${base_cmd} --customise=Validation/Performance/TimeMemorySummary.py --customise_commands \"process.options.numberOfConcurrentLuminosityBlocks = 1\" --python_filename=step${step_num}_timememoryinfo.py " >> cmd_ts.sh
@@ -320,7 +324,7 @@ EOF
 add_step2_modifications() {
     log "Adding step2 modifications for EOS access"
     
-    for cmd_file in cmd_ts.sh cmd_ig.sh cmd_je.sh cmd_ft.sh cmd_am.sh cmd_eam.sh; do
+    for cmd_file in cms_vt.sh cmd_ts.sh cmd_ig.sh cmd_je.sh cmd_ft.sh cmd_am.sh cmd_eam.sh; do
         echo "perl -p -i -e 's!/store/relval!root://eoscms.cern.ch//store/user/cmsbuild/store/relval!g' step2_*.py" >> "${cmd_file}"
     done
 }
